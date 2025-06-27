@@ -14,7 +14,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, Any
 
-from ..utils import atomic_write_json
+from ..core.utils import atomic_write_json
 
 logger = logging.getLogger(__name__)
 
