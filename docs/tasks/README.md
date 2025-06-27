@@ -1,48 +1,38 @@
-# Refactoring Tasks Overview
+# Refactoring Tasks: Making It Boring
 
-## Task Dependencies and Execution Order
+## Goal
+Make this codebase so simple and standard that any Python developer can understand and maintain it without documentation.
 
-### Phase 1: Foundation (Can be done in parallel)
-These tasks are independent and can be started immediately:
+## Principles
+- **Boring is good** - use the most obvious solution
+- **Explicit over implicit** - no magic, no cleverness
+- **Simple over flexible** - we don't need flexibility we're not using
+- **Standard over optimal** - use patterns everyone knows
 
-- **Task 01: Flatten Module Structure** - This is the foundation that most other tasks depend on
-- **Task 02: Explicit Status Enum** - Simple, isolated change
-- **Task 08: Add Proper Testing** - Can start with existing structure
+## Tasks
 
-### Phase 2: Core Refactoring (After Task 01 is merged)
-These tasks depend on the new module structure from Task 01:
+### Task 01: Remove Unnecessary Complexity
+Remove dependency injection, complex lifecycle management, and other over-engineered patterns. Just use simple constants and direct function calls.
 
-- **Task 03: Dependency Injection** - Needs the new structure
-- **Task 04: Separate Route Concerns** - Needs the new structure
-- **Task 05: Storage Abstraction** - Needs the new structure
-- **Task 06: Config Management** - Needs the new structure
+### Task 02: Keep Status as Simple Strings  
+Don't add an enum for 5 status values. Strings work fine.
 
-### Phase 3: Final Polish (After Phase 2)
-- **Task 07: Simplify Entry Point** - Depends on multiple Phase 2 tasks
+### Task 03: Simple Error Handling
+Add basic try/except where needed. No custom exception hierarchies.
 
-## Recommended Approach
+### Task 04: Basic Tests That Matter
+Test the critical paths (job executor) with simple, readable tests.
 
-1. **Start with Phase 1 tasks only** (01, 02, 08)
-2. **After Task 01 is merged**, create worktrees for Phase 2 tasks
-3. **After Phase 2 is mostly complete**, create worktree for Task 07
+## What We're NOT Doing
+- ❌ Dependency injection
+- ❌ Abstract base classes
+- ❌ Complex type hierarchies
+- ❌ 100% test coverage
+- ❌ Clever abstractions
+- ❌ Premature optimization
 
-## Current Worktrees Created
-
-We've created worktrees for all tasks, but you should:
-1. Only start agents on Phase 1 tasks (01, 02, 08) immediately
-2. Leave Phase 2 worktrees idle until Task 01 is merged
-3. Consider removing Phase 2/3 worktrees and recreating them later:
-   ```bash
-   agent-worktree remove refactor/03-dependency-injection
-   agent-worktree remove refactor/04-separate-route-concerns
-   agent-worktree remove refactor/05-storage-abstraction
-   agent-worktree remove refactor/06-config-management
-   agent-worktree remove refactor/07-simplify-entry-point
-   ```
-
-## Task Prioritization
-
-1. **Task 01** is the highest priority as it unblocks most other work
-2. **Task 02** and **Task 08** can proceed in parallel with Task 01
-3. Once Task 01 is merged, all Phase 2 tasks can proceed in parallel
-4. Task 07 should be done last as it benefits from all previous refactoring
+## Success Metrics
+- A new developer can understand the entire codebase in 30 minutes
+- Changes take minutes, not hours
+- No "magic" that requires deep knowledge
+- Boring, predictable, maintainable code
