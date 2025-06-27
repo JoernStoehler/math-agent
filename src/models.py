@@ -4,6 +4,8 @@ Pydantic models for the math agent system.
 from typing import Dict, Optional
 from pydantic import BaseModel
 
+from .math_agent.core.enums import JobStatus as JobStatusEnum
+
 
 class JobCreateRequest(BaseModel):
     """Request model for creating a new job"""
@@ -23,7 +25,7 @@ class PromptSaveRequest(BaseModel):
 
 class JobStatus(BaseModel):
     """Status information for a job"""
-    status: str  # TODO: Should be an Enum (setup, running, completed, error, cancelled)
+    status: JobStatusEnum
     createdAt: str
     startedAt: Optional[str] = None
     completedAt: Optional[str] = None

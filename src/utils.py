@@ -35,10 +35,10 @@ def atomic_write_json(file_path: Path, data: Any, indent: int = 2) -> None:
         
         # Atomically replace the original file
         os.replace(temp_path, file_path)
-    except:
+    except Exception:
         # Clean up temp file on error
         try:
             os.unlink(temp_path)
-        except:
+        except OSError:
             pass
         raise

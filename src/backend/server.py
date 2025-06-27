@@ -12,21 +12,19 @@ import logging
 import os
 from datetime import datetime
 from pathlib import Path
-from typing import List
 from base64 import b64decode
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Response
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 
-logger = logging.getLogger(__name__)
-
-
-# Import models from separate file
-from ..models import JobCreateRequest, PromptSaveRequest, JobStatus
+from ..models import JobCreateRequest, PromptSaveRequest
 from ..utils import atomic_write_json
+from ..math_agent.core.enums import JobStatus as JobStatusEnum
+
+logger = logging.getLogger(__name__)
 
 
 # Mock job execution (DEV MODE ONLY - Enable with DEV_MODE=true)
@@ -45,8 +43,8 @@ async def mock_job_executor():
                             status = json.load(f)
                         
                         # Simulate starting setup jobs
-                        if status["status"] == "setup":
-                            status["status"] = "running"
+                        if status["status"] == JobStatusEnum.SETUP.value:
+                            status["status"] = JobStatusEnum.RUNNING.value
                             status["startedAt"] = datetime.utcnow().isoformat() + "Z"
                             
                             atomic_write_json(status_file, status)
@@ -237,7 +235,7 @@ async def create_job(request: JobCreateRequest):
     
     # Create initial status
     status = {
-        "status": "setup",
+        "status": JobStatusEnum.SETUP.value,
         "createdAt": datetime.utcnow().isoformat() + "Z",
         "model": request.model,
         "exercise": request.exercise,
@@ -278,14 +276,14 @@ async def cancel_job(job_name: str):
     with open(status_file, 'r') as f:
         status = json.load(f)
     
-    if status["status"] not in ["setup", "running"]:
+    if status["status"] not in [JobStatusEnum.SETUP.value, JobStatusEnum.RUNNING.value]:
         raise HTTPException(status_code=400, detail=f"Cannot cancel job in {status['status']} state")
     
     # Cancel via job manager
     success = await job_manager.cancel_job(job_name)
     if not success:
         # Fallback: update status directly
-        status["status"] = "cancelled"
+        status["status"] = JobStatusEnum.CANCELLED.value
         status["completedAt"] = datetime.utcnow().isoformat() + "Z"
         atomic_write_json(status_file, status)
     

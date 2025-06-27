@@ -8,13 +8,12 @@ including running the AI agent, managing output, and compiling LaTeX.
 import asyncio
 import json
 import logging
-import os
-import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, Any
 
 from ..utils import atomic_write_json
+from ..math_agent.core.enums import JobStatus as JobStatusEnum
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +32,7 @@ class JobExecutor:
         """Execute the job"""
         try:
             # Update status to running
-            await self._update_status("running", startedAt=datetime.utcnow().isoformat() + "Z")
+            await self._update_status(JobStatusEnum.RUNNING.value, startedAt=datetime.utcnow().isoformat() + "Z")
             
             # Load job configuration
             status = self._load_status()
@@ -72,7 +71,7 @@ class JobExecutor:
                 solution_pdf = self.workspace_dir / "solution.pdf"
                 
                 updates = {
-                    "status": "completed",
+                    "status": JobStatusEnum.COMPLETED.value,
                     "completedAt": datetime.utcnow().isoformat() + "Z",
                     "solutionTexCreated": solution_tex.exists()
                 }
@@ -87,7 +86,7 @@ class JobExecutor:
                 await self._update_status(**updates)
             else:
                 await self._update_status(
-                    "error",
+                    JobStatusEnum.ERROR.value,
                     completedAt=datetime.utcnow().isoformat() + "Z",
                     error=f"Process exited with code {return_code}"
                 )
@@ -98,7 +97,7 @@ class JobExecutor:
                 self.process.terminate()
                 await self.process.wait()
             await self._update_status(
-                "cancelled",
+                JobStatusEnum.CANCELLED.value,
                 completedAt=datetime.utcnow().isoformat() + "Z"
             )
             raise
@@ -106,7 +105,7 @@ class JobExecutor:
         except Exception as e:
             logger.exception("Job execution failed")
             await self._update_status(
-                "error",
+                JobStatusEnum.ERROR.value,
                 completedAt=datetime.utcnow().isoformat() + "Z",
                 error=str(e)
             )
@@ -183,7 +182,7 @@ class JobExecutor:
                     f.write(json.dumps(entry) + '\n')
                 return False
                 
-        except Exception as e:
+        except Exception:
             logger.exception("PDF compilation failed")
             return False
             

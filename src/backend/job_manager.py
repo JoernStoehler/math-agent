@@ -8,10 +8,11 @@ and coordinates job lifecycle.
 import asyncio
 import logging
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict
 from contextlib import suppress
 
 from .job import JobExecutor
+from ..math_agent.core.enums import JobStatus as JobStatusEnum
 
 logger = logging.getLogger(__name__)
 
@@ -155,7 +156,7 @@ class JobManager:
                             with open(status_file, 'r') as f:
                                 status = json.load(f)
                                 
-                            if status.get("status") == "setup":
+                            if status.get("status") == JobStatusEnum.SETUP.value:
                                 # Submit for execution
                                 await self.submit_job(job_name)
                                 
