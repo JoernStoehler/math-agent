@@ -33,7 +33,7 @@ math-agent/
 ├── src/backend/                           # Backend implementation
 │   ├── job.py                            # Job execution logic
 │   ├── job_manager.py                    # Job queue management
-│   └── backend.py                        # API server & routing
+│   └── server.py                        # API server & routing
 └── static/                               # Frontend assets
     ├── dashboard.html                    # Main dashboard
     ├── job.html                          # Job details page
@@ -192,9 +192,36 @@ Evaluations will be done externally (e.g., Google Sheets) since they need to be 
 
 ## Development
 
+### Setup
 ```bash
-uv run src/backend.py
+# Install dependencies
+uv sync
+
+# Run server
+uv run python src/backend/server.py
+
+# Run with mock executor (for testing)
+DEV_MODE=true uv run python src/backend/server.py
 ```
+
+### Testing
+```bash
+# Install dev dependencies
+uv sync --dev
+
+# Run tests
+uv run pytest
+```
+
+**WARNING**: The job executor (src/backend/job.py) is COMPLETELY UNTESTED. 
+See tests/test_job_executor.py for what needs to be tested before production use.
+
+### Project Structure
+- `src/backend/server.py` - FastAPI application and routes
+- `src/backend/job.py` - Job executor (UNTESTED)
+- `src/backend/job_manager.py` - Job queue management
+- `src/models.py` - Pydantic models
+- `tests/` - Test files with warnings about untested code
 
 Single Python process running FastAPI + job manager with asyncio.
 

@@ -1,0 +1,8 @@
+{
+  "status": "running",
+  "createdAt": "2024-01-15T14:20:00Z",
+  "startedAt": "2024-01-15T14:20:05Z",
+  "model": "claude-sonnet-4",
+  "exercise": "linear_algebra/sheet_03_ex_01",
+  "disallowedTools": "WebSearch"
+}

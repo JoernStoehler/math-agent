@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{array}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+
+\begin{document}
+
+\section*{Solution to Linear Algebra - Sheet 3, Exercise 1}
+
+\textbf{Given:} The matrix
+$$A = \begin{pmatrix}
+2 & 1 & 0 \\
+1 & 2 & 1 \\
+0 & 1 & 2
+\end{pmatrix}$$
+
+\subsection*{Part (a): Finding all eigenvalues}
+
+To find the eigenvalues, we compute the characteristic polynomial $\det(A - \lambda I) = 0$.
+
+$$A - \lambda I = \begin{pmatrix}
+2-\lambda & 1 & 0 \\
+1 & 2-\lambda & 1 \\
+0 & 1 & 2-\lambda
+\end{pmatrix}$$
+
+We calculate the determinant by expanding along the first row:
+\begin{align}
+\det(A - \lambda I) &= (2-\lambda)\begin{vmatrix}
+2-\lambda & 1 \\
+1 & 2-\lambda
+\end{vmatrix} - 1\begin{vmatrix}
+1 & 1 \\
+0 & 2-\lambda
+\end{vmatrix} + 0\\
+&= (2-\lambda)[(2-\lambda)^2 - 1] - 1[1(2-\lambda) - 0]\\
+&= (2-\lambda)[(2-\lambda)^2 - 1] - (2-\lambda)\\
+&= (2-\lambda)[(2-\lambda)^2 - 1 - 1]\\
+&= (2-\lambda)[(2-\lambda)^2 - 2]
+\end{align}
+
+Setting this equal to zero:
+$$(2-\lambda)[(2-\lambda)^2 - 2] = 0$$
+
+This gives us:
+- $\lambda_1 = 2$ (from the first factor)
+- $(2-\lambda)^2 = 2$, which gives $2-\lambda = \pm\sqrt{2}$
+  - $\lambda_2 = 2 - \sqrt{2}$
+  - $\lambda_3 = 2 + \sqrt{2}$
+
+\textbf{The eigenvalues are:} $\lambda_1 = 2$, $\lambda_2 = 2 - \sqrt{2}$, $\lambda_3 = 2 + \sqrt{2}$
+
+\subsection*{Part (b): Finding eigenspaces}
+
+(Work in progress - computing eigenvectors...)
+
+\end{document}

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details - Math Agent</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        /* Job page specific styles */
+        .job-header {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .job-title-row {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .job-name {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .job-metadata {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--light-gray);
+            border-radius: 8px;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .metadata-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+        
+        .metadata-label {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .metadata-value {
+            color: var(--text-primary);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+        
+        /* Chat interface */
+        .chat-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-bottom: 1px solid var(--border-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .auto-scroll-indicator {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-lg);
+            background: var(--light-gray);
+            scroll-behavior: smooth;
+        }
+        
+        /* Enhanced chat messages */
+        .chat-message {
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            gap: var(--spacing-md);
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+            font-size: var(--font-size-sm);
+        }
+        
+        .chat-avatar.user {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
+        .chat-avatar.assistant {
+            background: var(--success-green);
+            color: white;
+        }
+        
+        .chat-avatar.system {
+            background: var(--neutral-gray);
+            color: white;
+        }
+        
+        .chat-content {
+            flex: 1;
+            background: white;
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .chat-role {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+            text-transform: capitalize;
+        }
+        
+        .chat-text {
+            color: var(--text-primary);
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .chat-text code {
+            background: var(--light-gray);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .chat-time {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            margin-top: var(--spacing-xs);
+        }
+        
+        /* Tool use styling */
+        .tool-use {
+            background: #f0f7ff;
+            border-left: 4px solid var(--primary-blue);
+            padding: var(--spacing-sm) var(--spacing-md);
+            margin: var(--spacing-sm) 0;
+            border-radius: 4px;
+        }
+        
+        .tool-use-command {
+            font-family: 'Courier New', monospace;
+            font-size: var(--font-size-sm);
+            color: var(--primary-blue);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .tool-result {
+            background: #f5f5f5;
+            padding: var(--spacing-sm);
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: var(--font-size-sm);
+            overflow-x: auto;
+        }
+        
+        /* Loading state */
+        .thinking-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--text-secondary);
+            padding: var(--spacing-md);
+        }
+        
+        .thinking-dots {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .thinking-dots span {
+            width: 8px;
+            height: 8px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: thinking 1.4s infinite;
+        }
+        
+        .thinking-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .thinking-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes thinking {
+            0%, 60%, 100% {
+                opacity: 0.3;
+            }
+            30% {
+                opacity: 1;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .job-metadata {
+                grid-template-columns: 1fr;
+            }
+            
+            .chat-section {
+                height: 500px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <div class="nav-logo">MA</div>
+                <span class="nav-title">Math Agent</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Dashboard</a>
+                <a href="/submit" class="nav-link">New Job</a>
+                <a href="/files/data/" class="nav-link">Files</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- Job Header -->
+        <div class="job-header">
+            <div class="job-title-row">
+                <h1 class="job-name" id="jobName">Loading...</h1>
+                <span class="status-badge" id="statusBadge">Loading...</span>
+            </div>
+            
+            <div class="job-metadata">
+                <div class="metadata-item">
+                    <span class="metadata-label">Model</span>
+                    <span class="metadata-value" id="modelInfo">-</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Exercise</span>
+                    <span class="metadata-value" id="exerciseInfo">-</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Created</span>
+                    <span class="metadata-value" id="createdInfo">-</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Duration</span>
+                    <span class="metadata-value" id="durationInfo">-</span>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="solutionTexBtn" disabled onclick="downloadFile('solution.tex')">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                    </svg>
+                    Download TeX
+                </button>
+                <button class="btn btn-primary" id="solutionPdfBtn" disabled onclick="downloadFile('solution.pdf')">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                    </svg>
+                    Download PDF
+                </button>
+                <a class="btn btn-secondary" id="workspaceBtn" href="#">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z"/>
+                        <path d="M2.5 5.5a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
+                        <path d="M9 0H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5L9 0z"/>
+                    </svg>
+                    View Workspace
+                </a>
+                <button class="btn btn-danger" id="cancelBtn" onclick="cancelJob()" style="display:none">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                    Cancel Job
+                </button>
+            </div>
+        </div>
+        
+        <!-- Chat Section -->
+        <div class="chat-section">
+            <div class="chat-header">
+                <span class="chat-title">Conversation Log</span>
+                <span class="auto-scroll-indicator">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                    Auto-scrolling
+                </span>
+            </div>
+            
+            <div class="chat-container" id="chatContainer">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: var(--spacing-md);">Loading conversation...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const jobName = window.location.pathname.split('/').pop();
+        let lastLogLength = 0;
+        let lastStatus = null;
+        let jobData = null;
+
+        // Set initial values
+        document.getElementById('jobName').textContent = jobName;
+        document.getElementById('workspaceBtn').href = `/files/jobs/${jobName}/workspace/`;
+
+        async function updateJob() {
+            try {
+                const response = await fetch(`/jobs/${jobName}`);
+                if (!response.ok) throw new Error('Failed to fetch job data');
+                
+                const data = await response.json();
+                jobData = data;
+                
+                // Update status
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.className = `status-badge status-${data.status}`;
+                statusBadge.textContent = data.status;
+                
+                // Update metadata
+                document.getElementById('modelInfo').textContent = data.model || '-';
+                document.getElementById('exerciseInfo').textContent = data.exercise || '-';
+                document.getElementById('createdInfo').textContent = formatTimestamp(data.createdAt);
+                document.getElementById('durationInfo').textContent = calculateDuration(data);
+                
+                // Update buttons
+                document.getElementById('solutionTexBtn').disabled = !data.solutionTexCreated;
+                document.getElementById('solutionPdfBtn').disabled = !data.solutionPdfCreated;
+                document.getElementById('cancelBtn').style.display = 
+                    (data.status === 'running' || data.status === 'setup') ? 'inline-flex' : 'none';
+                
+                // Update page title and notify on status change
+                if (lastStatus && lastStatus !== data.status) {
+                    document.title = `[${data.status.toUpperCase()}] ${jobName} - Math Agent`;
+                    
+                    if (Notification.permission === 'granted') {
+                        new Notification(`Job ${jobName}`, {
+                            body: `Status changed to: ${data.status}`,
+                            icon: '/favicon.ico'
+                        });
+                    }
+                }
+                lastStatus = data.status;
+                
+                // Update chat if new messages
+                if (data.log && data.log.length !== lastLogLength) {
+                    renderChat(data.log);
+                    lastLogLength = data.log.length;
+                }
+                
+                // Add thinking indicator if running
+                if (data.status === 'running' && data.log && data.log.length > 0) {
+                    addThinkingIndicator();
+                }
+            } catch (error) {
+                console.error('Failed to update job:', error);
+                showError('Failed to load job data');
+            }
+        }
+
+        function renderChat(log) {
+            const container = document.getElementById('chatContainer');
+            container.innerHTML = '';
+            
+            if (!log || log.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💬</div>
+                        <h3>No messages yet</h3>
+                        <p>Waiting for the job to start...</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            log.forEach((entry, index) => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'chat-message';
+                
+                // Determine role and avatar
+                const role = entry.role || entry.type || 'system';
+                const avatarText = role === 'user' ? 'U' : role === 'assistant' ? 'AI' : 'S';
+                
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = `chat-avatar ${role}`;
+                avatarDiv.textContent = avatarText;
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'chat-content';
+                
+                const roleDiv = document.createElement('div');
+                roleDiv.className = 'chat-role';
+                roleDiv.textContent = role;
+                
+                const textDiv = document.createElement('div');
+                textDiv.className = 'chat-text';
+                
+                // Format content based on type
+                if (entry.type === 'tool_use') {
+                    const toolDiv = document.createElement('div');
+                    toolDiv.className = 'tool-use';
+                    
+                    const commandDiv = document.createElement('div');
+                    commandDiv.className = 'tool-use-command';
+                    commandDiv.textContent = `Tool: ${entry.name || 'unknown'}`;
+                    toolDiv.appendChild(commandDiv);
+                    
+                    if (entry.input) {
+                        const inputDiv = document.createElement('div');
+                        inputDiv.textContent = `Input: ${JSON.stringify(entry.input, null, 2)}`;
+                        toolDiv.appendChild(inputDiv);
+                    }
+                    
+                    textDiv.appendChild(toolDiv);
+                } else if (entry.type === 'tool_result') {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'tool-result';
+                    resultDiv.textContent = formatToolResult(entry);
+                    textDiv.appendChild(resultDiv);
+                } else {
+                    textDiv.textContent = entry.content || JSON.stringify(entry, null, 2);
+                }
+                
+                const timeDiv = document.createElement('div');
+                timeDiv.className = 'chat-time';
+                timeDiv.textContent = formatTimestamp(entry.timestamp);
+                
+                contentDiv.appendChild(roleDiv);
+                contentDiv.appendChild(textDiv);
+                contentDiv.appendChild(timeDiv);
+                
+                messageDiv.appendChild(avatarDiv);
+                messageDiv.appendChild(contentDiv);
+                container.appendChild(messageDiv);
+            });
+            
+            // Scroll to bottom
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addThinkingIndicator() {
+            const container = document.getElementById('chatContainer');
+            
+            // Remove existing thinking indicator
+            const existing = container.querySelector('.thinking-indicator');
+            if (existing) existing.remove();
+            
+            const thinkingDiv = document.createElement('div');
+            thinkingDiv.className = 'thinking-indicator';
+            thinkingDiv.innerHTML = `
+                <span>AI is thinking</span>
+                <div class="thinking-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+            
+            container.appendChild(thinkingDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function formatToolResult(entry) {
+            if (entry.output) {
+                return typeof entry.output === 'string' ? entry.output : JSON.stringify(entry.output, null, 2);
+            }
+            if (entry.error) {
+                return `Error: ${entry.error}`;
+            }
+            return JSON.stringify(entry, null, 2);
+        }
+
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return '-';
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diff = now - date;
+            
+            // If today, show time
+            if (diff < 86400000 && date.getDate() === now.getDate()) {
+                return date.toLocaleTimeString();
+            }
+            
+            // Otherwise show date and time
+            return date.toLocaleString();
+        }
+
+        function calculateDuration(data) {
+            if (!data.startedAt) return 'Not started';
+            
+            const start = new Date(data.startedAt);
+            const end = data.completedAt ? new Date(data.completedAt) : new Date();
+            const diff = end - start;
+            
+            if (diff < 60000) {
+                return `${Math.floor(diff / 1000)}s`;
+            } else if (diff < 3600000) {
+                return `${Math.floor(diff / 60000)}m ${Math.floor((diff % 60000) / 1000)}s`;
+            } else {
+                return `${Math.floor(diff / 3600000)}h ${Math.floor((diff % 3600000) / 60000)}m`;
+            }
+        }
+
+        function downloadFile(filename) {
+            window.open(`/files/jobs/${jobName}/workspace/${filename}`);
+        }
+
+        async function cancelJob() {
+            if (!confirm('Are you sure you want to cancel this job? This action cannot be undone.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/jobs/${jobName}/cancel`, { method: 'POST' });
+                if (!response.ok) {
+                    throw new Error('Failed to cancel job');
+                }
+            } catch (error) {
+                alert('Failed to cancel job: ' + error.message);
+            }
+        }
+
+        function showError(message) {
+            const container = document.getElementById('chatContainer');
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">⚠️</div>
+                    <h3>Error</h3>
+                    <p>${message}</p>
+                    <button class="btn btn-primary" onclick="updateJob()" style="margin-top: var(--spacing-md);">Retry</button>
+                </div>
+            `;
+        }
+
+        // Request notification permission
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+
+        // Initial load
+        updateJob();
+        
+        // Poll every 2 seconds
+        const pollInterval = setInterval(updateJob, 2000);
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            clearInterval(pollInterval);
+        });
+    </script>
+</body>
+</html>

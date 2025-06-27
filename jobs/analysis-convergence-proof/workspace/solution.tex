@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage{amsmath,amsthm,amssymb}
+
+\begin{document}
+
+\section*{Solution to Analysis 1 - Sheet 1, Exercise 1}
+
+\textbf{Problem:} Prove using the definition of convergence that the sequence $(a_n)_{n \in \mathbb{N}}$ with 
+$$a_n = \frac{n}{n+1}$$
+converges to $1$.
+
+\begin{proof}
+We need to show that $\lim_{n \to \infty} a_n = 1$. By the definition of convergence, we must prove that for any $\varepsilon > 0$, there exists $N \in \mathbb{N}$ such that $|a_n - 1| < \varepsilon$ for all $n \geq N$.
+
+Let $\varepsilon > 0$ be given. We compute:
+\begin{align}
+|a_n - 1| &= \left|\frac{n}{n+1} - 1\right| \\
+&= \left|\frac{n}{n+1} - \frac{n+1}{n+1}\right| \\
+&= \left|\frac{n - (n+1)}{n+1}\right| \\
+&= \left|\frac{-1}{n+1}\right| \\
+&= \frac{1}{n+1}
+\end{align}
+
+We want $|a_n - 1| < \varepsilon$, which means:
+$$\frac{1}{n+1} < \varepsilon$$
+
+Solving for $n$:
+$$n+1 > \frac{1}{\varepsilon}$$
+$$n > \frac{1}{\varepsilon} - 1$$
+
+Therefore, if we choose $N = \left\lceil \frac{1}{\varepsilon} - 1 \right\rceil + 1$ (where $\lceil \cdot \rceil$ denotes the ceiling function), then for all $n \geq N$:
+$$n \geq N > \frac{1}{\varepsilon} - 1$$
+
+This implies:
+$$n + 1 > \frac{1}{\varepsilon}$$
+$$\frac{1}{n+1} < \varepsilon$$
+$$|a_n - 1| < \varepsilon$$
+
+Thus, we have shown that for any $\varepsilon > 0$, there exists $N \in \mathbb{N}$ such that $|a_n - 1| < \varepsilon$ for all $n \geq N$. Therefore, $\lim_{n \to \infty} a_n = 1$.
+\end{proof}
+
+\end{document}

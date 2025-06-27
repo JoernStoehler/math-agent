@@ -1,0 +1,11 @@
+{
+  "status": "error",
+  "createdAt": "2024-01-15T09:15:00Z",
+  "startedAt": "2024-01-15T09:15:05Z",
+  "completedAt": "2024-01-15T09:16:30Z",
+  "model": "gemini-2.5-flash",
+  "exercise": "analysis_1/sheet_01_ex_02",
+  "error": "LaTeX compilation failed: Undefined control sequence \\invalidcommand",
+  "solutionTexCreated": true,
+  "solutionPdfCreated": false
+}

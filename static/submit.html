@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Agent - Submit New Job</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        /* Submit form specific styles */
+        .submit-header {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .submit-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .submit-subtitle {
+            color: var(--text-secondary);
+        }
+        
+        /* Enhanced progress stepper */
+        .progress-container {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        /* Form sections */
+        .form-section {
+            background: white;
+            padding: var(--spacing-xl);
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            display: none;
+        }
+        
+        .form-section.active {
+            display: block;
+        }
+        
+        .section-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        /* Navigation buttons */
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--spacing-xl);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-gray);
+        }
+        
+        .nav-group {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        /* Radio buttons */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+        
+        .radio-card {
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            padding: var(--spacing-md);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+        }
+        
+        .radio-card:hover {
+            border-color: var(--primary-blue);
+            background: var(--light-gray);
+        }
+        
+        .radio-card input[type="radio"] {
+            margin-top: 2px;
+        }
+        
+        .radio-card.selected {
+            border-color: var(--primary-blue);
+            background: #f0f7ff;
+        }
+        
+        .radio-content {
+            flex: 1;
+        }
+        
+        .radio-title {
+            font-weight: 500;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .radio-description {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+        
+        /* File upload */
+        .file-upload-area {
+            border: 2px dashed var(--border-gray);
+            border-radius: 8px;
+            padding: var(--spacing-xl);
+            text-align: center;
+            background: var(--light-gray);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .file-upload-area:hover {
+            border-color: var(--primary-blue);
+            background: #f0f7ff;
+        }
+        
+        .file-upload-area.dragging {
+            border-color: var(--primary-blue);
+            background: #f0f7ff;
+        }
+        
+        .file-list {
+            margin-top: var(--spacing-md);
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--light-gray);
+            border-radius: 4px;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .file-size {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        .remove-file {
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .remove-file:hover {
+            background: white;
+            color: var(--error-red);
+        }
+        
+        /* Review section */
+        .review-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: var(--spacing-md);
+            background: var(--light-gray);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+        }
+        
+        .review-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        .review-value {
+            color: var(--text-primary);
+        }
+        
+        /* Validation */
+        .form-input.error,
+        .form-select.error {
+            border-color: var(--error-red);
+        }
+        
+        .error-message {
+            color: var(--error-red);
+            font-size: var(--font-size-sm);
+            margin-top: var(--spacing-xs);
+        }
+        
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .loading-overlay.active {
+            display: flex;
+        }
+        
+        .loading-content {
+            background: white;
+            padding: var(--spacing-xl);
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .progress-stepper {
+                flex-direction: column;
+            }
+            
+            .step:not(:last-child)::after {
+                display: none;
+            }
+            
+            .review-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <div class="nav-logo">MA</div>
+                <span class="nav-title">Math Agent</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Dashboard</a>
+                <a href="/submit" class="nav-link active">New Job</a>
+                <a href="/files/data/" class="nav-link">Files</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- Submit Header -->
+        <div class="submit-header">
+            <h1 class="submit-title">Create New Job</h1>
+            <p class="submit-subtitle">Configure and submit a math problem-solving job</p>
+        </div>
+        
+        <!-- Progress Stepper -->
+        <div class="progress-container">
+            <div class="progress-stepper">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Configuration</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Prompt</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Files</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Review</div>
+                </div>
+            </div>
+        </div>
+        
+        <form id="jobForm">
+            <!-- Step 1: Job Configuration -->
+            <div class="form-section active" data-section="1">
+                <h2 class="section-title">Job Configuration</h2>
+                
+                <div class="form-group">
+                    <label class="form-label required" for="jobName">Job Name</label>
+                    <input type="text" class="form-input" id="jobName" name="jobName" 
+                           placeholder="e.g., analysis-hw1-problem3" required>
+                    <div class="form-help">Use lowercase letters, numbers, and hyphens. Must be unique.</div>
+                    <div class="error-message" id="jobNameError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label required" for="model">AI Model</label>
+                    <select class="form-select" id="model" name="model" required>
+                        <option value="">Select a model...</option>
+                        <option value="claude-opus-4">Claude Opus 4 (Most capable)</option>
+                        <option value="claude-sonnet-4">Claude Sonnet 4 (Balanced)</option>
+                        <option value="gemini-2.5-pro">Gemini 2.5 Pro (Advanced)</option>
+                        <option value="gemini-2.5-flash">Gemini 2.5 Flash (Fast)</option>
+                    </select>
+                    <div class="form-help">Choose based on problem complexity and response time needs</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label required" for="exercise">Exercise</label>
+                    <select class="form-select" id="exercise" name="exercise" required>
+                        <option value="">Loading exercises...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="disallowedTools">Restricted Tools (Optional)</label>
+                    <input type="text" class="form-input" id="disallowedTools" name="disallowedTools" 
+                           placeholder="e.g., Bash(git:*),WebSearch">
+                    <div class="form-help">Comma-separated list of tools the agent cannot use</div>
+                </div>
+                
+                <div class="form-navigation">
+                    <div></div>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">
+                        Next
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Prompt Selection -->
+            <div class="form-section" data-section="2">
+                <h2 class="section-title">Agent Instructions</h2>
+                
+                <div class="radio-group">
+                    <label class="radio-card" onclick="selectPromptType('existing')">
+                        <input type="radio" name="promptType" value="existing" checked>
+                        <div class="radio-content">
+                            <div class="radio-title">Use Existing Prompt</div>
+                            <div class="radio-description">Select from pre-written prompts optimized for different problem types</div>
+                        </div>
+                    </label>
+                    
+                    <label class="radio-card" onclick="selectPromptType('new')">
+                        <input type="radio" name="promptType" value="new">
+                        <div class="radio-content">
+                            <div class="radio-title">Create New Prompt</div>
+                            <div class="radio-description">Write custom instructions for specific requirements</div>
+                        </div>
+                    </label>
+                </div>
+                
+                <div id="existingPromptSection">
+                    <div class="form-group" style="margin-top: var(--spacing-lg);">
+                        <label class="form-label required" for="existingPrompt">Select Prompt Template</label>
+                        <select class="form-select" id="existingPrompt" name="existingPrompt">
+                            <option value="">Loading prompts...</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="newPromptSection" style="display: none;">
+                    <div class="form-group" style="margin-top: var(--spacing-lg);">
+                        <label class="form-label required" for="newPromptName">Prompt Name</label>
+                        <input type="text" class="form-input" id="newPromptName" name="newPromptName" 
+                               placeholder="e.g., detailed-proof-solver">
+                        <div class="form-help">A descriptive name for saving this prompt</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="promptContent">Prompt Content</label>
+                        <textarea class="form-textarea" id="promptContent" name="promptContent" rows="12" 
+                                  placeholder="Enter your instructions for the AI agent...
+
+You can use markdown and include LaTeX code blocks:
+
+```latex
+\documentclass{article}
+...
+```"></textarea>
+                        <div class="form-help">Be clear and specific about what you want the agent to do</div>
+                    </div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-secondary" onclick="previousStep()">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">
+                        Next
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Additional Files -->
+            <div class="form-section" data-section="3">
+                <h2 class="section-title">Additional Files (Optional)</h2>
+                <p class="text-muted mb-3">Upload any supplementary materials like lecture notes or reference documents</p>
+                
+                <div class="file-upload-area" id="fileUploadArea">
+                    <input type="file" id="additionalFiles" name="additionalFiles" multiple style="display: none;">
+                    <svg width="48" height="48" viewBox="0 0 16 16" fill="var(--text-secondary)" style="margin-bottom: var(--spacing-md);">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                    </svg>
+                    <p><strong>Click to upload</strong> or drag and drop</p>
+                    <p class="text-muted">PDF, TEX, TXT files up to 10MB each</p>
+                </div>
+                
+                <div id="filesList" class="file-list"></div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-secondary" onclick="previousStep()">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">
+                        Next
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Step 4: Review & Submit -->
+            <div class="form-section" data-section="4">
+                <h2 class="section-title">Review & Submit</h2>
+                <p class="text-muted mb-3">Please review your job configuration before submitting</p>
+                
+                <div class="review-grid">
+                    <div class="review-label">Job Name:</div>
+                    <div class="review-value" id="reviewJobName">-</div>
+                    
+                    <div class="review-label">AI Model:</div>
+                    <div class="review-value" id="reviewModel">-</div>
+                    
+                    <div class="review-label">Exercise:</div>
+                    <div class="review-value" id="reviewExercise">-</div>
+                    
+                    <div class="review-label">Prompt:</div>
+                    <div class="review-value" id="reviewPrompt">-</div>
+                    
+                    <div class="review-label">Restricted Tools:</div>
+                    <div class="review-value" id="reviewDisallowedTools">None</div>
+                    
+                    <div class="review-label">Additional Files:</div>
+                    <div class="review-value" id="reviewFiles">None</div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-secondary" onclick="previousStep()">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                        Back
+                    </button>
+                    <div class="nav-group">
+                        <button type="button" class="btn btn-secondary" onclick="if(confirm('Are you sure you want to start over?')) location.reload();">
+                            Start Over
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                            </svg>
+                            Submit Job
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner" style="margin: 0 auto var(--spacing-md) auto;"></div>
+            <h3>Creating Job...</h3>
+            <p class="text-muted">Please wait while we set up your job</p>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let uploadedFiles = {};
+        
+        // Initialize
+        async function init() {
+            await loadExercises();
+            await loadPrompts();
+            setupFileUpload();
+            updateProgressIndicator();
+        }
+        
+        // Load exercises
+        async function loadExercises() {
+            try {
+                const response = await fetch('/data/exercises');
+                const exercises = await response.json();
+                
+                const select = document.getElementById('exercise');
+                select.innerHTML = '<option value="">Select an exercise...</option>';
+                
+                // Group by course
+                const grouped = {};
+                exercises.forEach(exercise => {
+                    const [course, name] = exercise.split('/');
+                    if (!grouped[course]) grouped[course] = [];
+                    grouped[course].push(name);
+                });
+                
+                Object.entries(grouped).forEach(([course, names]) => {
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = course.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    
+                    names.forEach(name => {
+                        const option = document.createElement('option');
+                        option.value = `${course}/${name}`;
+                        option.textContent = name.replace(/_/g, ' ');
+                        optgroup.appendChild(option);
+                    });
+                    
+                    select.appendChild(optgroup);
+                });
+            } catch (error) {
+                console.error('Failed to load exercises:', error);
+            }
+        }
+        
+        // Load prompts
+        async function loadPrompts() {
+            try {
+                const response = await fetch('/data/prompts');
+                const prompts = await response.json();
+                
+                const select = document.getElementById('existingPrompt');
+                select.innerHTML = '<option value="">Select a prompt...</option>';
+                
+                prompts.forEach(prompt => {
+                    const option = document.createElement('option');
+                    option.value = prompt;
+                    option.textContent = prompt.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Failed to load prompts:', error);
+            }
+        }
+        
+        // Setup file upload
+        function setupFileUpload() {
+            const uploadArea = document.getElementById('fileUploadArea');
+            const fileInput = document.getElementById('additionalFiles');
+            
+            uploadArea.onclick = () => fileInput.click();
+            
+            // Drag and drop
+            uploadArea.ondragover = (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragging');
+            };
+            
+            uploadArea.ondragleave = () => {
+                uploadArea.classList.remove('dragging');
+            };
+            
+            uploadArea.ondrop = (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragging');
+                handleFiles(e.dataTransfer.files);
+            };
+            
+            fileInput.onchange = (e) => handleFiles(e.target.files);
+        }
+        
+        // Handle file uploads
+        function handleFiles(files) {
+            const filesList = document.getElementById('filesList');
+            
+            Array.from(files).forEach(file => {
+                if (file.size > 10 * 1024 * 1024) {
+                    alert(`File ${file.name} is too large. Maximum size is 10MB.`);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedFiles[file.name] = btoa(e.target.result);
+                    
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    fileItem.innerHTML = `
+                        <div class="file-info">
+                            <span>📄</span>
+                            <span>${file.name}</span>
+                            <span class="file-size">(${formatFileSize(file.size)})</span>
+                        </div>
+                        <span class="remove-file" onclick="removeFile('${file.name}')">✕</span>
+                    `;
+                    filesList.appendChild(fileItem);
+                };
+                reader.readAsBinaryString(file);
+            });
+        }
+        
+        // Remove file
+        function removeFile(filename) {
+            delete uploadedFiles[filename];
+            document.getElementById('filesList').innerHTML = '';
+            Object.entries(uploadedFiles).forEach(([name, data]) => {
+                const size = Math.round(atob(data).length / 1024);
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div class="file-info">
+                        <span>📄</span>
+                        <span>${name}</span>
+                        <span class="file-size">(${size} KB)</span>
+                    </div>
+                    <span class="remove-file" onclick="removeFile('${name}')">✕</span>
+                `;
+                document.getElementById('filesList').appendChild(fileItem);
+            });
+        }
+        
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+        
+        // Navigation
+        function nextStep() {
+            if (!validateCurrentStep()) return;
+            
+            currentStep++;
+            showStep(currentStep);
+            updateProgressIndicator();
+            updateReview();
+        }
+        
+        function previousStep() {
+            currentStep--;
+            showStep(currentStep);
+            updateProgressIndicator();
+        }
+        
+        function showStep(step) {
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelector(`[data-section="${step}"]`).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function updateProgressIndicator() {
+            document.querySelectorAll('.step').forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                if (index < currentStep - 1) {
+                    step.classList.add('completed');
+                } else if (index === currentStep - 1) {
+                    step.classList.add('active');
+                }
+            });
+        }
+        
+        // Prompt type selection
+        function selectPromptType(type) {
+            document.querySelectorAll('.radio-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            document.getElementById('existingPromptSection').style.display = type === 'existing' ? 'block' : 'none';
+            document.getElementById('newPromptSection').style.display = type === 'new' ? 'block' : 'none';
+        }
+        
+        // Validation
+        function validateCurrentStep() {
+            const errors = [];
+            
+            if (currentStep === 1) {
+                const jobName = document.getElementById('jobName').value.trim();
+                if (!jobName) errors.push('Job name is required');
+                else if (!/^[a-z0-9-]+$/.test(jobName)) errors.push('Job name can only contain lowercase letters, numbers, and hyphens');
+                
+                if (!document.getElementById('model').value) errors.push('Model selection is required');
+                if (!document.getElementById('exercise').value) errors.push('Exercise selection is required');
+            } else if (currentStep === 2) {
+                const promptType = document.querySelector('input[name="promptType"]:checked').value;
+                if (promptType === 'existing' && !document.getElementById('existingPrompt').value) {
+                    errors.push('Please select a prompt');
+                } else if (promptType === 'new') {
+                    if (!document.getElementById('newPromptName').value.trim()) errors.push('Prompt name is required');
+                    if (!document.getElementById('promptContent').value.trim()) errors.push('Prompt content is required');
+                }
+            }
+            
+            if (errors.length > 0) {
+                alert(errors.join('\n'));
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Update review
+        function updateReview() {
+            document.getElementById('reviewJobName').textContent = document.getElementById('jobName').value || '-';
+            
+            const modelSelect = document.getElementById('model');
+            document.getElementById('reviewModel').textContent = modelSelect.options[modelSelect.selectedIndex]?.text || '-';
+            
+            const exerciseSelect = document.getElementById('exercise');
+            document.getElementById('reviewExercise').textContent = exerciseSelect.value || '-';
+            
+            const promptType = document.querySelector('input[name="promptType"]:checked').value;
+            if (promptType === 'existing') {
+                document.getElementById('reviewPrompt').textContent = 
+                    document.getElementById('existingPrompt').value || '-';
+            } else {
+                document.getElementById('reviewPrompt').textContent = 
+                    (document.getElementById('newPromptName').value || '-') + ' (new)';
+            }
+            
+            document.getElementById('reviewDisallowedTools').textContent = 
+                document.getElementById('disallowedTools').value || 'None';
+            
+            const fileCount = Object.keys(uploadedFiles).length;
+            document.getElementById('reviewFiles').textContent = 
+                fileCount > 0 ? `${fileCount} file(s)` : 'None';
+        }
+        
+        // Form submission
+        document.getElementById('jobForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            document.getElementById('loadingOverlay').classList.add('active');
+            
+            const promptType = document.querySelector('input[name="promptType"]:checked').value;
+            let promptContent;
+            
+            if (promptType === 'existing') {
+                promptContent = '@' + document.getElementById('existingPrompt').value;
+            } else {
+                promptContent = document.getElementById('promptContent').value;
+                
+                // Save new prompt first
+                try {
+                    await fetch('/data/prompts/save', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            name: document.getElementById('newPromptName').value,
+                            content: promptContent
+                        })
+                    });
+                } catch (error) {
+                    console.error('Failed to save prompt:', error);
+                }
+            }
+            
+            const jobData = {
+                name: document.getElementById('jobName').value,
+                model: document.getElementById('model').value,
+                exercise: document.getElementById('exercise').value,
+                prompt: promptContent,
+                disallowedTools: document.getElementById('disallowedTools').value,
+                additionalFiles: uploadedFiles
+            };
+            
+            try {
+                const response = await fetch('/jobs/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(jobData)
+                });
+                
+                if (response.ok) {
+                    window.location.href = `/job/${jobData.name}`;
+                } else {
+                    const error = await response.json();
+                    alert('Failed to create job: ' + (error.detail || 'Unknown error'));
+                    document.getElementById('loadingOverlay').classList.remove('active');
+                }
+            } catch (error) {
+                alert('Failed to create job: ' + error.message);
+                document.getElementById('loadingOverlay').classList.remove('active');
+            }
+        });
+        
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

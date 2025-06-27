@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Agent - Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        /* Dashboard-specific styles */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .dashboard-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .dashboard-subtitle {
+            color: var(--text-secondary);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .jobs-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+        }
+        
+        .model-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            background: var(--light-gray);
+            color: var(--text-secondary);
+        }
+        
+        .model-badge.claude {
+            background: #e8f0fe;
+            color: #1967d2;
+        }
+        
+        .model-badge.gemini {
+            background: #fef7e0;
+            color: #ea8600;
+        }
+        
+        .job-row {
+            transition: background-color 0.2s;
+        }
+        
+        .job-row:hover {
+            background: #f8f9fa;
+        }
+        
+        .exercise-name {
+            font-family: 'Courier New', monospace;
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+        
+        .icon-btn {
+            padding: 6px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .icon-btn:hover:not(:disabled) {
+            background: var(--light-gray);
+            color: var(--primary-blue);
+        }
+        
+        .icon-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: var(--spacing-xl);
+            color: var(--text-secondary);
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--border-gray);
+            border-radius: 50%;
+            border-top-color: var(--primary-blue);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .data-table {
+                font-size: var(--font-size-sm);
+            }
+            
+            .data-table th:nth-child(3),
+            .data-table td:nth-child(3) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <div class="nav-logo">MA</div>
+                <span class="nav-title">Math Agent</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link active">Dashboard</a>
+                <a href="/submit" class="nav-link">New Job</a>
+                <a href="/files/data/" class="nav-link">Files</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div>
+                <h1 class="dashboard-title">Dashboard</h1>
+                <p class="dashboard-subtitle">Monitor and manage your math problem-solving jobs</p>
+            </div>
+            <a href="/submit" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+                New Job
+            </a>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="quick-stats" id="quickStats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalJobs">0</div>
+                <div class="stat-label">Total Jobs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="runningJobs">0</div>
+                <div class="stat-label">Running</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="completedJobs">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="failedJobs">0</div>
+                <div class="stat-label">Failed</div>
+            </div>
+        </div>
+        
+        <!-- Jobs Table -->
+        <div class="jobs-section">
+            <div class="section-header">
+                <h2 class="section-title">Recent Jobs</h2>
+                <button class="btn btn-secondary" onclick="loadJobs()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                    </svg>
+                    Refresh
+                </button>
+            </div>
+            
+            <div id="jobsContainer">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: var(--spacing-md);">Loading jobs...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadJobs() {
+            try {
+                const response = await fetch('/jobs');
+                const jobs = await response.json();
+                
+                // Update stats
+                const stats = {
+                    total: 0,
+                    running: 0,
+                    completed: 0,
+                    error: 0
+                };
+                
+                Object.values(jobs).forEach(job => {
+                    stats.total++;
+                    if (job.status === 'running' || job.status === 'setup') stats.running++;
+                    else if (job.status === 'completed') stats.completed++;
+                    else if (job.status === 'error') stats.error++;
+                });
+                
+                document.getElementById('totalJobs').textContent = stats.total;
+                document.getElementById('runningJobs').textContent = stats.running;
+                document.getElementById('completedJobs').textContent = stats.completed;
+                document.getElementById('failedJobs').textContent = stats.error;
+                
+                // Build table
+                const container = document.getElementById('jobsContainer');
+                
+                if (Object.keys(jobs).length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📋</div>
+                            <h3>No jobs yet</h3>
+                            <p>Create your first job to get started</p>
+                            <a href="/submit" class="btn btn-primary" style="margin-top: var(--spacing-md);">Create Job</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const sortedJobs = Object.entries(jobs).sort((a, b) => 
+                    new Date(b[1].createdAt) - new Date(a[1].createdAt)
+                );
+                
+                container.innerHTML = `
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Job Name</th>
+                                <th>Status</th>
+                                <th>Model</th>
+                                <th>Exercise</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sortedJobs.map(([name, job]) => `
+                                <tr class="job-row" onclick="window.location.href='/job/${name}'">
+                                    <td>
+                                        <strong>${name}</strong>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge status-${job.status}">${job.status}</span>
+                                    </td>
+                                    <td>
+                                        <span class="model-badge ${job.model?.includes('claude') ? 'claude' : 'gemini'}">
+                                            ${job.model || '-'}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="exercise-name">${job.exercise || '-'}</span>
+                                    </td>
+                                    <td>${formatDate(job.createdAt)}</td>
+                                    <td onclick="event.stopPropagation()">
+                                        <div class="action-buttons">
+                                            <a href="/files/jobs/${name}/workspace/solution.pdf" 
+                                               class="icon-btn" 
+                                               title="Download PDF"
+                                               ${!job.solutionPdfCreated ? 'disabled' : ''}>
+                                                📄
+                                            </a>
+                                            <a href="/files/jobs/${name}/workspace/solution.tex" 
+                                               class="icon-btn" 
+                                               title="Download TeX"
+                                               ${!job.solutionTexCreated ? 'disabled' : ''}>
+                                                📝
+                                            </a>
+                                            <a href="/files/jobs/${name}/workspace/" 
+                                               class="icon-btn" 
+                                               title="View Workspace">
+                                                📁
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            } catch (error) {
+                console.error('Failed to load jobs:', error);
+                document.getElementById('jobsContainer').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <h3>Failed to load jobs</h3>
+                        <p>${error.message}</p>
+                        <button class="btn btn-primary" onclick="loadJobs()" style="margin-top: var(--spacing-md);">Retry</button>
+                    </div>
+                `;
+            }
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = now - date;
+            
+            // If less than 1 minute
+            if (diff < 60000) return 'Just now';
+            
+            // If less than 1 hour
+            if (diff < 3600000) {
+                const mins = Math.floor(diff / 60000);
+                return `${mins} min${mins > 1 ? 's' : ''} ago`;
+            }
+            
+            // If less than 24 hours
+            if (diff < 86400000) {
+                const hours = Math.floor(diff / 3600000);
+                return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+            }
+            
+            // Otherwise show date
+            return date.toLocaleDateString();
+        }
+
+        // Load jobs on page load
+        loadJobs();
+        
+        // Refresh every 5 seconds
+        setInterval(loadJobs, 5000);
+    </script>
+</body>
+</html>

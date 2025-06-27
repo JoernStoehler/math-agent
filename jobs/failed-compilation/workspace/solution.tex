@@ -1,0 +1,33 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\section*{Solution to Analysis 1 - Sheet 1, Exercise 2}
+
+Let's analyze the function $f: \mathbb{R} \to \mathbb{R}$ defined by:
+$$f(x) = \begin{cases}
+x^2 & \text{if } x \geq 0 \\
+-x & \text{if } x < 0
+\end{cases}$$
+
+\subsection*{Part (a): Continuity at $x = 0$}
+
+To show continuity at $x = 0$, we need to verify that $\lim_{x \to 0} f(x) = f(0)$.
+
+First, let's find $f(0) = 0^2 = 0$ (since $0 \geq 0$).
+
+Now we compute the one-sided limits:
+- Right limit: $\lim_{x \to 0^+} f(x) = \lim_{x \to 0^+} x^2 = 0$
+- Left limit: $\lim_{x \to 0^-} f(x) = \lim_{x \to 0^-} (-x) = 0$
+
+Since both one-sided limits equal $f(0) = 0$, we have:
+$$\lim_{x \to 0} f(x) = 0 = f(0)$$
+
+Therefore, $f$ is continuous at $x = 0$. \invalidcommand{This will cause an error}
+
+\subsection*{Part (b): Differentiability at $x = 0$}
+
+(Rest of solution...)
+
+\end{document}

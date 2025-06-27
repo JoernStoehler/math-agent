@@ -1,0 +1,10 @@
+{
+  "status": "completed",
+  "createdAt": "2024-01-15T10:30:00Z",
+  "startedAt": "2024-01-15T10:30:05Z",
+  "completedAt": "2024-01-15T10:32:15Z",
+  "model": "claude-opus-4",
+  "exercise": "analysis_1/sheet_01_ex_01",
+  "solutionTexCreated": true,
+  "solutionPdfCreated": true
+}
