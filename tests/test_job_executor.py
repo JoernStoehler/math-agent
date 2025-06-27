@@ -12,7 +12,7 @@ def test_job_executor_not_implemented():
     """
     THE JOB EXECUTOR IS UNTESTED!
     
-    The JobExecutor class in src/backend/job.py has NOT been tested.
+    The JobExecutor class in src/math_agent/services/job_executor.py has NOT been tested.
     This includes:
     - Running claude/gemini CLI commands
     - Streaming output to log files

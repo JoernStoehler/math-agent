@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Dict, Optional
 from contextlib import suppress
 
-from .job import JobExecutor
+from .job_executor import JobExecutor
 
 logger = logging.getLogger(__name__)
 
