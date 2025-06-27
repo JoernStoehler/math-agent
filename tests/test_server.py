@@ -18,7 +18,7 @@ def test_import_app():
 
 def test_root_endpoint():
     """Test the root endpoint returns the dashboard"""
-    from src.backend.backend import app
+    from src.backend.server import app
     client = TestClient(app)
     
     response = client.get("/")
@@ -28,7 +28,7 @@ def test_root_endpoint():
 
 def test_jobs_list_endpoint():
     """Test listing jobs"""
-    from src.backend.backend import app
+    from src.backend.server import app
     client = TestClient(app)
     
     response = client.get("/jobs")
@@ -38,7 +38,7 @@ def test_jobs_list_endpoint():
 
 def test_models_endpoint():
     """Test getting available models"""
-    from src.backend.backend import app
+    from src.backend.server import app
     client = TestClient(app)
     
     response = client.get("/data/models")
