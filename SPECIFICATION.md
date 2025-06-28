@@ -45,7 +45,7 @@ math-agent/
 ### Dashboard (/)
 - Table of jobs with columns: Name, Status, Model, Exercise, Created, Actions
 - Click row → job page
-- Buttons: "New Job" → submit page, "File Server" → file browser
+- Buttons: "New Job" → submit page
 - Direct links in Actions column: solution.pdf, solution.tex, workspace (if available)
 
 ### Job Submission (/submit)
@@ -84,16 +84,17 @@ math-agent/
   - First message: The prompt content
   - Following messages: Log entries formatted as chat
 - **Buttons**:
-  - "Solution.tex" (disabled until available)
-  - "Solution.pdf" (disabled until available)  
-  - "View Workspace" → file server
-  - "Cancel" (red, only if job is running)
+  - "Download TeX" (disabled until available)
+  - "Download PDF" (disabled until available)  
+  - "Cancel Job" (red, only if job is running)
 - **Auto-refresh**: Pull status + log every 2 seconds via single endpoint
 - **Notifications**: Alert user on status change (tab title + notification)
 
-### File Server (/files/...)
-- Browse and download files from data/ and jobs/
-- Standard file listing interface
+### Static File Access
+- `/static/*` - Frontend assets (CSS, JS)
+- `/data/*` - Direct access to exercise and prompt files
+- `/jobfiles/*` - Direct access to job workspace files
+- Note: No directory browsing, only direct file access
 
 ## API Endpoints
 
@@ -142,10 +143,12 @@ math-agent/
 }
 ```
 
-### File Server
+### Static File Serving
 
-**GET /files/<path>**
-- Serves files from data/ and jobs/ directories only
+Files are served via static mounts:
+- `/static/*` - Frontend assets
+- `/data/*` - Exercise and prompt files  
+- `/jobfiles/*` - Job workspace files
 
 ## Job Execution
 

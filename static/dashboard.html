@@ -184,7 +184,6 @@
             <div class="nav-links">
                 <a href="/" class="nav-link active">Dashboard</a>
                 <a href="/submit" class="nav-link">New Job</a>
-                <a href="/files/data/" class="nav-link">Files</a>
             </div>
         </div>
     </nav>
@@ -323,22 +322,17 @@
                                     <td>${formatDate(job.createdAt)}</td>
                                     <td onclick="event.stopPropagation()">
                                         <div class="action-buttons">
-                                            <a href="/files/jobs/${name}/workspace/solution.pdf" 
+                                            <a href="/jobfiles/${name}/workspace/solution.pdf" 
                                                class="icon-btn" 
                                                title="Download PDF"
                                                ${!job.solutionPdfCreated ? 'disabled' : ''}>
                                                 📄
                                             </a>
-                                            <a href="/files/jobs/${name}/workspace/solution.tex" 
+                                            <a href="/jobfiles/${name}/workspace/solution.tex" 
                                                class="icon-btn" 
                                                title="Download TeX"
                                                ${!job.solutionTexCreated ? 'disabled' : ''}>
                                                 📝
-                                            </a>
-                                            <a href="/files/jobs/${name}/workspace/" 
-                                               class="icon-btn" 
-                                               title="View Workspace">
-                                                📁
                                             </a>
                                         </div>
                                     </td>

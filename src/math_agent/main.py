@@ -14,7 +14,7 @@ import uvicorn
 
 from .config import STATIC_DIR, DATA_DIR, JOBS_DIR
 from .app_state import job_manager
-from .api.routes import jobs_router, data_router, files_router
+from .api.routes import jobs_router, data_router
 
 logger = logging.getLogger(__name__)
 
@@ -37,19 +37,29 @@ app = FastAPI(title="Math Agent API", lifespan=lifespan)
 # Include routers
 app.include_router(jobs_router)
 app.include_router(data_router)
-app.include_router(files_router)
 
 @app.get("/")
 async def serve_dashboard():
     """Serve the main dashboard"""
     return FileResponse(STATIC_DIR / "dashboard.html")
 
-# Mount static files
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+@app.get("/submit")
+async def serve_submit_page():
+    """Serve the job submission page"""
+    return FileResponse(STATIC_DIR / "submit.html")
 
-# Mount file directories with browsing enabled
-app.mount("/files/data", StaticFiles(directory=DATA_DIR, html=True), name="data_files")
-app.mount("/files/jobs", StaticFiles(directory=JOBS_DIR, html=True), name="jobs_files")
+@app.get("/job/{job_name}")
+async def serve_job_page(job_name: str):
+    """Serve the job details page - same HTML for all jobs"""
+    return FileResponse(STATIC_DIR / "job.html")
+
+
+# Mount static files - these can be accessed directly
+# Note: No directory listing, only direct file access
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount("/data", StaticFiles(directory=DATA_DIR), name="data")
+# Use /jobfiles to avoid conflict with /jobs API endpoint
+app.mount("/jobfiles", StaticFiles(directory=JOBS_DIR), name="jobfiles")
 
 
 if __name__ == "__main__":
