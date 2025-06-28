@@ -278,7 +278,6 @@
             <div class="nav-links">
                 <a href="/" class="nav-link">Dashboard</a>
                 <a href="/submit" class="nav-link">New Job</a>
-                <a href="/files/data/" class="nav-link">Files</a>
             </div>
         </div>
     </nav>
@@ -325,14 +324,6 @@
                     </svg>
                     Download PDF
                 </button>
-                <a class="btn btn-secondary" id="workspaceBtn" href="#">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                        <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z"/>
-                        <path d="M2.5 5.5a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
-                        <path d="M9 0H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5L9 0z"/>
-                    </svg>
-                    View Workspace
-                </a>
                 <button class="btn btn-danger" id="cancelBtn" onclick="cancelJob()" style="display:none">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
@@ -371,7 +362,7 @@
 
         // Set initial values
         document.getElementById('jobName').textContent = jobName;
-        document.getElementById('workspaceBtn').href = `/files/jobs/${jobName}/workspace/`;
+        // Workspace button removed - no directory listing available
 
         async function updateJob() {
             try {
@@ -383,33 +374,33 @@
                 
                 // Update status
                 const statusBadge = document.getElementById('statusBadge');
-                statusBadge.className = `status-badge status-${data.status}`;
-                statusBadge.textContent = data.status;
+                statusBadge.className = `status-badge status-${data.status.status}`;
+                statusBadge.textContent = data.status.status;
                 
                 // Update metadata
-                document.getElementById('modelInfo').textContent = data.model || '-';
-                document.getElementById('exerciseInfo').textContent = data.exercise || '-';
-                document.getElementById('createdInfo').textContent = formatTimestamp(data.createdAt);
-                document.getElementById('durationInfo').textContent = calculateDuration(data);
+                document.getElementById('modelInfo').textContent = data.status.model || '-';
+                document.getElementById('exerciseInfo').textContent = data.status.exercise || '-';
+                document.getElementById('createdInfo').textContent = formatTimestamp(data.status.createdAt);
+                document.getElementById('durationInfo').textContent = calculateDuration(data.status);
                 
                 // Update buttons
-                document.getElementById('solutionTexBtn').disabled = !data.solutionTexCreated;
-                document.getElementById('solutionPdfBtn').disabled = !data.solutionPdfCreated;
+                document.getElementById('solutionTexBtn').disabled = !data.status.solutionTexCreated;
+                document.getElementById('solutionPdfBtn').disabled = !data.status.solutionPdfCreated;
                 document.getElementById('cancelBtn').style.display = 
-                    (data.status === 'running' || data.status === 'setup') ? 'inline-flex' : 'none';
+                    (data.status.status === 'running' || data.status.status === 'setup') ? 'inline-flex' : 'none';
                 
                 // Update page title and notify on status change
-                if (lastStatus && lastStatus !== data.status) {
-                    document.title = `[${data.status.toUpperCase()}] ${jobName} - Math Agent`;
+                if (lastStatus && lastStatus !== data.status.status) {
+                    document.title = `[${data.status.status.toUpperCase()}] ${jobName} - Math Agent`;
                     
                     if (Notification.permission === 'granted') {
                         new Notification(`Job ${jobName}`, {
-                            body: `Status changed to: ${data.status}`,
+                            body: `Status changed to: ${data.status.status}`,
                             icon: '/favicon.ico'
                         });
                     }
                 }
-                lastStatus = data.status;
+                lastStatus = data.status.status;
                 
                 // Update chat if new messages
                 if (data.log && data.log.length !== lastLogLength) {
@@ -418,7 +409,7 @@
                 }
                 
                 // Add thinking indicator if running
-                if (data.status === 'running' && data.log && data.log.length > 0) {
+                if (data.status.status === 'running' && data.log && data.log.length > 0) {
                     addThinkingIndicator();
                 }
             } catch (error) {
@@ -571,7 +562,7 @@
         }
 
         function downloadFile(filename) {
-            window.open(`/files/jobs/${jobName}/workspace/${filename}`);
+            window.open(`/jobfiles/${jobName}/workspace/${filename}`);
         }
 
         async function cancelJob() {
