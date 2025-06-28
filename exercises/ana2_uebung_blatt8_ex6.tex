@@ -1,0 +1,42 @@
+\begin{prob}
+Wir betrachten hier den $\R^2$ in Polarkoordinaten und den $\R^3$ in sph"arischen beziehungsweise zylindrischen Koordinaten. Genauer: Wir definieren Abbildungen $\psi_{pol}:\R_+\times[0,2\pi)\to\R^2\backslash\{0\}$, $\psi_{sph}:\R_+\times(0,\pi)\times[0,2\pi)\to \R^3\backslash\{(x,y,z):x=y=0\}$ und $\psi_{zyl}:\R_+\times[0,2\pi)\times\R\to\R^3\backslash\{(x,y,z):x=y=0\}$ gegeben durch
+\begin{equation*}
+\begin{split}
+\psi_{pol}(r,\varphi):=&
+\begin{pmatrix}
+r\cos(\varphi)\\ 
+r\sin(\varphi)
+\end{pmatrix};\\
+\psi_{sph}(r,\vartheta,\varphi):=
+&\begin{pmatrix} 
+r\sin(\vartheta)\cos(\varphi)\\
+r\sin(\vartheta)\sin(\varphi)\\
+r\cos(\vartheta)
+\end{pmatrix};\\
+\psi_{zyl}(r,\varphi,z):=&
+\begin{pmatrix}
+r\cos(\varphi)\\
+r\sin(\varphi)\\
+z
+\end{pmatrix}.
+\end{split}
+\end{equation*}
+
+Zeige:
+
+(a) Die obigen Abbildungen sind bijektiv und stetig differenzierbar.
+
+(b) Die Ableitungen dieser Abbildungen sind an jedem Punkt invertierbar.
+
+Im Folgenden sei eine Funktion $f:\R^2\setminus\{0\}\to\R$ gegeben als $f(r,\phi)$
+in Polarkoordinaten. Zeige:
+
+(c)
+$$
+\Delta f = \frac{\p^2f}{\p r^2}+\frac{1}{r}\frac{\p f}{\p
+  r} + \frac{1}{r^2}\frac{\p^2f}{\p\phi^2}.
+$$
+(d) Jede Linearkombination der Funktionen $r^n\cos(n\phi)$,
+$r^n\sin(n\phi)$ mit
+$n\in\Z$ l\"ost die Laplace-Gleichung $\Delta f=0$.
+\end{prob}

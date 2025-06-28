@@ -1,0 +1,238 @@
+%% WARNING: This file contains multiple exercises and should be split into separate files
+\begin{prob}[Injektive Abbildungen]
+  Ziel dieser Aufgabe ist der Beweis des folgenden Satzes:
+  \begin{theorem*}
+    Sind $A, B$ zwei Mengen und gibt es zwei injektive Abbildungen
+    $f \colon A \to B$ und $g \colon B \to A$, so gibt es auch eine bijektive
+    Funktion $h \colon A \to B$. Insbesondere haben damit $A$ und $B$ die
+    gleiche Mächtigkeit.
+  \end{theorem*}
+  Für endliche Mengen $A, B$ kennst Du diese Aussage bereits, wir wollen diese
+  Aussage nun für beliebige Mengen zeigen. Wir nennen ein Element $b \in B$
+  \emph{einsam}, wenn es kein $a \in A$ mit $f(a) = b$ gibt. Weiter nennen wir
+  ein Element $b_1 \in B$ einen \emph{Nachfahren} von $b_0 \in B$, falls
+  $b_1 = (f \circ g)^n (b_0)$ für ein $n \in \N_0$ gilt. Wir definieren nun eine
+  Abbildung $h \colon A \to B$ durch
+  \[
+    a \mapsto
+    \begin{cases}
+      g^{-1}(a) & f(a) \text{ ist der Nachfahre eines einsamen Elements} \\
+      f(a)      & \text{sonst}                                           \\
+    \end{cases}
+  \]
+  Zeige nun das Folgende:
+  \begin{enumerate}[label=(\roman*)]
+  \item $h$ ist wohldefiniert
+  \item $h$ ist surjektiv
+  \item $h$ ist injektiv
+  \end{enumerate}
+  Zeige nun davon ausgehend, dass wir auch die Aussage aus den folgenden
+  Voraussetzungen schließen können:
+  \begin{enumerate}
+  \item Es gibt surjektive Abbildungen $f \colon A \to B$ und $g \colon B
+    \to A$
+  \item Es gibt eine surjektive Abbildung $f \colon A \to B$ und eine injektive
+    Abbildung $g \colon A \to B$
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}
+  Sei $\mathbf{K}_p$ ein Körper mit Charakteristik $p>0$. Wir betrachten im
+  folgenden die Abbildung
+  \begin{center}
+    \includestandalone{tikz/cd_koerper2}
+  \end{center}
+  etwas näher. Dabei werden wir viele schöne Eigenschaften zeigen können, die
+  einem hoffentlich im weiteren mathematischen Leben noch das eine oder andere Mal
+  begegnen.
+
+  \begin{enumerate}[label=(\alph*)]
+  \item \label{itm:fieldhom}Lasst uns mit einigen Überlegungen zur
+    Wohldefiniertheit der Abbildung beginnen: Zu zeigen ist
+    \begin{enumerate}[label=\roman*.]
+    \item $f(1) = 1$
+    \item $f(0) = 0$
+    \item $\fa{x, y \in \mathbf{K_p}} f(x \cdot y) = f(x) \cdot f(y)$
+    \item $\fa{x, y \in \mathbf{K_p}} f(x + y) = f(x) + f(y)$
+    \end{enumerate}
+    Hiermit haben wir eigentlich vor allem gezeigt, dass $f_p$ ein
+    \emph{Körperhomomorphismus} ist, falls du dir das später im Studium noch mal
+    anschaust.
+
+  \item Lasst uns jetzt zeigen, dass $f_p$ natürlich ist, soll heißen es ist zu
+    beweisen, dass das folgende Diagramm kommutiert, wobei $\mathbf{K}$ und
+    $\widetilde{\mathbf{K}}$ zwei Körper der Charakteristik $p$ sind und
+    $\phi \colon \mathbf{K} \to \widetilde{\mathbf{K}}$ auch ein
+    Körperhomomorphismus ist, also die Eigenschaften in \ref{itm:fieldhom}
+    erfüllt:
+    \begin{center}
+      \includestandalone{tikz/cd_koerper1}
+    \end{center}
+    Zu zeigen ist also, dass für alle Körperhomomorphismen $\phi$ und für alle
+    $x \in \mathbf{K}$ schon die Gleichung
+    \begin{equation*}
+      \begin{split}
+        \left( \phi \circ f_p \right)(x)= \left( f_p \circ \phi \right)(x)
+      \end{split}
+    \end{equation*}
+    erfüllt ist.
+
+  \item Nun kommen wir zum Eingemachten: Im Folgenden ist $f_p$ auf Injektivität
+    und Surjektivität zu untersuchen. Wir nennen einen Körper \emph{perfekt},
+    wenn $f_p$ ein Ringisomorphismus -- also surjektiv und injektiv -- ist. Gebe
+    nun zusätzlich Beispiele an (oder beweise dass es keine gibt) für
+    \begin{itemize}
+    \item einen nichtperfekten Körper mit Charakteristik $p > 0$
+    \item einen perfekten Körper mit Charakteristik $p > 0$
+    \end{itemize}
+
+  \item Untersuche die Fixpunktmenge von $f_p$, also die Menge
+    \begin{equation*}
+      \begin{split}
+        M \defn \Set{x \in \mathbf{K}_p | x^p = x}
+      \end{split}
+    \end{equation*}
+    \enquote{Überlege dir}, wann $M$ selbst wieder ein Körper wird.
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}
+  In dieser Aufgabe sollst du untersuchen, an welchen Stellen der Vorlesung es
+  entscheidend war in $\R$ zu arbeiten, und an welchen auch $\C$ genügt hätte.
+  Genauer: Finde alle Sätze aus den Kapiteln 4, 5 und 7, bei denen die
+  Forderung, dass $(a_n)$ eine Folge reeller Zahlen ist, nicht automatisch durch
+  die Forderung, dass $(a_n)$ eine Folge komplexer Zahlen ist ersetzt werden
+  kann. Kannst du diese Aussagen trotzdem leicht modifiziert retten? Wenn ja,
+  gib eine neue gültige Formulierung, f"ur die der fragliche Satz auch in $\C$
+  noch wahr ist, an.
+\end{prob}
+
+\begin{prob}
+  Wiederhole die aus der Vorlesung bekannte Definition vom Häufungspunkt einer
+  Folge $\left(a_n\right)_{n \in \N} \subset \R$. Untersuche, ob die folgenden
+  alternativen Definitionen äquivalent, schwächer, oder stärker sind, oder gar
+  etwas ganz anderes beschreiben.
+  \begin{enumerate}[label=(\alph*)]
+  \item Wir nennen einen Punkt $x$ HHäufungspunkt der Folge
+    $\left(a_n\right)_{n\in\N}$, wenn es für jedes $N \in \N$ und jedes
+    $\varepsilon > 0$ ein $n \geqslant N$ gibt mit
+    \begin{equation*}
+      \abs{a_n - x} < \varepsilon
+    \end{equation*}
+  \item Wir nennen einen Punkt $x$ HHHäufungspunkt der
+    Folge$\left(a_n\right)_{n\in\N}$, wenn für jedes $\eps > 0$ unendlich viele
+    $n$ existieren mit
+    \begin{equation*}
+      \abs{a_n - x} < \eps
+    \end{equation*}
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}
+  In dieser Aufgabe sollen noch einige, vielleicht für den ein oder anderen
+  interessante Lemmata über Folgen bewiesen werden.
+  \begin{enumerate}[label=(\alph*)]
+  \item Es sei $\left( a_n \right)_{ n \in \N}$ eine beschränkte Folge und es
+    gelte zudem
+    \begin{equation*}
+      \begin{split}
+        \lim_{n \to \infty} \left( a_n - a_{n-1} \right) = 0
+      \end{split}
+    \end{equation*}
+    Dann ist die Menge der Häufungspunkte von $(a_n)_{n \in \N}$ ein
+    abgeschlossenes Intervall der Form $\interval{a}{b}$ (wobei wir hier
+    außnahmsweise triviale Intervalle der Form $\interval{a}{a}$ zulassen
+    wollen). Gilt die analoge Aussage auch, wenn wir auf Beschränktheit
+    verzichten?
+  \item Seien $\left( a_n \right)_{ n \in \N}$ und
+    $\left( b_n \right)_{ n \in \N}$ zwei beschränkte Folgen und es gelte zudem
+    \begin{equation*}
+      \begin{split}
+        \lim_{n \to \infty} (a_n - b_n) = 0
+      \end{split}
+    \end{equation*}
+    Dann folgt schon, dass $\left( a_n \right)_{n \in \N}$ und
+    $\left( b_n \right)_{n \in \N}$ die selben Häufungspunkte haben.
+  \item Es sei $\left( a_n \right)_{n \in \N}$ eine nicht negative Folge reeller
+    Zahlen, deren Cesaro-Limes gegen Null geht, also
+    \begin{equation*}
+      \begin{split}
+        \lim_{n \to \infty}{\left( \frac{1}{n} \sum_{ k=1 }^{ n } a_k \right)}
+        =
+        0
+      \end{split}
+    \end{equation*}
+    Dann gibt es eine Teilfolge $\left( a_{n_k} \right)_{n_k \in \N}$ mit
+    \begin{equation*}
+      \begin{split}
+        \lim_{k \to \infty} a_{n_k} = 0
+      \end{split}
+    \end{equation*}
+    Stimmt die Aussage auch, wenn $\left( { a }_{ n } \right)_{ n \in \N}$
+    negative Werte annehmen darf?
+  \item Es sei wieder $\left( a_n \right)_{n \in \N}$ eine Folge reeller Zahlen.
+    Konvergiert $\left( a_n \right)_{n \in \N}$ gegen ein $m$ und divergiert
+    jedoch $\left( \floor{a_n} \right)_{n \in \N}$, so ist $m \in \Z$.
+  \item Es sei $\left( a_n \right)_{n \in \N}$ eine beschränkte Folge reeller
+    Zahlen mit abzählbar unendlich vielen Häufungspunkten. Sei nun
+    $\left( b_k \right)_{k \in \N}$ eine Folge von solcher Häufungspunkte, die
+    gegen ein $b \in \R$ konvergiert. Dann folgt, dass $b$ auch schon ein
+    Häufungspunkt der Folge $\left( a_n \right)_{n \in \N}$ war.
+  \item Finde eine divergente Folge $\left( a_n \right)_{n \in \N}$, sodass für
+    alle $k > 1$ die Teilfolgen
+    \begin{equation*}
+      \begin{split}
+        \left( a_{kn} \right)_{n \in \N}
+      \end{split}
+    \end{equation*}
+    konvergieren und beweise die Richtigkeit deiner Aussage. Wenn man analog
+    fordert, dass für alle streng monotonen Funktionen $\phi \colon \N \to \N$
+    mit
+    \begin{equation*}
+      \begin{split}
+        \frac{1}{n} \phi(n) > \theta > 1
+      \end{split}
+    \end{equation*}
+    die Teilfolge $\left( a_{\phi(n)} \right)_{n \in \N}$ konvergiert, folgt
+    dann, dass $\left( a_n \right)_{n \in \N}$ konvergiert? Wenn nicht, was muss
+    man für die Funktionen $\phi$ fordern, damit die Folgerung gültig ist?
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}
+  Wir wollen rekursive Folgen studieren und in speziellen Fällen eine direkte
+  Darstellung angeben.
+  \begin{enumerate}[label=(\alph*)]
+  \item Sei dazu $(a_n)_{n \in \N}$ eine Folge und $d \in \N$, so dass die
+    ersten $d$ Folgenglieder $a_0, \dots, a_{d - 1}$ bereits gegeben sind und es
+    $c_1, \dots, c_d \in \R$ gibt, so dass für alle weiteren Folgenglieder mit
+    $n \geq d$ gilt
+    \begin{equation*}
+      a_n
+      =
+      \sum_{i = 1}^d c_i a_{n - i}.
+    \end{equation*}
+    Wir betrachten ferner das Polynom
+    \begin{equation*}
+      p(x)
+      \coloneqq
+      x^d - \sum_{i = 1}^d c_i x^{d - i}.
+    \end{equation*}
+    Nach dem \emph{Fundamentalsatz der Algebra} hat dieses Polynom $d$
+    Nullstellen $r_1, \dots, r_d \in \C$. Beweise: Gibt es nun weiter
+    $k_1, \dots, k_d \in \C$, so dass
+    \begin{equation*}
+      \fa{i \in \{0, \dots, d - 1\}} a_i = \sum_{j = 1}^d k_j r_j^i
+    \end{equation*}
+    gilt, dann ist schon für alle $n \in \N$:
+    \begin{equation*}
+      a_n = \sum_{j = 1}^d k_j r_j^n
+    \end{equation*}
+
+  \item Die \emph{Lukaszahlen} sind rekursiv über $f_0 = 2, \ f_1 = 1$ und
+    $f_n = f_{n - 1} + f_{n - 2}$ für $n \geq 2$ definiert. Finde nun eine
+    explizite Formel für die $n$-te Lukaszahl.
+
+  \item Finde eine explizite Formel für die $n$-te Fibonaccizahl.
+  \end{enumerate}
+\end{prob}

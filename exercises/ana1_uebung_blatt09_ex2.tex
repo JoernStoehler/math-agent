@@ -1,0 +1,52 @@
+\begin{exercise}[$\liminf$ und $\limsup$]
+  Man zeige die folgenden Aussagen:
+  \begin{enumerate}[label=(\alph*)]
+  \item $\limsup_{n \to \infty} a_n$ (bzw. $\liminf_{n \to \infty} a_n$) ist der
+    größte (bzw. kleinste) Häufungspunkt der Folge $a_n$.
+
+  \item Man mache sich den Zusammenhang von $\limsup$, $\liminf$, $\sup$ und
+    $\inf$ einer Folge $a_n$ klar, d.h. zeige zunächst, dass folgende
+    Ungleichung für jede Folge $a_n$ gilt:
+    \begin{equation*}
+      \inf \Set{a_n | n \in \N}
+      \leq
+      \liminf_{n \to \infty} a_n
+      \leq
+      \limsup_{n \to \infty} a_n
+      \leq
+      \sup \Set{a_n | n \in \N}.
+    \end{equation*}
+    Mache dir nun Gedanken, in welchen Fällen Gleichheit gilt (\emph{Tipp}:
+    Monotonie der Folge $a_n$).
+
+  \item (Quotientenkriterium mit $\limsup$) Beweise, dass das
+    Quotientenkriterium mit $\limsup$ korrekt ist, d.h. es gilt: Gilt
+    $\limsup_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}} < 1$, so konvergiert die
+    Reihe $\displaystyle \sum_{n=0}^{\infty}a_n$ absolut.
+
+  \item (Quotientenkriterium mit $\liminf$) Zeige nun, dass es nicht ausreicht,
+    wenn $\liminf_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}} < 1$ gilt, um
+    Konvergenz der Reihe $\displaystyle \sum_{n=0}^{\infty}a_n$ zu zeigen.
+    Genauer noch: Über die Konvergenz lässt sich gar keine Aussage mehr treffen,
+    wenn
+    \begin{equation*}
+      \liminf_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}}
+      \leq
+      1
+      \leq
+      \limsup_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}}
+    \end{equation*}
+    gilt.
+
+  \item(Divergenz mit Quotientenkriterium und $\liminf$) Zu guter Letzt zeige
+    man nun noch, dass das \enquote{umgekehrte} Quotientenkriterium mit
+    $\liminf$ funktioniert, dass also folgendes gilt: Gilt
+    $\liminf_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}} > 1$, so divergiert die Reihe
+    $\displaystyle \sum_{n=0}^{\infty}a_n$.
+  \end{enumerate}
+  \textbf{Achtung:} Es sei an dieser Stelle nochmal erwähnt, dass man durch die
+  Betrachtung von $\liminf$ bzw. $\limsup$ die Aussage für \enquote{$=1$}
+  verliert, man also nichts mehr über Konvergenz aussagen kann, falls
+  $\liminf_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}} = 1$ bzw.
+  $\limsup_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}} = 1$ gilt!
+\end{exercise}

@@ -1,0 +1,85 @@
+%% WARNING: This file contains multiple exercises and should be split into separate files
+\begin{prob}
+  Zeige ohne Verwendung der Exponentialreihe, dass für alle $x, y \in \R$ gilt:
+  \begin{equation*}
+    \lim_{n\to\infty} \left( 1 + \frac{x}{n} \right)^n \cdot \lim_{n\to\infty} \left( 1 + \frac{y}{n} \right)^n
+    =
+    \lim_{n\to\infty} \left( 1 + \frac{x + y}{n} \right)^n
+  \end{equation*}
+\end{prob}
+
+\begin{prob}
+  Für $s \in \R$ und $n \in \N_0$ definieren wir den
+  \textit{Binomialkoeffizienten} rekursiv durch
+  \begin{equation*}
+    \binom{s}{0} \coloneqq 1 \quad \text{und} \quad
+    \binom{s}{n + 1} \coloneqq \frac{s - n}{n + 1} \cdot \binom{s}{n}
+  \end{equation*}
+  Sei weiter $x \in \R$. Wir definieren die \textit{Binomialreihe} als
+  \begin{equation*}
+    B(s,x):=\sum_{k=0}^\infty \binom{s}{k}x^k.
+  \end{equation*}
+  \begin{enumerate}[label=(\alph*)]
+  \item Beweise das \emph{Additionstheorem} für alle $s, t \in \R$:
+    \begin{equation*}
+      \sum_{k=0}^n \binom{s}{k}\binom{t}{n - k}
+      =
+      \binom{s+t}{n}.
+    \end{equation*}
+  \item Zeige, dass die Binomialreihe $B(s,x)$ für $\abs{x} < 1$ und beliebiges
+    $s \in \R$ absolut konvergiert.
+  \item Beweise die \textit{Funktionalgleichung} für $s, t \in \R$ und
+    $\abs{x} < 1$:
+    \begin{equation*}
+      B(s, x) \cdot B(t,x) = B(s + t, x).
+    \end{equation*}
+  \item Zeige: Für jedes $x \in \R$ ist
+    \begin{equation*}
+      \lim_{n\to\infty} B\left( n, \frac{x}{n} \right) = e^x,
+    \end{equation*}
+    wobei $n\in\mathbb{N}$
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}
+  Zeige, dass $(\C, +, \cdot)$ ein Körper der Charakteristik $0$ ist.
+\end{prob}
+
+\begin{prob}
+  Zeige für alle  $z,w \in \C$:
+  \begin{enumerate}[label=(\alph*)]
+  \item $\conj{\conj{z}} = z$
+  \item $\conj{z \cdot w} = \conj{z} \cdot \conj{w}$
+  \item $\conj{z+w} = \conj{z} + \conj{w}$
+  \item $z\conj{z} = \Re(z)^2 + \Im(z)^2$
+  \item $\Re(z) = \frac{1}{2} (z + \conj{z})$
+  \item $\Im(z) = \frac{1}{2i} (z - \conj{z})$
+  \end{enumerate}
+\end{prob}
+
+\newpage
+
+\begin{prob}
+  \begin{enumerate}[label=(\alph*)]
+  \item Zeige für $z, w \in \C$: $\Re(z\conj{w})$ ist das aus der Schule
+    bekannte Skalarprodukt von $z$ und $w$, interpretiert als Vektoren in der
+    Ebene. Insbesondere ist $\Re(z\conj{w}) = 0$ genau dann, wenn $z \perp w$.
+  \item Formuliere und beweise den Satz des Pythagoras für rechtwinklige
+    Dreiecke in $\mathbb{C}$.
+  \item Formuliere und beweise den Satz des Thales in $\C$.
+  \item Seien $a, b, c$ drei komplexe Zahlen mit $\abs{a} = \abs{b} = \abs{c}$.
+    Zeige: $a$, $b$ und $c$ bilden die Ecken eines gleichseitigen Dreiecks genau
+    dann, wenn $a+b+c = 0$ gilt .
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}[Bonusaufgabe]
+  Gegeben sei die rekursiv definierte Folge $(a_n)$ in $\R$ mit
+  $a_1 \coloneqq \frac{1}{5}$ und $a_{n+1} \coloneqq \frac{2a_n}{1 + a_n}$ für $n \geq 1$.
+  \begin{enumerate}[label=(\alph*)]
+  \item Zeige, dass f"ur alle $n \in \N$ gilt: $0<a_n<1$.
+  \item Untersuche $(a_n)$ auf Monotonie.
+  \item Untersuche $(a_n)$ auf Konvergenz und berechne den Limes, falls er
+    existiert.
+  \end{enumerate}
+\end{prob}

@@ -1,0 +1,44 @@
+\begin{exercise}[Grundwerkzeuge für Reihen]
+  \begin{enumerate}[label=(\alph*)]
+  \item Zur Wiederholung erinnere man sich an die folgenden Konvergenzkriterien
+    für Reihen und beweise sie:
+    \begin{itemize}
+    \item Leibnitzkriterium
+    \item Majorantenkriterium
+    \item Quotientenkriterium
+    \end{itemize}
+
+  \item Hier ein Vorschlag für ein weiteres Kriterium, diesmal allerdings für
+    Divergenz:
+    \begin{theorem}[\emph{Minorantenkriterium für Divergenz}]\normalfont\itshape
+      Sei $\sum \limits_{ n=0 }^{ \infty } b_n $ eine divergente Reihe und $a_n$
+      eine Folge mit $a_n \geqslant b_n \geqslant 0$ für alle $n\in \N$, so gilt
+      \begin{equation*}
+        \begin{split}
+          \sum\limits_{ n=1 }^{ N }{ a_n } \overset{N \to \infty}{\longrightarrow} \infty
+        \end{split}
+      \end{equation*}
+    \end{theorem}
+    Stimmt dieser Satz so? Beweise oder widerlege!
+
+  \item In der Vorlesung wurde der Begriff der absoluten Konvergenz eingeführt.
+    Wiederhole die Definition und zeige, dass absolute Konvergenz schon
+    Konvergenz impliziert.
+
+  \item Bei Folgen haben wir gesehen dass die ersten endlich vielen
+    Folgenglieder an der Konvergenz nichts ändern. Man zeige das Analoge nun für
+    Reihen:
+    \begin{theorem}
+      \normalfont\itshape Seien $\left( a_n \right)_{n \in N}$ und
+      $\left( b_n \right)_{n\in \N}$ Folgen in $\R$, sodass ein $K \in \N$
+      existiert mit
+      \begin{equation*}
+        \begin{split}
+          \fa{n \geqslant K} a_n = b_n
+        \end{split}
+      \end{equation*}
+      Dann konvergiert die Reihe über die $a_n$ genau dann, wenn die Reihe über
+      die $b_n$ konvergiert.
+    \end{theorem}
+  \end{enumerate}
+\end{exercise}

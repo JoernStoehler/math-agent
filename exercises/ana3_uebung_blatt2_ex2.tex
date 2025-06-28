@@ -1,0 +1,29 @@
+                \begin{prob}[Jordan-messbare Mengen]
+%
+Für eine beschränkte Menge $A \subset \R^n$ definieren wir die Mengensysteme
+%
+\[ \mathcal{U}(A) = \left\{ U \subset \R^n  \, | \, U \subset A , \, U \text{ ist endliche Vereinigung von halboffenen Quadern} \right\} \]
+%
+und
+%
+\[ \mathcal{O}(A) = \left\{ O \subset \R^n  \, | \, A \subset O , \, O \text{ ist endliche Vereinigung von halboffenen Quadern} \right\}. \]
+%
+Sei $\lambda$ das Lebesgue-Maß auf $\R^n$. Die beschränkte Menge $A$ heißt {\em Jordan-messbar}, wenn
+%
+\[ \forall \eps > 0 \, \exists U \in \mathcal{U}(A) , O \in \mathcal{O}(A) \colon \lambda(O \setminus U) < \eps. \]
+%
+Ein $\setminus$-stabiles, $\cup$-stabiles Mengensystem, das $\emptyset$ umfasst, heißt ein {\em Ring}.\footnote{Ein Mengen-Ring ist also bis auf die womöglich fehlende Eins der Multiplikation $\cap$ eine Mengen-Algebra, was den Namen 'Ring' erklärt.} Beweisen Sie:
+\begin{enumerate}[label = (\alph*)]
+\item Das System $\mathcal{J}(\R^n)$ der Jordan-messbaren Mengen bildet einen Ring.
+\item Die Mengenfunktion
+	%
+	\[ \mathfrak{J} \colon \mathcal{J}(\R^n) \mapsto \left[ 0 , \i \right) \colon A \mapsto \sup_{U \in \mathcal{U}(A) } \lambda(U) = \inf_{O \in \mathcal{O}(A) } \lambda(O) \]
+	%
+	ist ein wohldefinierter Inhalt.
+\item Jede Jordan-messbare Menge ist Lebesgue-messbar und $\mathfrak{J} = \left. \lambda \right|_{ \mathcal{J}(\R^n) }$, d.h. $\mathfrak{J}$ stimmt mit der Einschränkung des Lebesgue-Maßes auf $\mathcal{J}(\R^n)$ überein.
+\end{enumerate}
+% Es gibt Jordan-messbare Mengen, die nicht Borel-messbar sind, vgl. Korollar 7.8 bei Elstrodt.
+% $Bemerkung$: Jordan-messbare Mengen verhalten sich zum mehrdimensionalen Riemann-Integral wie Borel-Mengen zum Lebesgue-Integral. Man beachte die Analogie zu Unter- und Obersummen.
+%------------------------------------------------------------------------------------------------------------------------
+\vspace{2mm}
+                \end{prob}

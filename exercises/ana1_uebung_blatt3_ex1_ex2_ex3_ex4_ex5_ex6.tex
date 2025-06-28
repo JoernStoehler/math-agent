@@ -1,0 +1,83 @@
+%% WARNING: This file contains multiple exercises and should be split into separate files
+\begin{prob}
+  Folgere aus den Axiomen der Multiplikation in einem Körper:
+  \begin{enumerate}[label=(\alph*)]
+  \item Die Eins ist eindeutig bestimmt.
+  \item Für $a \neq 0$ ist das inverse Element $a^{-1}$ eindeutig bestimmt.
+  \item Für $a \neq 0$ gilt $(a^{-1})^{-1} = a$
+  \item Für $a,\ b\neq 0$ gilt $(ab)^{-1} = a^{-1}b^{-1}$
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}
+  Die \textit{Charakteristik} eines Körpers $\K$, geschrieben $\chi(\K)$, ist
+  das kleinste $n \in \N$ so, dass $n \cdot 1 = 0$. Wenn es kein solches $n$
+  gibt, definieren wir $\chi(\K) := 0$. \\
+  Zeige, dass...
+  \begin{enumerate}[label=(\alph*)]
+  \item $\chi(\K) \neq 0 \iff \chi(\K)=p$ für eine Primzahl $p$;
+  \item $\chi(\K)= 0 \iff \K$ enthält $\Q$ als Teilkörper;
+  \item $\fa{a \in \K} \chi(\K) \cdot a = 0$;
+  \item falls die Anzahl der Elemente von $\K$ endlich ist, so gilt
+    $\chi(\K) > 0$ und $\chi(\K)$ ist ein Teiler der Anzahl der Elemente von $\K$
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}Konstruiere einen Körper...
+  \begin{enumerate}[label=(\alph*)]
+  \item ...mit 3 Elementen;
+  \item ...mit 4 Elementen.
+  \end{enumerate}
+  Zeige außerdem, dass es keinen Körper mit 6 Elementen gibt.
+\end{prob}
+
+\begin{prob}
+  Folgere aus den Körperaxiomen und den Anordnungsaxiomen in einem angeordneten
+  Körper $\K$:
+  \begin{enumerate}[label=(\alph*)]
+  \item $a < b$ und $c > 0 \implies ac < bc$; $a < b$ und
+    $c < 0 \implies ac > bc$.
+  \item $a \neq 0 \implies a^2 > 0$. Insbesondere $1 > 0$.
+  \item $0 < a < b \implies a^{-1} > b^{-1} >0$.
+  \item Drei Elemente $a, b, c$ von $\K$ sind genau dann alle positiv, wenn die
+    folgenden Ungleichungen alle erfüllt sind:
+    \begin{equation*}
+      \begin{split}
+        a + b + c    & > 0 \\
+        ab + bc + ca & > 0 \\
+        abc          & > 0
+      \end{split}
+    \end{equation*}
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}
+  Betrachte die Menge der gebrochenrationalen Funktionen
+  \begin{equation*}
+    \mathbb{Q}(t)
+    \coloneqq
+    \Set{\frac{P}{Q} | \textit{P, Q Polynome in t mit Koeffizienten in } \Q, \ Q
+      \neq 0}
+  \end{equation*}
+  mit der in der Vorlesung definierten Addition und Multiplikation. Zeige:
+  \begin{enumerate}[label=(\alph*)]
+  \item $\Q(t)$ ist ein Körper.
+  \item $\Q(t)$ ist ein angeordneter Körper mit
+    $\frac{P}{Q}>0 \iff a_n\cdot b_m>0$ für $P = a_nt^n + \ldots + a_0$,
+    $Q = b_mt^m + \ldots + b_0$ mit $a_n \neq 0$ und $b_m \neq 0$.
+  \item $\Q(t)$ mit dieser Anordnung ist kein archimedischer Körper.
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}
+  \textit{Wiederholungsaufgabe. Diese Aufgabe ist 2 Punkte wert, die nur
+    verteilt werden, wenn du die für die entsprechende Aufgabe auf Blatt 1 2
+    Punkte oder weniger erhalten hast.} \\
+  Für Aussagen $A$ und $B$, leite folgende Gleichheiten aus den Gesetzen (1)-(7)
+  her, ohne Wahrheitstafeln zu verwenden:
+  \begin{enumerate}
+  \item Wenn $A \land B = 0$ und $A \lor B = 1$, dann ist $B = \neg A$.
+  \item $\neg (A \lor B) = (\neg A) \land (\neg B)$, $\neg (A \land B) = (\neg
+    A) \lor (\neg B)$
+  \end{enumerate}
+\end{prob}

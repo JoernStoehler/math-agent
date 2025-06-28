@@ -1,0 +1,20 @@
+\begin{exercise}[Symmetrische Mengendifferenz]
+  Es sei $X$ eine Menge, und $A,B \subset X$ Teilmengen. Wir definieren die
+  \emph{Symmetrische Differenz} als
+  \begin{center}
+    \begin{tikzcd}[row sep=tiny]
+      \mathcal{P}(X)\times\mathcal{P}(X)
+      \arrow [r, "\vartriangle"]
+      & \mathcal{P}(X) \\
+      (A,B)
+      \arrow [r, mapsto]
+      & A\vartriangle B \eqdef (A\cup B)\setminus (A\cap B) \\
+    \end{tikzcd}
+  \end{center}
+  Weise nach, dass
+  \begin{itemize}
+  \item $\vartriangle$ kommutativ ist und
+  \item $\vartriangle$ assoziativ ist und dass
+  \item $A\vartriangle B = (A\setminus B)\cup (B\setminus A)$.
+  \end{itemize}
+\end{exercise}

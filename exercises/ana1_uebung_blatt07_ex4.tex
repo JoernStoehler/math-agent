@@ -1,0 +1,48 @@
+\begin{exercise}[Die Cantor-Menge]
+  Wir definieren für reelle Zahlen $a$ und Mengen $M\subset \R$ die Mengen
+  \begin{equation*}
+    \begin{split}
+      aM  & \eqdef \Set{am | m \in M} \\
+      a+M & \eqdef \Set{a + m | m \in M}
+    \end{split}
+  \end{equation*}
+  Die $n$-te Cantoriterierte ist rekursiv definiert als
+  \begin{equation*}
+    \begin{split}
+      C_0 &= (0,1)\\
+      C_n &= \frac{1}{3} \cdot C_{n-1} \dot\cup \left( \frac{2}{3} + \frac{1}{3} C_{n-1} \right)
+    \end{split}
+  \end{equation*}
+  Nun definieren wir die Cantormenge als
+  \begin{equation*}
+    \begin{split}
+      C \eqdef \bigcap_{n\in \N} C_n
+    \end{split}
+  \end{equation*}
+  Nach etwas Überlegung und einer Skizze ist man sich nichteinmal sicher ob
+  diese überhaupt Punkte enthält. Es ist jedoch etwas schier unglaubliches der
+  Fall: Die Cantormenge ist sogar überabzählbar! Dies wollen wir im Verlauf
+  dieser Aufgabe zeigen.
+  \begin{enumerate}[label=(\alph*)]
+  \item Man fertige eine hübsche Skizze der Cantoriterierten an und vergewissere
+    sich die Definition gut verdaut zu haben indem man eine nicht-rekursive
+    äquivalente Darstellung der $C_n$ herleite.
+  \item Zum Aufwärmen überlege man sich nun
+    \begin{equation*}
+      \begin{split}
+        C \neq \emptyset
+      \end{split}
+    \end{equation*}
+    \emph{Tipp}: Man betrachte dabei die $3$-adische Darstellung der Zahlen im
+    Intervall $(0,1)$ und überlege sich was dann die Cantoriteration bedeutet .
+
+  \item Nun ans Eingemachte: Man zeige, dass
+    \begin{equation*}
+      \begin{split}
+        C \cong (0,1)
+      \end{split}
+    \end{equation*}
+    \emph{Tipp}: Es könnte für die Bijektion hilfreich sein, auch die
+    $2$-adische Darstellung nocheinmal zu wiederholen.
+  \end{enumerate}
+\end{exercise}

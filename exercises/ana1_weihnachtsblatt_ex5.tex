@@ -1,0 +1,59 @@
+\begin{prob}
+  Sei $\mathbf{K}_p$ ein Körper mit Charakteristik $p>0$. Wir betrachten im
+  folgenden die Abbildung
+  \begin{center}
+    \includestandalone{tikz/cd_koerper2}
+  \end{center}
+  etwas näher. Dabei werden wir viele schöne Eigenschaften zeigen können, die
+  einem hoffentlich im weiteren mathematischen Leben noch das eine oder andere Mal
+  begegnen.
+
+  \begin{enumerate}[label=(\alph*)]
+  \item \label{itm:fieldhom}Lasst uns mit einigen Überlegungen zur
+    Wohldefiniertheit der Abbildung beginnen: Zu zeigen ist
+    \begin{enumerate}[label=\roman*.]
+    \item $f(1) = 1$
+    \item $f(0) = 0$
+    \item $\fa{x, y \in \mathbf{K_p}} f(x \cdot y) = f(x) \cdot f(y)$
+    \item $\fa{x, y \in \mathbf{K_p}} f(x + y) = f(x) + f(y)$
+    \end{enumerate}
+    Hiermit haben wir eigentlich vor allem gezeigt, dass $f_p$ ein
+    \emph{Körperhomomorphismus} ist, falls du dir das später im Studium noch mal
+    anschaust.
+
+  \item Lasst uns jetzt zeigen, dass $f_p$ natürlich ist, soll heißen es ist zu
+    beweisen, dass das folgende Diagramm kommutiert, wobei $\mathbf{K}$ und
+    $\widetilde{\mathbf{K}}$ zwei Körper der Charakteristik $p$ sind und
+    $\phi \colon \mathbf{K} \to \widetilde{\mathbf{K}}$ auch ein
+    Körperhomomorphismus ist, also die Eigenschaften in \ref{itm:fieldhom}
+    erfüllt:
+    \begin{center}
+      \includestandalone{tikz/cd_koerper1}
+    \end{center}
+    Zu zeigen ist also, dass für alle Körperhomomorphismen $\phi$ und für alle
+    $x \in \mathbf{K}$ schon die Gleichung
+    \begin{equation*}
+      \begin{split}
+        \left( \phi \circ f_p \right)(x)= \left( f_p \circ \phi \right)(x)
+      \end{split}
+    \end{equation*}
+    erfüllt ist.
+
+  \item Nun kommen wir zum Eingemachten: Im Folgenden ist $f_p$ auf Injektivität
+    und Surjektivität zu untersuchen. Wir nennen einen Körper \emph{perfekt},
+    wenn $f_p$ ein Ringisomorphismus -- also surjektiv und injektiv -- ist. Gebe
+    nun zusätzlich Beispiele an (oder beweise dass es keine gibt) für
+    \begin{itemize}
+    \item einen nichtperfekten Körper mit Charakteristik $p > 0$
+    \item einen perfekten Körper mit Charakteristik $p > 0$
+    \end{itemize}
+
+  \item Untersuche die Fixpunktmenge von $f_p$, also die Menge
+    \begin{equation*}
+      \begin{split}
+        M \defn \Set{x \in \mathbf{K}_p | x^p = x}
+      \end{split}
+    \end{equation*}
+    \enquote{Überlege dir}, wann $M$ selbst wieder ein Körper wird.
+  \end{enumerate}
+\end{prob}

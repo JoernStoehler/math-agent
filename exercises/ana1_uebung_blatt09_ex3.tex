@@ -1,0 +1,18 @@
+\begin{exercise}
+  Da der Beweis des \emph{Doppelreihensatzes} in der Vorlesung etwas kurz
+  ausgefallen ist, wollen wir hier nochmal einen genauen Blick darauf werfen.
+  Beweise den Doppelreihensatz:
+  \begin{theorem}[Doppelreihensatz]
+    Sei $\displaystyle \sum_{i,j=0}^{\infty}a_{ij}$ absolut konvergent. Dann
+    gilt:
+    \begin{equation*}
+      \sum_{i,j=0}^{\infty} a_{ij}
+      =
+      \sum_{i=0}^{\infty}\left( \sum_{j=0}^{\infty}a_{ij}\right)
+      =
+      \sum_{j=0}^{\infty}\left( \sum_{i=0}^{\infty}a_{ij}\right)
+      =
+      \sum_{k=0}^{\infty}\left( \sum_{i=0}^{k}a_{i,k-i}\right).
+    \end{equation*}
+  \end{theorem}
+\end{exercise}

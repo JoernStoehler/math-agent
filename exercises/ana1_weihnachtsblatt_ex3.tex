@@ -1,0 +1,17 @@
+\begin{prob}[Fraktale]
+  Im Folgenden wollen wir die \emph{Kochsche Schneeflocke} untersuchen.
+  Die Kochsche Schneeflocke wird ausgehend von einem gleichseitigen Dreieck
+  iterativ bezüglich der Seiten des Dreiecks definiert:
+  \begin{enumerate}[label=(\arabic*)]
+  \item Unterteile jede der Seiten in drei Segmente der selben Länge
+  \item Entferne das mittlere Liniensegment jeder Seite.
+  \item Füge ein gleichseitiges Dreieck ein, das das entfernte mittlere Streckensegment aus
+    Schritt 1 als Basis hat und dessen Punkte nach außen zeigen
+  \end{enumerate}
+  Berechne ausgehend von dem ersten gegebenen gleichseitigen Dreieck nun den
+  Flächeninhalt und den Umfang der Konstruktion in der $n$-ten Iteration.
+  Untersuche ferner die Werte jeweils auf das Grenzwertverhalten.
+  \begin{center}
+    \includestandalone[width=\linewidth]{tikz/koch_progression}
+  \end{center}
+\end{prob}

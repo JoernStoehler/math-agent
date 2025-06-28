@@ -1,0 +1,34 @@
+\begin{exercise}[Alternative Differenzierbarkeit, übernommen von Prof.
+  Oldenburg]
+  Hier stellen wir einige andere Definitionen von Differenzierbarkeit vor. Zu
+  überlegen ist sich, ob diese äquivalent, schwächer oder stärker als die
+  übliche Definition mit der $h$-Methode.
+  \begin{enumerate}[label=(\alph*)]
+  \item Wir nennen eine Funktion $f$ symmetrisch differenzierbar bei $x$, wenn
+    \begin{equation*}
+      \begin{split}
+        f^\sim(x) \eqdef \lim_{h \to 0}{\frac{f(x + h) - f(x-h)}{2h}}
+      \end{split}
+    \end{equation*}
+    existiert.
+    \begin{enumerate}[label=(\roman*)]
+    \item Berechne die symmetrische Ableitung von $f(x) = x^2$
+    \item Untersuche ob aus symmetrischer Differenzierbarkeit normale
+      Differenzierbarkeit folgt und andersherum (Tipp: $\abs{x}$)
+    \end{enumerate}
+
+  \item Wir nennen eine Funktion $f$ skalar differenzierbar bei $x \neq 0$, wenn
+    \begin{equation*}
+      \begin{split}
+        f^\circledast(x) \eqdef \lim_{q \to 1}{\frac{f(qx) - f(x)}{qx - x}}
+      \end{split}
+    \end{equation*}
+    existiert.
+    \begin{enumerate}[label=(\roman*)]
+    \item Berechne die symmetrische Ableitung von $f(x) = x^2$ und
+      $g(x) = \log (x)$
+    \item Untersuche ob aus skalarer Differenzierbarkeit normale
+      Differenzierbarkeit folgt und andersherum.
+    \end{enumerate}
+  \end{enumerate}
+\end{exercise}

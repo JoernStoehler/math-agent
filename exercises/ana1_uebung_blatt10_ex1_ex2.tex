@@ -1,0 +1,44 @@
+%% WARNING: This file contains multiple exercises and should be split into separate files
+\begin{prob}
+  Untersuche die folgenden Funktionen $f \colon D \to \R$ auf gleichmäßige
+  Stetigkeit:
+  \begin{enumerate}[label=(\alph*)]
+  \item $f(x) \coloneqq \sin(x)$ und $f(x) := \cos(x)$ mit $D = \R$
+  \item $f(x) \coloneqq \sqrt{x}$ mit $D = \interval[open right]{0}{\infty}$
+  \item $f(x) \coloneqq \frac{1}{(x-1)(x+1)}$ mit $D = \R \setminus \set{\pm 1}$
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}
+  \begin{enumerate}[label=(\alph*)]
+  \item Skizziere den Graphen des Sinus Hyperbolicus
+    $\sinh \colon \R\to\R$ und des Cosinus Hyperbolicus
+    $\cosh:\R\to\R$, wobei
+    \begin{equation*}
+      \begin{split}
+        \cosh(x) &\coloneqq \frac{e^x + e^{-x}}{2}\\
+        \sinh(x) &\coloneqq \frac{e^x - e^{-x}}{2}
+      \end{split}
+    \end{equation*}
+  \item Beweise für alle $x,y\in\R$:
+    \begin{equation*}
+      \begin{split}
+        \cosh(x+y) &= \cosh(x)\cosh(y)+\sinh(x)\sinh(y)\\
+        \sinh(x+y) &= \cosh(x)\sinh(y)+\sinh(x)\cosh(y)\\
+        \cosh^2(x) - \sinh^2(x) &= 1
+      \end{split}
+    \end{equation*}
+  \item Beweise, dass $\sinh \colon \R \to \R$ und
+    $\cosh \colon \interval[open right]{0}{\infty} \to \interval[open
+    right]{1}{\infty}$ streng monoton wachsend und bijektiv sind.
+  \item Beweise für die Umkehrfunktionen $\arsinh \colon \R \to \R$ und
+    $\arcosh \colon \interval[open right]{1}{\infty} \to \interval[open
+    right]{0}{\infty}$:
+    \begin{equation*}
+      \begin{split}
+        \arcosh(x) &= \log(x + \sqrt{x^2 - 1})\\
+        \arsinh(x) &= \log(x + \sqrt{x^2 + 1})
+      \end{split}
+    \end{equation*}
+  \end{enumerate}
+\end{prob}

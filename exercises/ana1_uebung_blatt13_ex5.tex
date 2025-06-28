@@ -1,0 +1,30 @@
+\begin{exercise}[Begrenzte Differenzierbarkeit]
+  Manchmal denkt man sich wie komisch es ist, dass sich manche Funktionen nur
+  genau ein paar Mal ableiten lassen. Solche Funktionen zu finden und zu
+  verstehen ist hier das Ziel
+  \begin{enumerate}[label=(\alph*)]
+  \item Finde für jedes $n \in \N$ eine Funktion, die genau $n$-Mal
+    differenzierbar ist.
+  \item Auf den Übungsblättern haben wir gezeigt, dass die Funktion
+    \begin{equation*}
+      \begin{split}
+        f(x) = x \sin \left( \frac{1}{x} \right)
+      \end{split}
+    \end{equation*}
+    stetig bei $x_0 = 0$ ist. Ist sie auch differenzierbar? Was müsste man an
+    der Funktion ändern damit sie es wäre, und warum ist dem anschaulich so?
+  \item Betrachte den Glättungskern
+    % Someone please fix this mess and teach my how to do TeX partially defined
+    % Functions beautifully and properly. Thanks.
+    \begin{equation*}
+      f(x) =
+      \begin{cases}
+        \exp \left( \frac{1}{1 - \abs{x}^2} \right) & \abs{x} < 1  \\
+        0                                           & \text{sonst} \\
+      \end{cases}
+    \end{equation*}
+    Zeige dass dieser Glättungskern überraschenderweise unendlich oft
+    differenzierbar ist. Dies wird uns vermutlich in der Analysis 3 einmal
+    irgendwann gute Dienste leisten.
+  \end{enumerate}
+\end{exercise}

@@ -1,0 +1,44 @@
+                    \begin{prob}[Parametrisierte Integrale] \\
+%
+Das Lebesgue-Integral liefert sehr starke hinreichende Bedingungen für Stetigkeit und Differenzierbarkeit parametrisierter Integrale. Diese Resultat nützen auf vielen Gebieten, z.B. in den Partiellen Differentialgleichungen oder der Variationsrechnung.
+
+Sei $\left( \Omega , \mathcal{A}, \mu \right)$ ein Maßraum. Zeigen Sie:
+\begin{enumerate}[label = (\alph*)]
+	\item Sei $\left( X , d \right)$ ein metrischer Raum, $x_0 \in X$ und $f \colon \Omega \times X \mapsto \R$ eine Funktion mit folgenden Eigenschaft:
+	\begin{enumerate}[label = (\roman*)]
+		\item $\omega \mapsto f( \omega , x )$ ist integrabel für alle $x \in X$.
+		\item $x \mapsto f( \omega , x )$ ist stetig bei $x_0$ für alle $\omega \in \Omega$.
+		\item Es existiert eine integrable Funktion $g$ auf $\Omega$ mit
+		%
+		\[ \left| f( \omega , x ) \right| \le g(\omega) \quad \forall \omega \in \Omega, x \in X. \]
+		%
+	\end{enumerate}
+	Dann ist die Abbildung $F \colon X \mapsto \R$, gegeben durch
+	%
+	\[ F(x) = \int_\Omega f( \omega , x ) \, d \mu, \]
+	%
+	in $x_0$ stetig.
+	\item Sei $U \subset \R^n$ offen und $f \colon \Omega \times U \mapsto \R$ eine Funktion mit folgenden Eigenschaften:
+	\begin{enumerate}[label = (\roman*)]
+		\item $\omega \mapsto f( \omega , x )$ ist integrabel für alle $x \in X$.
+		\item $x \mapsto f( \omega , x )$ ist partiell nach $x_i$ differenzierbar für alle $\omega \in \Omega$.
+		\item Es existiert eine integrable Funktion $g$ auf $\Omega$ mit
+		%
+		\[ \left| \del_{x_i} f( \omega , x ) \right| \le g(\omega) \quad \forall \omega \in \Omega, x \in U. \]
+		%
+	\end{enumerate}
+	Dann ist die Abbildung $F \colon U \mapsto \R$, gegeben durch
+	%
+	\[ F(x) = \int_\Omega f( \omega , x ) \, d \mu, \]
+	%
+	partiell nach $x_i$ differenzierbar mit
+	%
+	\[ \del_{x_i} F(x) = \int_\Omega \del_{x_i} f( \omega , x ) \, d \mu.\]
+	%
+	$Hinweis$: Nutzen Sie entlang passender Folgen $h_k \in \R$ mit $h_k \to 0$ den Mittelwertsatz für den Differenzenquotienten
+	%
+	\[ f_k(\omega) := \frac{f(\omega , x + h_k e_i) - f(\omega , x) }{h_k}. \]
+	%
+\end{enumerate}
+
+\end{prob}

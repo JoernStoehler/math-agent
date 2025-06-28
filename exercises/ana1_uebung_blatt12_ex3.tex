@@ -1,0 +1,24 @@
+\begin{exercise}
+  Beweise:
+  \begin{enumerate}
+  \item Es gibt genau eine \emph{stetige} Abbildung $f \colon \R \to \R$, welche
+    für alle $a, b \in \R$ der Funktionalgleichung
+    \begin{equation}
+      \label{eq:exp-func}
+      f(a + b) = f(a) \cdot f(b)
+    \end{equation}
+    und der Anfangsbedingung $f(1) = \e$ genügt, nämlich $f = \exp$.
+  \item Es existieren weitere \emph{nicht stetige} Lösungen der
+    Funktionalgleichung \ref{eq:exp-func} mit $f(1) = \e$ genügen.
+
+    Tipp: Es existiert eine (überabzählbare) Basis $B = (a_i)_{i \in I}$ des
+    $\Q$-Vektorraums $\R$ mit $1 \in B$. Die Aussage wird mit dem Zornschen
+    Lemma gezeigt und darf an dieser Stelle vorausgesetzt werden. Setzen wir
+    weiter $V \coloneqq \lspan(B \setminus \set{1})$, dann wird durch die
+    Setzung
+    \begin{equation*}
+      \fa{r \in Q} \fa{v \in V} f(r + v) \coloneqq \exp(r)
+    \end{equation*}
+    eindeutig eine Funktion der gewünschten Form definiert.
+  \end{enumerate}
+\end{exercise}

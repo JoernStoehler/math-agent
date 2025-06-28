@@ -1,0 +1,16 @@
+\begin{exercise}[Abstraktion des Graphen]
+  In \Cref{ex:graph-of-map} ist der Graph einer Abbildung definiert. Wir wollen
+  dies nun etwas abstrahieren: Betrachte den Graphen als Abbildung
+  \begin{center}
+    \begin{tikzcd}[row sep=tiny]
+      B^A
+      \arrow [r, "\graph"]
+      & A \times B \\
+      f
+      \arrow [r, mapsto]
+      & \operatorname{graph}(f) \\
+    \end{tikzcd}
+  \end{center}
+  Was lassen sich mit dem aus \Cref{ex:graph-of-map} gewonnenem Wissen für
+  Schlüsse über Injektivität und Surjektivität dieser Abbildung ziehen?
+\end{exercise}

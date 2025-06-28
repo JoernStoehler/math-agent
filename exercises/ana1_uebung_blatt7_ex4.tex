@@ -1,0 +1,26 @@
+\begin{prob}
+  Es sei $a_{ij}$ die Zahl in der $i$-ten Zeile und $j$-en Spalte des Schemas
+  \begin{equation*}
+    \begin{matrix}
+      -1          & 0           & 0           & 0      & \cdots \\[3pt]
+      \frac{1}{2} & -1          & 0           & 0      & \cdots \\[3pt]
+      \frac{1}{4} & \frac{1}{2} & -1          & 0      & \cdots \\[3pt]
+      \frac{1}{8} & \frac{1}{4} & \frac{1}{2} & -1     & \cdots \\
+      \vdots      & \vdots      & \vdots      & \vdots & \ddots
+    \end{matrix}
+  \end{equation*}
+  Anders ausgedrück betrachten wir die Abbildung $a \colon \N \times \N \to \R$
+  mit:
+  \begin{align*}
+    a_{ij}
+    =
+    \begin{cases}
+      -1                 & i = j \\
+      0                  & j > i \\
+     \frac{1}{2^{i - j}} & i > j \\
+    \end{cases}
+  \end{align*}
+  Berechne $\sum_{i=1}^\infty (\sum_{j=1}^{\infty} a_{ij})$ und
+  $\sum_{j=1}^{\infty} (\sum_{i=1}^\infty a_{ij})$. Wie verträgt sich das
+  Ergebnis mit dem Doppelreihensatz?
+\end{prob}

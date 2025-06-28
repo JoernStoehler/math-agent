@@ -1,0 +1,25 @@
+\begin{prob}
+  \begin{enumerate}[label=(\alph*)]
+  \item Es sei $p > 1$ eine natürliche Zahl. Zeige: Jede positive reelle Zahl $a$
+    besitzt eine $p$-adische Entwicklung, das heißt, es gibt eine ganze Zahl
+    $k_0$ und eine Folge $(a_k)_{k \geq k_0}$ ganzer Zahlen mit $0 \leq a_k < p$,
+    so dass
+    \begin{equation*}
+      a = \sum_{k=k_0}^{\infty}\frac{a_k}{p^k}.
+    \end{equation*}
+  \item Zwei $p$-adische Darstellungen
+    $\displaystyle\sum_{k=k_0}^{\infty} \frac{a_k}{p^k}$ und
+    $\displaystyle\sum_{k=k_1}^{\infty} \frac{b_k}{p^k}$ repräsentieren genau dann
+    dieselbe Zahl $a \in \R_+$, wenn entweder $a_k = b_k$ für alle $k \in \Z$
+    gilt, oder ein $\ell \in \Z$ existiert, sodass
+    \begin{equation*}
+      \begin{cases}
+        a_k = b_k\ \text{für alle } k < \ell, \\
+        a_\ell = b_\ell + 1,                  \\
+        a_k = 0\ \text{für alle } k > \ell,   \\
+        b_k = p-1\ \text{für alle } k > \ell,
+      \end{cases}
+    \end{equation*}
+    gilt oder dasselbe,  mit den Rollen der $a_k$ und $b_k$ vertauscht, gilt.
+  \end{enumerate}
+\end{prob}

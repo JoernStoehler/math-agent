@@ -1,0 +1,156 @@
+%% WARNING: This file contains multiple exercises and should be split into separate files
+\begin{exercise}[Vollständigen Induktion]
+  Zeige die folgenden Aussagen mit Hilfe von vollständiger Induktion:
+  \begin{enumerate}
+  \item für alle $n \in \N_0$ gilt:
+    \begin{equation*}
+      \begin{split}
+        \sum\limits_{ i=1 }^{ n}{ \frac{1}{i(i+1)} } = \frac{n}{n+1}
+      \end{split}
+    \end{equation*}
+  \item für alle ungeraden $n \in \N$ gilt:
+    \begin{itemize}
+    \item $2^{2n + 1}$ ist durch $8$ teilbar
+    \item $2^{n} + 1$ ist durch $3$ teilbar
+    \end{itemize}
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Türme von Hanoi]
+  Die \emph{Türme von Hanoi} sind ein bekanntes Spiel mit drei Stäben und
+  Scheibenringen unterschiedlicher Größen die darauf aufgesteckt werden können.
+  Wie der Name vermuten lässt sind aus den Scheiben Türme zu bauen. Ziel des
+  Spiels ist, einen Turm der Größe $N$ von dem linken Stab auf den rechten
+  umzuwälzen. Die Regeln dabei sind:
+  \begin{itemize}
+  \item Pro Zug darf nur eine Scheibe bewegt werden
+  \item Ein Zug besteht daraus die oberste Scheibe von einem der Stäbe zu nehmen
+    und auf einen der anderen Stäbe zu legen
+  \item Scheiben dürfen nur auf Scheiben platziert werden, die größer sind als
+    sie selbst, es werden also keine \enquote{Überhänge} gebaut
+  \end{itemize}
+  Aufgabe ist nun zu zeigen, dass für jedes $n \in \N$ der Turm von Hanoi bewegt
+  werden kann, also das Spiel immer eine Lösung hat.
+  \begin{itemize}
+  \item[$\ast$] Bonusaufgabe: Zeige dass immer eine Lösung mit $2^n - 1$ Zügen
+    möglich ist
+  \item[$\ast\ast$] Bonusaufgabe 2: Zeige dass die Lösung in $2^n - 1$ Zügen auch
+    die optimale Lösung ist.
+  \end{itemize}
+\end{exercise}
+
+\begin{exercise}[Fibonacci-Zahlen]
+  Die Fibonnaci Zahlen sind definiert durch $f_0 = f_1 = 1$ und rekursiv
+  weiter mit $f_{n+1} = f_n + f_{n-1}$. Zeige induktiv für alle $n \in \N$:
+  \begin{enumerate}
+  \item $\sum\limits_{ i= 0 }^{ n }{ f_i } = f_{n+2} - 1$
+  \item $f_{2n}$ ist teilbar durch $f_n$
+  \item $f_n$ und $f_{n+1}$ sind relativ prim, das heißt es gibt keine Zahl
+    $a \in \N$, die sowohl $f_n$ als auch $f_{n+1}$ teilt
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Trinominos]
+  Ein \emph{Trinomino} ist wie ein Dominostein, nur aus drei Quadraten aufgebaut
+  und von der Form \includestandalone[scale=0.15]{graphics/trinominos/trinom1}.
+  Trinominos dürfen beliebig gedreht werden, und sollen im Folgenden benützt
+  werden, um \enquote{Schachbretter} lückenlos zu pflastern. Dabei stimmt die
+  Größe der Quadrate aus denen die Schachbretter aufgebaut sind überein mit der
+  Größe der Quadrate aus denen die Trinominos gemacht sind. Ein Trinomino
+  bedeckt so immer genau drei Quadrate.\\
+  Zu zeigen ist nun, dass es immer (für alle $n \in \N$) möglich ist, folgende
+  \enquote{Schachbretter} vollständig ohne Überlappen mit Trinominos zu
+  pflastern:
+  \begin{itemize}
+  \item $\downarrow$ Ein $2^n \times 2^n$ Schachbrett dem die rechte untere
+    Ecke fehlt
+    \begin{figure}[!h]
+      \centering
+      \begin{minipage}[b]{0.38\textwidth}
+        \includestandalone[width=\textwidth]{graphics/trinominos/trinom3}
+      \end{minipage}
+      \hspace{1cm}
+      \begin{minipage}[b]{0.38\textwidth}
+        \includestandalone[width=\textwidth]{graphics/trinominos/trinom4}
+      \end{minipage}
+    \end{figure}
+  \item Ein $2^n \times 2^n$ Schachbrett dessen rechtes unteres Viertel fehlt
+    $\uparrow$
+  \end{itemize}
+\end{exercise}
+
+\begin{exercise}[Fehlgeschlagene Induktionen]
+  Versuche eine vollständige Induktion bei den offensichtlich falschen Aussagen
+  \begin{enumerate}
+  \item $\fa{k \in \N} k > k + 1$
+  \item $\fa{k \in \N} k^2 > k^3$
+  \item $\fa{k \in \N} 5k = 0$
+  \end{enumerate}
+  Was geht hier schief? Was funktioniert dennoch?
+\end{exercise}
+
+\begin{exercise}[Mächtigkeit der Potenzmenge]
+  Die Potenzmenge $\mathcal{P}(M)$ ist bekanntlich definiert als die Menge aller
+  Teilmengen einer Menge $M$. Zeige, dass für endliche Mengen $M$ gilt
+  \begin{equation*}
+    \begin{split}
+      \abs{ \mathcal{P}(M) } > \abs{ M }
+    \end{split}
+  \end{equation*}
+  wobei $\abs{ M }$ wie normal die Mächtigkeit der Menge (also die Anzahl
+  Elemente in der Menge) bezeichne.
+\end{exercise}
+
+\begin{exercise}[Boolsche Algebra und Mengen]
+  Überlege ob für Mengen alle Axiome einer Booleschen Algebra erfüllt
+  sind, und was das bedeuten würde. Sind zum Beispiel die De-Morgan'schen
+  Gesetze noch einmal zu zeigen?
+\end{exercise}
+
+\begin{exercise}[Graph einer Abbildung]
+  \label{ex:graph-of-map}
+  Der Graph einer Abbildung $f\colon X \rightarrow Y$ ist bekanntlich definiert
+  durch
+  \begin{equation*}
+    \begin{split}
+      \graph(f) \eqdef \left\{ (a,b) \in X\times Y \:\arrowvert\:
+        f(a)=b\right\} \subset X\times Y
+    \end{split}
+  \end{equation*}
+  Zeige dass die Angabe eines Graphen eine Abbildung schon eindeutig bestimmt
+  und andersherum.
+\end{exercise}
+
+\begin{exercise}[Raum aller Abbildungen]
+  Überlege anhand von endlichen Mengen, warum es sinnvoll ist, den Raum der
+  Abbildungen $f$ mit
+  \begin{center}
+    \begin{tikzcd}[row sep=tiny]
+      X
+      \arrow [r, "f"]
+      & Y \\
+    \end{tikzcd}
+  \end{center}
+  Auch mit $Y^X$ zu betiteln.
+\end{exercise}
+
+\begin{exercise}[Symmetrische Mengendifferenz]
+  Es sei $X$ eine Menge, und $A,B \subset X$ Teilmengen. Wir definieren die
+  \emph{Symmetrische Differenz} als
+  \begin{center}
+    \begin{tikzcd}[row sep=tiny]
+      \mathcal{P}(X)\times\mathcal{P}(X)
+      \arrow [r, "\vartriangle"]
+      & \mathcal{P}(X) \\
+      (A,B)
+      \arrow [r, mapsto]
+      & A\vartriangle B \eqdef (A\cup B)\setminus (A\cap B) \\
+    \end{tikzcd}
+  \end{center}
+  Weise nach, dass
+  \begin{itemize}
+  \item $\vartriangle$ kommutativ ist und
+  \item $\vartriangle$ assoziativ ist und dass
+  \item $A\vartriangle B = (A\setminus B)\cup (B\setminus A)$.
+  \end{itemize}
+\end{exercise}

@@ -1,0 +1,31 @@
+            \begin{prob}[Smith-Volterra-Cantormengen]
+%
+Sei $0 < \alpha \le \tfrac{1}{3}$. Wir konstruieren die {\em Smith-Volterra-Cantormenge} $C_\alpha$ wie folgt: Aus der Mitte des Intervalls $\left[ 0, 1 \right]$ entnehmen wir ein Intervall der Länge $\alpha$, sodass wir die Intervalle
+%
+\[ \left[0, \tfrac{1}{2} - \tfrac{\alpha}{2} \right] \cup \left[ \tfrac{\alpha}{2} + \tfrac{1}{2} , 1 \right] \]
+%
+erhalten. Aus der Mitte jedes dieser Intervalle entnehmen wir wiederum Intervalle der Länge $\alpha^2$, sodass wir die Intervalle 
+%
+\[ \left[ 0 , \tfrac{1}{4} - \tfrac{\alpha}{4} - \tfrac{\alpha^2}{2} \right] \cup \left[ \tfrac{1}{4} - \tfrac{\alpha}{4} + \tfrac{\alpha^2}{2}, \tfrac{1}{2} - \tfrac{\alpha}{2} \right] \cup \left[ \tfrac{\alpha}{2} + \tfrac{1}{2} , \tfrac{\alpha}{4} + \tfrac{3}{4} - \tfrac{\alpha^2}{2} \right] \cup \left[ \tfrac{\alpha}{4} + \tfrac{3}{4} + \tfrac{\alpha^2}{2} , 1 \right] \]
+%
+erhalten und immer so weiter. Formal heißt das
+%
+\[ E_0 := \left[ 0 , 1 \right], \quad E_n := \bigcup_{k = 0}^{2^{n - 1} - 1} \left( \left[ a_k , \frac{a_k + b_k}{2} - \frac{\alpha^n}{2} \right] \cup \left[ \frac{\alpha^n}{2} + \frac{a_k + b_k}{2} , b_k \right] \right), \]
+%
+wobei die $0 = a_1 < b_1 < a_2 < b_2 < \cdots < a_{2^{n - 1} } < b_{2^{n - 1} } = 1$ durch
+%
+\[ E_{n - 1} = \bigcup_{k = 1}^{2^n - 1} \left[ a_k , b_k \right]\]
+%
+eindeutig gegeben sind. Nun
+%
+\[ C_\alpha :=  \bigcap_{n = 1}^\i E_n. \]
+%
+\begin{enumerate}[label = (\alph*)]
+	\item Zeigen Sie: $C_\alpha \in \mathcal{B}(\R)$ und $C_\alpha$ hat leeres Inneres.
+	\item Berechnen Sie das Lebesgue-Maß von $C_\alpha$.
+\end{enumerate}
+%------------------------------------------------------------------------------------------------------------------------
+\newpage
+%------------------------------------------------------------------------------------------------------------------------
+\vspace{2mm}
+            \end{prob}

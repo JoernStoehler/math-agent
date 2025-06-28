@@ -1,0 +1,35 @@
+\begin{exercise}[Stetigkeit]
+  Man überprüfe die folgenden Funktionen auf Stetigkeit:
+  \begin{enumerate}[label=(\alph*)]
+  \item $\sqrt{x}$
+  \item $\abs{x}$
+  \item $ax^n$ mit $a \in \R$ und $n \in \N$.
+  \item
+    \( \displaystyle
+    f(x) \coloneqq
+    \begin{cases}
+      1 & x \geq 0\\
+      0 & x < 0
+    \end{cases}
+    \)
+  \item Für beliebiges $n \in \N$
+    \begin{align*}
+      f_n(x) \coloneqq
+      \begin{cases}
+        1 - nx & x \in \interval{0}{\frac{1}{n}} \\
+        0      & x \in \interval[open left]{\frac{1}{n}}{1}
+      \end{cases}
+    \end{align*}
+    Untersuche bei Langeweile zusätzlich $\lim_{n \to \infty} f_n(x)$.
+  \item
+    \begin{align*}
+      f_n(x) \coloneqq
+      \begin{cases}
+        1 + \frac{1}{n}x - x     & x \in \interval{0}{\frac{1}{2}} \\
+        (1 - \frac{1}{n})(1 - x) & x \in \interval[open left]{\frac{1}{2}}{1}
+      \end{cases}
+    \end{align*}
+    für $n \in \N$. Untersuche unbedingt auch $\lim_{n\to\infty} f_n(x)$. Dabei
+    ist äußerst aufschlussreich, diese Funktion(en) zu zeichnen.
+  \end{enumerate}
+\end{exercise}

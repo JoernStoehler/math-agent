@@ -1,0 +1,28 @@
+\begin{exercise}[Trinominos]
+  Ein \emph{Trinomino} ist wie ein Dominostein, nur aus drei Quadraten aufgebaut
+  und von der Form \includestandalone[scale=0.15]{graphics/trinominos/trinom1}.
+  Trinominos dürfen beliebig gedreht werden, und sollen im Folgenden benützt
+  werden, um \enquote{Schachbretter} lückenlos zu pflastern. Dabei stimmt die
+  Größe der Quadrate aus denen die Schachbretter aufgebaut sind überein mit der
+  Größe der Quadrate aus denen die Trinominos gemacht sind. Ein Trinomino
+  bedeckt so immer genau drei Quadrate.\\
+  Zu zeigen ist nun, dass es immer (für alle $n \in \N$) möglich ist, folgende
+  \enquote{Schachbretter} vollständig ohne Überlappen mit Trinominos zu
+  pflastern:
+  \begin{itemize}
+  \item $\downarrow$ Ein $2^n \times 2^n$ Schachbrett dem die rechte untere
+    Ecke fehlt
+    \begin{figure}[!h]
+      \centering
+      \begin{minipage}[b]{0.38\textwidth}
+        \includestandalone[width=\textwidth]{graphics/trinominos/trinom3}
+      \end{minipage}
+      \hspace{1cm}
+      \begin{minipage}[b]{0.38\textwidth}
+        \includestandalone[width=\textwidth]{graphics/trinominos/trinom4}
+      \end{minipage}
+    \end{figure}
+  \item Ein $2^n \times 2^n$ Schachbrett dessen rechtes unteres Viertel fehlt
+    $\uparrow$
+  \end{itemize}
+\end{exercise}

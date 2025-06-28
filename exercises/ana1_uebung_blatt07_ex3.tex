@@ -1,0 +1,49 @@
+\begin{exercise}[Mächtigkeit von Mengen]
+  Wir wollen einige (auch für die Übungsaufgaben sehr relevante)
+  Gleichmächtigkeitsaussagen zeigen. Wir schreiben dabei für \enquote{$M$ ist
+    gleichmächtig zu $N$} kurz \enquote{$M \cong N$}.
+  \begin{enumerate}[label=(\alph*)]
+  \item Zum Aufwärmen wollen wir uns überlegen dass für jede unendliche Menge
+    $M$ und jedes $a \not\in M$ gilt, dass
+    \begin{equation*}
+      \begin{split}
+        M \cong M\cup\{a\}
+      \end{split}
+    \end{equation*}
+  \item Man überlege sich nun die einfache Folgerung, dass für $a < b$ gilt,
+    dass
+    \begin{equation*}
+      \begin{split}
+        [a,b] \cong (a,b) \cong [a,b) \cong (a,b]
+      \end{split}
+    \end{equation*}
+  \item Man zeige nun, dass jedes Intervall gleichmächtig zu jedem anderen ist,
+    also seien $a < b$ gegeben, zeige man
+    \begin{equation*}
+      \begin{split}
+        [a,b] \cong [0,1]
+      \end{split}
+    \end{equation*}
+    mittels der affin linearen Transformation
+    \begin{center}
+      \begin{tikzcd}[row sep=tiny]
+        [0,1]
+        \arrow [r, "\psi"]
+        & {[a,b]} \\
+        x
+        \arrow [r, mapsto]
+        & a+x(b-a) \\
+      \end{tikzcd}
+    \end{center}
+    Man zeige nun Transitivität von $\cong$ und folgere nun mit (b) die
+    geforderte Aussage.
+  \item Nun wollen wir noch zeigen, dass
+    \begin{equation*}
+      \begin{split}
+        (0,1) \cong \R^+\setminus \{0\}
+      \end{split}
+    \end{equation*}
+    gilt. Man überlege sich dazu eine geeignete Bijektion und zeige alles
+    Nötige.
+  \end{enumerate}
+\end{exercise}

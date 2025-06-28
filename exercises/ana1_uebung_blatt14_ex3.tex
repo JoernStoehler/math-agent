@@ -1,0 +1,26 @@
+\begin{exercise} % Aufgabe 3
+  \begin{theorem}[Satz 12.6]
+    Sei $I$ ein offenes Intervall und $f \colon I \to \R$ zweimal
+    differenzierbar. Dann gilt: $f$ ist konvex
+    $\iff \fa{x \in I} f''(x) \geq 0$.
+  \end{theorem}
+  Schaue in dein Skript und versuche, diesen Satz und den zugehörigen Beweis
+  nachzuvollziehen (Achtung: Der Beweis ist nicht gerade kurz!)
+
+  Prüfe nun entweder mit der Definition oder mit der Aussage von Satz 12.6 nach,
+  ob folgende Funktionen konvex sind:
+  \begin{enumerate}[label=(\alph*)]
+  \item $f \colon \R \to \R, \quad x \mapsto \abs{x}$
+  \item $f(x) =
+    \begin{cases}
+      1 & x \geq 0\\
+      0 & x < 0
+    \end{cases}$
+  \item $f \colon \interval a b \to \R, \quad
+    f(x) =
+    \begin{cases}
+      0 &x \in \interval[open right] a b\\
+      1 & x = b
+    \end{cases}$
+  \end{enumerate}
+\end{exercise}

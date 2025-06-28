@@ -1,0 +1,18 @@
+\begin{exercise}[Darstellung von reeellen Zahlen]
+  Sei $x \in \R_+$ eine positive reelle Zahl. Sei weiter die Folge
+  $(m_n)_{n \geq k}$ eine Dezimaldarstellung der Zahl $x$. Das heißt für eine
+  ganze Zahl $k \in \Z$ gilt:
+  \[
+    x = \sum_{i = k}^\infty \frac{m_i}{10^i}
+  \]
+  Definieren wir weiter die Folge $(a_n)_{n \geq k}$ durch
+  \[
+    a_n \coloneqq \sum_{i = k}^n \frac{m_i}{10^i}.
+  \]
+  Zeige, dass mit dieser Setzung gilt:
+  \[
+    \{x\}
+    =
+    \bigcap_{i = k}^\infty \left[ a_i - 10^{-i}, a_i + 10^{-i} \right]
+  \]
+\end{exercise}

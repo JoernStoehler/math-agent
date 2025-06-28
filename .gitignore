@@ -13,7 +13,7 @@ ENV/
 # LaTeX
 *.aux
 *.log
-*.pdf
+!*.pdf
 *.toc
 *.out
 *.synctex.gz
@@ -21,15 +21,16 @@ ENV/
 *.fdb_latexmk
 
 # Jobs directory (execution outputs)
-jobs/
+!jobs/
 
 # Logs
 *.log
+!*.jsonl
 server.log
 
 # Local configuration
-.claude/
-.mcp.json
+!.claude/
+!.mcp.json
 
 # IDE
 .vscode/
@@ -45,3 +46,4 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+tmp/

@@ -1,0 +1,25 @@
+\begin{prob}
+Die {\bf Fibonacci-Zahlen} $F_n$ sind rekursiv definiert durch
+$F_0=F_1=1$ und 
+$$
+   F_n=F_{n-1}+F_{n-2}. 
+$$
+(a) Zeige: Die Potenzreihe
+$$
+   f(z) := \sum_{n=0}^\infty F_nz^n
+$$
+hat positiven Konvergenzradius $R\geq 1/2$. 
+
+(b) Zeige mit Hilfe der Rekursionsformel f\"ur die $F_n$:
+$$
+   f(z) = \frac{1}{1-z-z^2}\qquad \text{f\"ur }|z|<\frac12\,.
+$$
+(c) Entwickle $1/(1-z-z^2)$ durch Partialbruchzerlegung und
+   geometrische Reihen in eine Potenzreihe, und folgere durch
+   Koeffizientenvergleich mit der Reihe in (a) (mittels des
+   Identit\"atssatzes) die explizite Formel f\"ur die Fibonacci-Zahlen
+$$
+   F_n = \frac{\Bigl(\frac{1+\sqrt{5}}{2}\Bigr)^{n+1} -
+     \Bigl(\frac{1-\sqrt{5}}{2}\Bigr)^{n+1}}{\sqrt{5}}\,. 
+$$
+\end{prob}

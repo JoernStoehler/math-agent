@@ -1,0 +1,24 @@
+        \begin{prob}[Dirac-Folgen]  \\
+%
+Eine Folge messbarer Funktionen $\varphi_n \colon \R^d \mapsto \R$ heißt eine Dirac-Folge, falls
+\begin{enumerate}[label = (\roman*)]
+	\item $\varphi_n \ge 0$,
+	\item $\int_{\R^d} \varphi_n \x = 1$,
+	\item $\int_{U^c} \varphi_n \x \to 0$ \text{ für jede Nullumgebung} $U$.
+\end{enumerate}
+Wir definieren den Raum der stetigen Testfunktionen als
+%
+\[ C_c(\R^d) := \left\{ f \mid f \colon \R^d \mapsto \R \text{ ist stetig und hat kompakten Träger} \right\}. \]
+%
+Sei $\varphi_n$ eine Dirac-Folge. Zeigen Sie:
+\begin{enumerate}[label = (\alph*)]
+	\item Jede Teilfolge von $\varphi_n$ hat eine Teilteilfolge, die fast überall gegen Null konvergiert, aber $\varphi_n$ konvergiert nicht in $L^1(\R^d)$;
+	\\
+	\textit{Hinweis}: Was bedeutet die erste Aussage für einen möglichen $L^1$-Grenzwert? Führen Sie das mit den übrigen Eigenschaften von $\varphi_n$ zu einem Widerspruch.
+	\item Für $f \in C_c(\R^d)$ gilt $\int_{\R^d} \varphi_n f \x \to f(0)$.
+	\item Geben Sie ein Beispiel einer Dirac-Folge an.
+\end{enumerate}
+
+%------------------------------------------------------------------------------------------------------------------------
+\vspace{2mm}
+        \end{prob}

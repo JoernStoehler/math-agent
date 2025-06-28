@@ -1,0 +1,70 @@
+\begin{prob}
+  In dieser Aufgabe sollen noch einige, vielleicht für den ein oder anderen
+  interessante Lemmata über Folgen bewiesen werden.
+  \begin{enumerate}[label=(\alph*)]
+  \item Es sei $\left( a_n \right)_{ n \in \N}$ eine beschränkte Folge und es
+    gelte zudem
+    \begin{equation*}
+      \begin{split}
+        \lim_{n \to \infty} \left( a_n - a_{n-1} \right) = 0
+      \end{split}
+    \end{equation*}
+    Dann ist die Menge der Häufungspunkte von $(a_n)_{n \in \N}$ ein
+    abgeschlossenes Intervall der Form $\interval{a}{b}$ (wobei wir hier
+    außnahmsweise triviale Intervalle der Form $\interval{a}{a}$ zulassen
+    wollen). Gilt die analoge Aussage auch, wenn wir auf Beschränktheit
+    verzichten?
+  \item Seien $\left( a_n \right)_{ n \in \N}$ und
+    $\left( b_n \right)_{ n \in \N}$ zwei beschränkte Folgen und es gelte zudem
+    \begin{equation*}
+      \begin{split}
+        \lim_{n \to \infty} (a_n - b_n) = 0
+      \end{split}
+    \end{equation*}
+    Dann folgt schon, dass $\left( a_n \right)_{n \in \N}$ und
+    $\left( b_n \right)_{n \in \N}$ die selben Häufungspunkte haben.
+  \item Es sei $\left( a_n \right)_{n \in \N}$ eine nicht negative Folge reeller
+    Zahlen, deren Cesaro-Limes gegen Null geht, also
+    \begin{equation*}
+      \begin{split}
+        \lim_{n \to \infty}{\left( \frac{1}{n} \sum_{ k=1 }^{ n } a_k \right)}
+        =
+        0
+      \end{split}
+    \end{equation*}
+    Dann gibt es eine Teilfolge $\left( a_{n_k} \right)_{n_k \in \N}$ mit
+    \begin{equation*}
+      \begin{split}
+        \lim_{k \to \infty} a_{n_k} = 0
+      \end{split}
+    \end{equation*}
+    Stimmt die Aussage auch, wenn $\left( { a }_{ n } \right)_{ n \in \N}$
+    negative Werte annehmen darf?
+  \item Es sei wieder $\left( a_n \right)_{n \in \N}$ eine Folge reeller Zahlen.
+    Konvergiert $\left( a_n \right)_{n \in \N}$ gegen ein $m$ und divergiert
+    jedoch $\left( \floor{a_n} \right)_{n \in \N}$, so ist $m \in \Z$.
+  \item Es sei $\left( a_n \right)_{n \in \N}$ eine beschränkte Folge reeller
+    Zahlen mit abzählbar unendlich vielen Häufungspunkten. Sei nun
+    $\left( b_k \right)_{k \in \N}$ eine Folge von solcher Häufungspunkte, die
+    gegen ein $b \in \R$ konvergiert. Dann folgt, dass $b$ auch schon ein
+    Häufungspunkt der Folge $\left( a_n \right)_{n \in \N}$ war.
+  \item Finde eine divergente Folge $\left( a_n \right)_{n \in \N}$, sodass für
+    alle $k > 1$ die Teilfolgen
+    \begin{equation*}
+      \begin{split}
+        \left( a_{kn} \right)_{n \in \N}
+      \end{split}
+    \end{equation*}
+    konvergieren und beweise die Richtigkeit deiner Aussage. Wenn man analog
+    fordert, dass für alle streng monotonen Funktionen $\phi \colon \N \to \N$
+    mit
+    \begin{equation*}
+      \begin{split}
+        \frac{1}{n} \phi(n) > \theta > 1
+      \end{split}
+    \end{equation*}
+    die Teilfolge $\left( a_{\phi(n)} \right)_{n \in \N}$ konvergiert, folgt
+    dann, dass $\left( a_n \right)_{n \in \N}$ konvergiert? Wenn nicht, was muss
+    man für die Funktionen $\phi$ fordern, damit die Folgerung gültig ist?
+  \end{enumerate}
+\end{prob}

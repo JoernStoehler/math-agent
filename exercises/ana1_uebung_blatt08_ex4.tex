@@ -1,0 +1,22 @@
+\begin{exercise}[Umordnung von Reihen]
+  Wir wollen zeigen, dass man Reihen nicht ohne Weiteres umsortieren kann. Dazu
+  betrachten wir die alternierende harmonische Reihe. Diese konvergiert
+  bekanntermaßen, jedoch kann mit geschicktem Anordnen erreicht werden, dass
+  diese divergiert. Finde eine Umordnung, die dies erreicht.\\
+  \textit{Hinweis}: Es darf vorrausgesetzt werden, dass
+  \[
+    \fa{k \in \N} \sum_{n=k}^{2k} \frac{1}{2n+1} \geq \frac{1}{k+1}
+  \]
+  gilt, diese Aussage ist äquivalent zu
+  \begin{align}
+    \label{eq:harmonic-series}
+    \sum_{n=k}^{2k} \frac{1}{2n+1} - \frac{1}{2(k+1)} \geq \frac{1}{2(k+1)}.
+  \end{align}
+  Das Berechnen der ersten 4 Werte macht die Nützlichkeit dieser Formel klar.
+  Mithilfe von \Cref{eq:harmonic-series} kann die Umsortierung der
+  alternierenden harmonischen Reihe gegen
+  \[
+    \frac{1}{2} \sum_{n=1}^\infty \frac{1}{n}
+  \]
+  abgeschätzt werden.
+\end{exercise}

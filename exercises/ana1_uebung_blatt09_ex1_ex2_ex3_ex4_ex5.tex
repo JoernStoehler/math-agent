@@ -1,0 +1,121 @@
+%% WARNING: This file contains multiple exercises and should be split into separate files
+\begin{exercise}[Indizierung von Folgen und Reihen]
+    Man berechne:
+  \begin{enumerate}[label=(\alph*)]
+  \item $\displaystyle \sum_{k=1}^n\frac{1}{n}$
+  \item $\displaystyle \sum_{n=1}^\infty \frac{1 + (-1)^n n}{n^2}$ (Diese Reihe
+    ist bereits aus der Übung bekannt)
+  \item
+    $\displaystyle \sum_{n = 1}^\infty \left( \frac{1}{n} \sum_{k = 1}^n
+      (-1)^{k+1} \cdot (2k-1) \right)$ (vgl. Tutorien-Blatt 7)
+  \item Sind die Reihen $\displaystyle \sum_{k=1}^{\infty} a_k$,
+    $\displaystyle \sum_{n=1}^{\infty} a_n$ und
+    $\displaystyle \sum_{n=1}^{\infty}\sum_{k=1}^{n} a_k$ die selben? Beweise
+    oder widerlege. Dies ist keine schwere Übungsaufgabe, soll aber nochmal die
+    Denkweise \enquote{Der Indexbuchstabe spielt keine Rolle} schärfen.
+  \end{enumerate}
+\end{exercise}
+
+
+\begin{exercise}[$\liminf$ und $\limsup$]
+  Man zeige die folgenden Aussagen:
+  \begin{enumerate}[label=(\alph*)]
+  \item $\limsup_{n \to \infty} a_n$ (bzw. $\liminf_{n \to \infty} a_n$) ist der
+    größte (bzw. kleinste) Häufungspunkt der Folge $a_n$.
+
+  \item Man mache sich den Zusammenhang von $\limsup$, $\liminf$, $\sup$ und
+    $\inf$ einer Folge $a_n$ klar, d.h. zeige zunächst, dass folgende
+    Ungleichung für jede Folge $a_n$ gilt:
+    \begin{equation*}
+      \inf \Set{a_n | n \in \N}
+      \leq
+      \liminf_{n \to \infty} a_n
+      \leq
+      \limsup_{n \to \infty} a_n
+      \leq
+      \sup \Set{a_n | n \in \N}.
+    \end{equation*}
+    Mache dir nun Gedanken, in welchen Fällen Gleichheit gilt (\emph{Tipp}:
+    Monotonie der Folge $a_n$).
+
+  \item (Quotientenkriterium mit $\limsup$) Beweise, dass das
+    Quotientenkriterium mit $\limsup$ korrekt ist, d.h. es gilt: Gilt
+    $\limsup_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}} < 1$, so konvergiert die
+    Reihe $\displaystyle \sum_{n=0}^{\infty}a_n$ absolut.
+
+  \item (Quotientenkriterium mit $\liminf$) Zeige nun, dass es nicht ausreicht,
+    wenn $\liminf_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}} < 1$ gilt, um
+    Konvergenz der Reihe $\displaystyle \sum_{n=0}^{\infty}a_n$ zu zeigen.
+    Genauer noch: Über die Konvergenz lässt sich gar keine Aussage mehr treffen,
+    wenn
+    \begin{equation*}
+      \liminf_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}}
+      \leq
+      1
+      \leq
+      \limsup_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}}
+    \end{equation*}
+    gilt.
+
+  \item(Divergenz mit Quotientenkriterium und $\liminf$) Zu guter Letzt zeige
+    man nun noch, dass das \enquote{umgekehrte} Quotientenkriterium mit
+    $\liminf$ funktioniert, dass also folgendes gilt: Gilt
+    $\liminf_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}} > 1$, so divergiert die Reihe
+    $\displaystyle \sum_{n=0}^{\infty}a_n$.
+  \end{enumerate}
+  \textbf{Achtung:} Es sei an dieser Stelle nochmal erwähnt, dass man durch die
+  Betrachtung von $\liminf$ bzw. $\limsup$ die Aussage für \enquote{$=1$}
+  verliert, man also nichts mehr über Konvergenz aussagen kann, falls
+  $\liminf_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}} = 1$ bzw.
+  $\limsup_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}} = 1$ gilt!
+\end{exercise}
+
+
+\begin{exercise}
+  Da der Beweis des \emph{Doppelreihensatzes} in der Vorlesung etwas kurz
+  ausgefallen ist, wollen wir hier nochmal einen genauen Blick darauf werfen.
+  Beweise den Doppelreihensatz:
+  \begin{theorem}[Doppelreihensatz]
+    Sei $\displaystyle \sum_{i,j=0}^{\infty}a_{ij}$ absolut konvergent. Dann
+    gilt:
+    \begin{equation*}
+      \sum_{i,j=0}^{\infty} a_{ij}
+      =
+      \sum_{i=0}^{\infty}\left( \sum_{j=0}^{\infty}a_{ij}\right)
+      =
+      \sum_{j=0}^{\infty}\left( \sum_{i=0}^{\infty}a_{ij}\right)
+      =
+      \sum_{k=0}^{\infty}\left( \sum_{i=0}^{k}a_{i,k-i}\right).
+    \end{equation*}
+  \end{theorem}
+\end{exercise}
+
+\newpage
+
+\subsection*{Ein Aufgabensammelsurium zu komplexen Zahlen}
+Diese Aufgabensammlung soll als Hilfe für all diejenigen dienen, die sich mit
+komplexen Zahlen sehr schwer tun. Die ein oder andere Aufgabe sollte sicherlich
+im Tutorium bearbeitet werden und für viele sind diese Aufgaben vielleicht auch
+sehr leicht.
+
+\begin{exercise}[Einfache komplexe Rechnungen]
+  Es seien $z_1 \coloneqq 5 + 3\im$ und $z_2 \coloneqq 1 - \im$. Berechne:
+  \begin{enumerate}[label=(\alph*)]  \item $z_1 + z_2$
+  \item $z_1 - z_2$
+  \item $z_1 \cdot z_2$
+  \item $ z_1^2 $ und $z_2^2$
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:complex-calculations}
+  Berechne den Real- und Imaginärteil, das komplex Konjugierte, sowie den Betrag
+  von:
+  \begin{enumerate}[label=(\alph*)]
+  \item $4 + 3\im$
+  \item $\displaystyle 7 \cdot \exp\left(3 + \frac{3 \pi}{4} \im\right)$
+  \item $\displaystyle\frac{7 - 2\im}{5 + \im}$
+  \item $2^\im$
+  \item $\im^\im$
+  \end{enumerate}
+\end{exercise}

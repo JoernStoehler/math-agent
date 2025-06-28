@@ -1,0 +1,31 @@
+        \end{prob}
+            \begin{prob}[Lebesgue-Räume]
+Sei $\left( \Omega , \mathcal{A} , \mu \right)$ ein Maßraum. Für $1 < p < \i$ und $u \colon \Omega \left[ - \i , \i \right]$ messbar definieren wir die $L^p(\mu)$-Norm von $u$ durch
+$$
+\| u \|_p := \left( \int_\Omega | u |^p \, d \mu \right)^{1 / p}.
+$$
+Die Endlichkeitsmenge von $\| \cdot \|_{L^p(\mu)}$ notieren wir als
+$$
+\mathcal{L}^p(\mu) = \left\{ u \in \mathcal{L}^0(\Omega) \, \middle| \, \| u \|_{L^p(\mu) } < \i \right\}.
+$$
+Man nennt die Elemente von $\mathcal{L}^p(\mu)$ die im $p$-ten Mittel integrierbaren Funktionen. Wie im Fall $p = 1$ notieren wir mit $L^p(\mu)$ den Raum der Äquivalenzklassen von Funktionen in $\mathcal{L}^p(\mu)$, die f.ü. übereinstimmen. Zeigen Sie: 
+\begin{enumerate}[label = (\alph*)]
+	\item Für $u \in \mathcal{L}^p(\mu)$ und $v \in \mathcal{L}^q(\mu)$ mit $\frac{1}{p} + \frac{1}{q} = 1$ gilt die \textit{Höldersche Ungleichung}
+	$$
+	\| u v \|_1 \le \| u \|_p \| v \|_q.
+	$$
+	Insbesondere folgt aus $u \in \mathcal{L}^p(\mu)$ und $v \in \mathcal{L}^q(\mu)$, dass $uv \in \mathcal{L}^1(\mu)$.
+	\\
+	\textit{Hinweis}: Beweisen Sie zunächst die elementare Youngsche Ungleichung
+	$$a b \le \frac{a^p}{p} + \frac{b^q}{q} \text{ für } a, b \in \left[ 0 , \i \right],$$ indem Sie die Konkavität des Logarithmus nutzen. Überlegen Sie sich dann, warum es nicht einschränkt $\| u \|_p = \| v \|_q = 1$ anzunehmen, und folgern Sie mittels der Youngschen Ungleichung.
+	\item Der Raum $L^p(\mu)$ ist normiert.
+	\\
+	\textit{Hinweis}: Betrachten Sie für die Dreiecksungleichung die $p$-te Potenz $\| u + v \|_p^p$ und faktorisieren Sie deren Integranden zu $| u + v | | u + v |^{p - 1}$, um die Höldersche Ungleichung anzuwenden. %Es hilft zu bemerken, dass $q = \frac{p}{p - 1}$.
+%	\item Der Raum $L^p(\mu)$ ist vollständig. Jede in $L^p(\mu)$ konvergente Folge enthält eine Teilfolge, die f.ü. gegen ihren Grenzwert konvergiert.
+	%\\
+	%\textit{Hinweis}: Studieren Sie im Skript den Fall $p = 1$.
+	
+\end{enumerate}
+
+\vspace{2mm}
+            \end{prob}

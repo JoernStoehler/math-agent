@@ -1,0 +1,36 @@
+\begin{exercise}[Zwei Verallgemeinerungen der Produktregel]
+  Die Leibnitzregel ist manchmal praktisch wenn man schnell und allgemein oft
+  hintereinander ein Produkt von zwei Funktionen ableiten muss. Die
+  Logarithmische Ableitung ist für den Fall, dass man mehr als zwei Faktoren hat
+  sehr schnell und effizient.
+  \begin{enumerate}[label=(\alph*)]
+  \item \emph{Die Leibnitzregel} besagt, dass
+    \begin{equation*}
+      \begin{split}
+        \left(u(x) \cdot v(x)\right)^{(n)} = \sum_{k=0}^{n} { \binom{n}{k}
+          f^{(k)}(x) g^{(n-k)}(x) }
+      \end{split}
+    \end{equation*}
+    gilt, wobei wir mit $f^{(i)}$ die $i$-te Ableitung einer Funktion $f$
+    bezeichnen. Zeige sie mit Hilfe der vollständigen Induktion.
+  \item Mit der \emph{logarithmischen Ableitung} einer Funktion
+    $f \colon \R \to \R \setminus \set{0}$ bezeichnen wir den Quotienten
+    \begin{equation*}
+      \begin{split}
+        f^{(l)}(x) \eqdef \frac{f^\prime(x)}{f(x)}
+      \end{split}
+    \end{equation*}
+    Es seien nun $f_i\colon \R \to \R \setminus \set{0}$ für
+    $i \in \set{1, \cdots, n}$ differenzierbare Funktionen und
+    $f(x) = f_1(x) \cdot f_2(x) \cdot \cdots \cdot f_n(x)$ das Produkt aller
+    $f_i$. Zeige dann die sehr schöne Aussage
+    \begin{equation*}
+      \begin{split}
+        f^{(l)} = \sum\limits_{ i=1 }^{ n }{ f_i^{(l)} }
+      \end{split}
+    \end{equation*}
+    und folgere eine Formel für die Berechnung der Ableitung eines Produktes von
+    mehr als zwei Funktionen. Überlege noch, ob die Vorraussetzung, dass die
+    $f_i$ nicht null werden für die Formel am Ende wirklich nötig war.
+  \end{enumerate}
+\end{exercise}

@@ -1,0 +1,23 @@
+\begin{prob}
+  Finde den Fehler im folgenden \enquote{Beweis} per Induktion: \\
+  \textit{Falscher Satz:} Alle Katzen haben dieselbe Farbe.
+
+  \textit{Falscher Beweis:} Wir zeigen per Induktion, dass jede Menge von $n$
+  Katzen nur Katzen derselben Farbe enthält. Da die Menge der Katzen endlich
+  ist, erreichen wir so irgendwann ein $n_0 \in \N$, das so groß ist wie die
+  Menge aller Katzen, und wenden dann unseren Satz auf die Menge aller Katzen
+  an.\\
+  Wir beginnen mit dem Induktionsanfang, also dem Fall einer einzigen Katze:
+  Diese hat dieselbe Farbe wie sie selbst. Jede Menge, die nur eine Katze
+  enthält, enthält also nur Katzen derselben Farbe. \\
+  Die Induktionsvoraussetzung ist jetzt also, dass jede Menge von $n$ Katzen nur
+  Katzen der gleichen Farbe enthält. Jetzt kommt der Induktionsschritt zu jeder
+  Menge von $n + 1$ Katzen. Wir trennen dazu zuerst eine Katze vom Rest, es
+  bleibt also eine Menge von $n$ Katzen übrig. Diese haben nach Voraussetzung
+  alle dieselbe Farbe. Wir kennen die Farbe der einzelnen Katze aber noch nicht.
+  Um diese herauszufinden, vereinen wir wieder all unsere Katzen und trennen
+  dann eine andere Katze davon ab als bei der ersten Trennung. Die verbleibenden
+  $n$ Katzen inklusive der einen, die wir vorher abgetrennt hatten, haben also
+  dieselbe Farbe. Also müssen alle Mengen von $n + 1$ Katzen nur Katzen
+  derselben Farbe beinhalten.
+\end{prob}

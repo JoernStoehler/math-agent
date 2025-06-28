@@ -1,0 +1,28 @@
+\begin{prob}
+%------------------------------------------------------------------------------------------------------------------------
+    \begin{prob}[ Kriterien für Messbarkeit]
+%
+Seien $(\Omega,\mathcal{A}), (\Omega ',\mathcal{A}')$ messbare Räume.
+\begin{enumerate}[label = (\alph*)]
+\item Sei $\mathcal{S}'\subset\mathcal{P}(\Omega')$ mit $\sigma(\mathcal{S}')=\mathcal{A}'$. Dann gilt:
+%
+\[ f \colon (\Omega, \mathcal{A} ) \mapsto (\Omega',\mathcal{A}') \text{ messbar} \iff f^{-1}(S') \in \mathcal{A} \text{ f\"ur alle } S'\in\mathcal{S}'. \]
+%
+$Hinweis$: Betrachten Sie die finale $\sigma$-Algebra von $f$.
+\item Sei $(\Omega',\mathcal{B}')$ ein topologischer Raum mit der $\sigma$-Algebra der Borel-Mengen. Dann gilt:
+\begin{align*}
+f \colon (\Omega, \mathcal{A} ) \mapsto (\Omega',\mathcal{B}') \text{ messbar} & \iff
+f^{-1}(U') \in \mathcal{A} \text{ f\"ur alle } U' \subset \Omega' \text{ offen} \cr & \iff
+f^{-1}(A') \in \mathcal{A} \text{ f\"ur alle } A'\subset \Omega' \text{ abgeschlossen}.
+\end{align*}
+Insbesondere ist jede stetige Abbildung Borel-Borel-messbar.
+\item F\"ur $(\R, \mathcal{B}_1)$ mit der Borel-$\sigma$-Algebra $\mathcal{B}_1$ gilt:
+%
+\[ f \colon (\Omega, \mathcal{A} ) \mapsto (\R,\mathcal{B}_1) \text{ messbar} \iff
+\{ f < a \} := \{ \omega \in \Omega \mid f(\omega) < a \} \in \mathcal{A} \text{ f\"ur alle } a \in \R, \]
+%
+und analog f\"ur die Ungleichungen $\le, >, \ge$.
+\end{enumerate}
+%------------------------------------------------------------------------------------------------------------------------
+\vspace{2mm}
+\end{prob}

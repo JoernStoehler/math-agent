@@ -1,0 +1,46 @@
+%% WARNING: This file contains multiple exercises and should be split into separate files
+\begin{prob}
+  Eine Schnecke startet morgens am linken Ende eines 1 Meter langen Gummibandes.
+  Jeden Tag kriecht sie einen Zentimeter nach rechts das Band entlang. Jede
+  Nacht (während die Schnecke schläft) wird das Gummiband gleichmäßig um 1 Meter
+  gedehnt. Erreicht die Schnecke das rechte Ende des Gummibands?
+\end{prob}
+
+\begin{prob}
+  Gegeben sei die rekursiv definierte Folge $(f_n)$ mit $f_1 = f_2 = 1$ und
+  $f_n = f_{n-1} + f_{n-2}$ für $n \geq 3$.
+  \begin{enumerate}[label=(\alph*)]
+  \item Untersuche $(f_n)$ auf Konvergenz.
+  \item Zeige, dass für alle $n \geq 2$ gilt, dass
+    $\frac{3}{2} \leq \frac{f_{n+1}}{f_n} \leq 2$.
+  \item Untersuche die Folge $a_n \coloneqq \frac{f_{n+1}}{f_n}$ auf Monotonie.
+  \item Untersuche $(a_n)$ auf Konvergenz und berechne den Grenzwert, wenn einer
+    existiert.
+  \end{enumerate}
+\end{prob}
+
+\begin{prob}
+  \begin{enumerate}[label=(\alph*)]
+  \item Es sei $p > 1$ eine natürliche Zahl. Zeige: Jede positive reelle Zahl $a$
+    besitzt eine $p$-adische Entwicklung, das heißt, es gibt eine ganze Zahl
+    $k_0$ und eine Folge $(a_k)_{k \geq k_0}$ ganzer Zahlen mit $0 \leq a_k < p$,
+    so dass
+    \begin{equation*}
+      a = \sum_{k=k_0}^{\infty}\frac{a_k}{p^k}.
+    \end{equation*}
+  \item Zwei $p$-adische Darstellungen
+    $\displaystyle\sum_{k=k_0}^{\infty} \frac{a_k}{p^k}$ und
+    $\displaystyle\sum_{k=k_1}^{\infty} \frac{b_k}{p^k}$ repräsentieren genau dann
+    dieselbe Zahl $a \in \R_+$, wenn entweder $a_k = b_k$ für alle $k \in \Z$
+    gilt, oder ein $\ell \in \Z$ existiert, sodass
+    \begin{equation*}
+      \begin{cases}
+        a_k = b_k\ \text{für alle } k < \ell, \\
+        a_\ell = b_\ell + 1,                  \\
+        a_k = 0\ \text{für alle } k > \ell,   \\
+        b_k = p-1\ \text{für alle } k > \ell,
+      \end{cases}
+    \end{equation*}
+    gilt oder dasselbe,  mit den Rollen der $a_k$ und $b_k$ vertauscht, gilt.
+  \end{enumerate}
+\end{prob}

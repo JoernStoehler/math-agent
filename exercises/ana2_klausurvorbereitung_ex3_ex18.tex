@@ -1,0 +1,214 @@
+%% WARNING: This file contains multiple exercises and should be split into separate files
+\begin{prob}
+Überprüfe die Funktionenfolge
+\begin{equation*}
+\begin{split}
+f_n:[0,\pi]&\to\R\\
+x&\mapsto \frac{\sin(nx)}{n}
+\end{split}
+\end{equation*}
+sowie die Funktionenfolge $f'_n$ auf gleichm"a"sige Konvergenz.
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Bestimme alle $x\in \mathbb{R}$, für die die folgende Potenzreihe konvergiert
+$$\sum_{n=1}^\infty \frac{x^n}{\sqrt{n}}.$$ 
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Berechne das Taylorpolynom  zweiten Grades $T_0^2f(x)$ der Funktion 
+\begin{equation*}
+\begin{split}
+f:\R&\to\R\\
+x&\mapsto \log(x^2+1)
+\end{split}
+\end{equation*}
+an der Stelle $x_0:=0$ und schätze den Fehler
+$$|f(1)-T_0^2f(1)|$$
+mit Hilfe des Lagrangerestglieds nach oben ab. 
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+(a) Zeige: Der Raum $\R^{m\times n}$ der $m\times n$-Matrizen ist mit der Funktion $d(A,B)=\text{rang}(A-B)$ ein metrischer Raum.
+
+(b) Bestimme f"ur $k\in\N$ die offenen B"alle $B(0,k)$ in $(\R^{m\times n},d)$.
+
+(c) Zeige, dass es keine Norm auf $\R^{m\times n}$ gibt, so dass $\|A-B\|=d(A,B)$.
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Es seien $f,g\in\mathcal{C}([0,1])$ und
+$$\la f,g\ra:=\integral{0}{1}{f(x)g(x)}{x}.$$
+Zeige: $(\mathcal{C}([0,1]),\la\cdot,\cdot\ra)$ ist ein Euklidischer Vektorraum.
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+(a) Bestimme das Innere, den Abschluss und den Rand der Menge
+$$X=\{(x,y)\in\R^2\;\bigl|\;|x|\leq 1,\ |y|<1\}\subset\R^2.$$
+
+(b) Bestimme das Innere, den Abschluss und den Rand desselben $X\subset X$.
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+(a) Es sei $(X,d)$ ein vollst"andiger nicht-leerer metrischer Raum, $n\in\N$ eine nat"urliche Zahl und
+$$f:X\to X$$
+eine Abbildung, so dass $d(f^n(x),f^n(y))\leq \theta d(x,y))$ f"ur ein $0<\theta<1$ und alle $x,y\in X$. Zeige, dass dann $f$ einen eindeutigen Fixpunkt hat.
+
+(b) Zeige, dass die Funktion
+\begin{equation*}
+\begin{split}
+f:(0,\infty)&\to(0,\infty)\\
+x&\mapsto 1+\frac{1}{x}
+\end{split}
+\end{equation*}
+ genau einen Fixpunkt hat und bestimme diesen.
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+(a) Untersuche die Menge 
+$$B:=\{x\in\R^n\;\bigl|\;0<|x|\leq 1\} \subset \R^n$$ auf Kompaktheit.
+
+(b) Zeige: Die Funktion 
+\begin{equation*}
+\begin{split}
+f:B&\to\R\\
+x&\mapsto \frac{1}{\|x\|^2}
+\end{split}
+\end{equation*}
+nimmt auf $B$ ihr Minimum an.
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Zeichne schematisch die Kurve
+\begin{equation*}
+\begin{split}
+\gamma:[0,2]&\to\R^2\\
+t&\mapsto \begin{pmatrix}
+t\cos(2\pi t)\\
+t\sin(2\pi t)\\
+\end{pmatrix}
+\end{split}
+\end{equation*}
+und zeige, dass sie einfach und regul"ar ist.
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Bestimme die Divergenz und Rotation des Vektorfelds 
+    \begin{equation*}
+        \begin{split}
+            f:\R^3&\to\R^3\\
+            (x,y,z)&\mapsto 
+            \begin{pmatrix}
+            x-y+z\\
+            x+y+z\\
+            z
+            \end{pmatrix}.
+        \end{split}
+    \end{equation*}
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Berechne die Jacobimatrix der Funktion 
+    \begin{equation*}
+        \begin{split}
+            f:\R^4&\to\R^2\\
+            (w,x,y,z)&\mapsto 
+            \begin{pmatrix}
+            \sin(w)\sin(z)\\
+            e^{x-y}
+            \end{pmatrix}
+        \end{split}
+    \end{equation*}
+    und bestimme ihren Rang in Abh"angigkeit von $(w,x,y,z)$.
+\end{prob}
+
+
+\vspace{0.3cm}
+
+\begin{prob}
+Untersuche die Funktion 
+\begin{equation*}
+        \begin{split}
+            f:\R^2&\to\R\\
+            (x,y)&\mapsto \begin{cases}
+						x^3y^2\sin\left(\frac{1}{x^2+y}\right),& x^2+y\neq 0\\
+						0,& x^2+y=0
+						\end{cases}
+        \end{split}
+    \end{equation*}
+ am Punkt $(0,0)$ auf Stetigkeit, partielle Differenzierbarkeit und totale Differenzierbarkeit. Berechne f"ur alle $v\in\R^2$ mit $\|v\|=1$ die Richtungsableitungen $D_vf(0,0)$ (falls sie existieren).
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Untersuche die Funktion
+\begin{equation*}
+        \begin{split}
+            f:\R^3&\to\R^3\\
+            (x,y,z)&\mapsto (yz, -xz, xy)
+        \end{split}
+    \end{equation*}
+ auf Lipschitz-Stetigkeit.
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Berechne das Taylorpolynom zweiten Grades $T_0^2f(x)$ am Punkt $x_0=0$ der Funktion
+\begin{equation*}
+        \begin{split}
+            f:\R^4&\to\R\\
+            (w,x,y,z) &\mapsto wy-x^2z
+        \end{split}
+    \end{equation*}
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Finde die lokalen und globalen Minima und Maxima der Funktion
+\begin{equation*}
+        \begin{split}
+            f:\R^2&\to\R\\
+            (x,y) &\mapsto \cos(x)+\sin(y)
+        \end{split}
+    \end{equation*}
+und interpretiere das Ergebnis geometrisch.
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Die Fläche eines Dreiecks aufgespannt von zwei Vektoren $a,b \in \R^2$ ist gegeben durch
+$$\operatorname{Area}\left(\begin{pmatrix}a_1 \\ a_2\end{pmatrix},\begin{pmatrix}b_1 \\ b_2\end{pmatrix}\right) = \frac{1}{2} \left\rVert \begin{pmatrix}a_1 \\ a_2 \\ 0\end{pmatrix} \times \begin{pmatrix}b_1 \\ b_2 \\ 0\end{pmatrix}\right\rVert$$
+Wir erhalten also eine Funktion 
+\begin{equation*}
+        \begin{split}
+            \mathcal{A}:\R^4&\to\R\\
+            (a_1, a_2, b_1, b_2) &\mapsto \operatorname{Area}\left(\begin{pmatrix}a_1 \\ a_2 \end{pmatrix}, \begin{pmatrix}b_1 \\ b_2 \end{pmatrix}\right)
+        \end{split}
+    \end{equation*}
+Finde die Maxima von $\mathcal{A}$ unter den Nebenbedingungen $a_1^2+a_2^2=1$, $b_1^2+b_2^2=1$, $a_i,b_i>0$ f"ur $i\in\{1,2\}$.
+Interpretiere das Ergebnis geometrisch.
+\end{prob}

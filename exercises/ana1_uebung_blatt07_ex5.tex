@@ -1,0 +1,61 @@
+\begin{exercise} Abzählbare Mengen
+  \begin{enumerate}[label=(\alph*)]
+  \item
+    Wir definieren die Menge aller \enquote{abbrechenden} rationalen Folgen als
+    \begin{equation*}
+      \begin{split}
+        d \eqdef \Set{a \colon \N \to \Q | \ex{N \in \N} \fa{n \geqslant N} a(n) = 0}
+      \end{split}
+    \end{equation*}
+    Man zeige nun, dass $d$ abzählbar ist.
+
+  \item
+    Wir definieren den Polynomring über $\Z$ als
+    \begin{equation*}
+      \begin{split}
+        \Z[X] \eqdef \left\{a_k X^k + \cdots + a_0 \:\arrowvert\: a_i \in \Z\right\}
+      \end{split}
+    \end{equation*}
+    Man zeige, dass auch dieser als Menge abzählbar ist.
+
+  \item
+    Wir definieren die algebraischen Zahlen
+    \begin{equation*}
+      \begin{split}
+        \mathbb{A} \eqdef \Set{x \in \R | \ex{p \in \adjunction{\Z}{X}} x
+          \textnormal{ ist Nullstelle von } p}
+      \end{split}
+    \end{equation*}
+    Man vergewissere sich kurz, dass
+    \begin{equation*}
+      \begin{split}
+        \Z \subsetneq \Q \subsetneq \mathbb{A} \subsetneq \C
+      \end{split}
+    \end{equation*}
+    gilt und zeige dann, dass auch die algebraischen Zahlen abzählbar sind.
+
+  \item \label{itm:subset-of-countable-set}Wir haben in der Vorlesung gezeigt,
+    dass unendliche Teilmengen von $\N$ abzählbar sind. Man wiederhole den
+    Beweis und passe ihn an, um die folgende, stärkere Behauptung zu beweisen:
+    \begin{theorem}
+      \normalfont\itshape Ist $M$ eine abzählbare Menge, so ist jede unendliche
+      Teilmenge $ S \subset M$ auch abzählbar
+    \end{theorem}
+
+  \item Wir wollen mal die Sprache betrachten
+    \begin{equation*}
+      \begin{split}
+        D = \Set{s | s \textnormal{ ist ein grammatikalisch korrekter deutscher Satz}}
+      \end{split}
+    \end{equation*}
+    Wie immer zeige man nun, dass $D$ abzählbar ist. Es könnte dabei hilfreich
+    sein, sich der Teilaufgabe \ref{itm:subset-of-countable-set} zu bedienen.
+    Mit dieser können wir dann auch direkt folgern dass die Menge aller
+    Mathematischen Sätze Abzählbar ist.
+
+  \item Man überlege sich, ob und wie man mit Induktion Aussagen zeigen kann die
+    für alle Elemente einer abzählbaren Menge gelten sollen. Kommt man zum
+    Schluss, dass das geht, so modifiziere man die Definition der Induktion
+    entsprechend, und anders gebe man ein Gegebeispiel.
+  \end{enumerate}
+\end{exercise}
