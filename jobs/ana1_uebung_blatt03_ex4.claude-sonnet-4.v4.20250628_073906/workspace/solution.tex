@@ -1,0 +1,144 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+% Commands from exercise
+\newcommand{\abs}[1]{|#1|}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\fa}[1]{\forall #1 \colon}
+
+\begin{document}
+
+\subsection*{Aufgabe}
+Aus der Vorlesung ist die Betragsfunktion 
+\[
+  \abs{{-}} \colon \R \to \R^{+}_{0}, x \mapsto
+  \begin{cases}
+    x  & x \geq 0 \\
+    -x & x < 0    \\
+  \end{cases}
+\]
+bekannt. Beweise folgende Eigenschaften:
+\begin{enumerate}
+\item \(\fa{x \in \mathbb{R}} \abs{x} \geq 0\)
+\item \(\fa{x \in \R} \abs{x} = 0 \implies x = 0\)
+\item \(\fa{x, y \in \R} \abs{x \cdot y} = \abs{x} \cdot \abs{y}\)
+\item \(\fa{x, y \in \R} \abs{x + y} \leq \abs{x} + \abs{y}\)
+\item \(\fa{a,b \in \R} \abs{a + b} + \abs{a - b} \geq \abs{a} + \abs{b}\)
+\item \(\fa{a,b \in \R^*} \abs{\frac{a}{b} + \frac{b}{a}} \geq 2\)
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\textbf{1. Beweis von \(\fa{x \in \mathbb{R}} \abs{x} \geq 0\):}
+
+Sei $x \in \R$ beliebig. Wir unterscheiden zwei Fälle gemäß der Definition der Betragsfunktion:
+
+Fall 1: $x \geq 0$. Dann ist $\abs{x} = x \geq 0$ nach Voraussetzung.
+
+Fall 2: $x < 0$. Dann ist $\abs{x} = -x$. Da $x < 0$ ist, folgt durch Multiplikation mit $-1$ dass $-x > 0$, also $\abs{x} > 0 \geq 0$.
+
+In beiden Fällen gilt $\abs{x} \geq 0$. $\square$
+
+\textbf{2. Beweis von \(\fa{x \in \R} \abs{x} = 0 \implies x = 0\):}
+
+Sei $x \in \R$ mit $\abs{x} = 0$. Wir unterscheiden wieder zwei Fälle:
+
+Fall 1: $x \geq 0$. Dann ist $\abs{x} = x = 0$, also $x = 0$.
+
+Fall 2: $x < 0$. Dann ist $\abs{x} = -x = 0$, also $x = 0$. Dies ist ein Widerspruch zur Annahme $x < 0$.
+
+Also kann nur Fall 1 eintreten und es folgt $x = 0$. $\square$
+
+\textbf{3. Beweis von \(\fa{x, y \in \R} \abs{x \cdot y} = \abs{x} \cdot \abs{y}\):}
+
+Seien $x, y \in \R$ beliebig. Wir betrachten vier Fälle:
+
+Fall 1: $x \geq 0$ und $y \geq 0$. Dann ist $xy \geq 0$, also
+\[\abs{xy} = xy = x \cdot y = \abs{x} \cdot \abs{y}.\]
+
+Fall 2: $x \geq 0$ und $y < 0$. Dann ist $xy \leq 0$, genauer $xy < 0$ falls $x > 0$ oder $xy = 0$ falls $x = 0$.
+\begin{itemize}
+\item Für $x > 0$: $\abs{xy} = -(xy) = x \cdot (-y) = \abs{x} \cdot \abs{y}$.
+\item Für $x = 0$: $\abs{xy} = \abs{0} = 0 = 0 \cdot \abs{y} = \abs{x} \cdot \abs{y}$.
+\end{itemize}
+
+Fall 3: $x < 0$ und $y \geq 0$. Analog zu Fall 2 mit vertauschten Rollen von $x$ und $y$.
+
+Fall 4: $x < 0$ und $y < 0$. Dann ist $xy > 0$, also
+\[\abs{xy} = xy = (-x) \cdot (-y) = \abs{x} \cdot \abs{y}.\]
+
+In allen Fällen gilt $\abs{xy} = \abs{x} \cdot \abs{y}$. $\square$
+
+\textbf{4. Beweis von \(\fa{x, y \in \R} \abs{x + y} \leq \abs{x} + \abs{y}\) (Dreiecksungleichung):}
+
+Seien $x, y \in \R$ beliebig. Wir nutzen folgende Beobachtung:
+Für alle $a \in \R$ gilt $-\abs{a} \leq a \leq \abs{a}$.
+
+Dies folgt direkt aus der Definition: Für $a \geq 0$ ist $\abs{a} = a$, also $-a \leq a \leq a$.
+Für $a < 0$ ist $\abs{a} = -a > 0$, also $-(-a) = a < 0 < -a = \abs{a}$, und somit $-\abs{a} < a < \abs{a}$.
+
+Daher haben wir:
+\begin{align}
+-\abs{x} &\leq x \leq \abs{x} \\
+-\abs{y} &\leq y \leq \abs{y}
+\end{align}
+
+Addition der beiden Ungleichungen ergibt:
+\[-(\abs{x} + \abs{y}) \leq x + y \leq \abs{x} + \abs{y}\]
+
+Dies bedeutet $\abs{x + y} \leq \abs{x} + \abs{y}$. $\square$
+
+\textbf{5. Beweis von \(\fa{a,b \in \R} \abs{a + b} + \abs{a - b} \geq \abs{a} + \abs{b}\):}
+
+Seien $a, b \in \R$ beliebig. Wir betrachten vier Fälle basierend auf den Vorzeichen von $a$ und $b$:
+
+Fall 1: $a \geq 0$ und $b \geq 0$. 
+Dann ist $a + b \geq 0$, also $\abs{a + b} = a + b$.
+\begin{itemize}
+\item Falls $a \geq b$, ist $a - b \geq 0$, also $\abs{a - b} = a - b$.
+Somit: $\abs{a + b} + \abs{a - b} = (a + b) + (a - b) = 2a = 2\abs{a} \geq \abs{a} + \abs{b}$.
+\item Falls $a < b$, ist $a - b < 0$, also $\abs{a - b} = -(a - b) = b - a$.
+Somit: $\abs{a + b} + \abs{a - b} = (a + b) + (b - a) = 2b = 2\abs{b} \geq \abs{a} + \abs{b}$.
+\end{itemize}
+
+Fall 2: $a \geq 0$ und $b < 0$. Dann ist $\abs{a} = a$ und $\abs{b} = -b$.
+\begin{itemize}
+\item Falls $a + b \geq 0$, ist $\abs{a + b} = a + b$ und $\abs{a - b} = a - b = a + (-b) = \abs{a} + \abs{b}$.
+Somit: $\abs{a + b} + \abs{a - b} = (a + b) + (\abs{a} + \abs{b}) \geq \abs{a} + \abs{b}$.
+\item Falls $a + b < 0$, ist $\abs{a + b} = -(a + b) = -a - b$ und $\abs{a - b} = a - b$.
+Somit: $\abs{a + b} + \abs{a - b} = (-a - b) + (a - b) = -2b = 2\abs{b} \geq \abs{a} + \abs{b}$.
+\end{itemize}
+
+Fall 3: $a < 0$ und $b \geq 0$. Analog zu Fall 2 mit vertauschten Rollen von $a$ und $b$.
+
+Fall 4: $a < 0$ und $b < 0$. Dann ist $\abs{a} = -a$, $\abs{b} = -b$, und $a + b < 0$, also $\abs{a + b} = -(a + b)$.
+\begin{itemize}
+\item Falls $a \leq b$, ist $a - b \leq 0$, also $\abs{a - b} = -(a - b) = b - a$.
+Somit: $\abs{a + b} + \abs{a - b} = (-(a + b)) + (b - a) = -2a = 2\abs{a} \geq \abs{a} + \abs{b}$.
+\item Falls $a > b$, ist $a - b > 0$, also $\abs{a - b} = a - b$.
+Somit: $\abs{a + b} + \abs{a - b} = (-(a + b)) + (a - b) = -2b = 2\abs{b} \geq \abs{a} + \abs{b}$.
+\end{itemize}
+
+In allen Fällen gilt die behauptete Ungleichung. $\square$
+
+\textbf{6. Beweis von \(\fa{a,b \in \R^*} \abs{\frac{a}{b} + \frac{b}{a}} \geq 2\):}
+
+Seien $a, b \in \R^*$ (also $a \neq 0$ und $b \neq 0$). Setze $x = \frac{a}{b}$. Dann ist $x \neq 0$ und wir müssen zeigen:
+\[\abs{x + \frac{1}{x}} \geq 2\]
+
+Fall 1: $x > 0$. Die Funktion $f(x) = x + \frac{1}{x}$ hat für $x > 0$ ein Minimum bei $x = 1$ mit $f(1) = 2$.
+Dies kann man durch Ableitung zeigen: $f'(x) = 1 - \frac{1}{x^2} = 0 \iff x^2 = 1 \iff x = 1$ (da $x > 0$).
+Für $0 < x < 1$ ist $f'(x) = 1 - \frac{1}{x^2} < 0$ (da $\frac{1}{x^2} > 1$) und für $x > 1$ ist $f'(x) = 1 - \frac{1}{x^2} > 0$ (da $\frac{1}{x^2} < 1$).
+Also hat $f$ bei $x = 1$ ein lokales Minimum. Da $\lim_{x \to 0^+} f(x) = +\infty$ und $\lim_{x \to +\infty} f(x) = +\infty$, ist dies auch ein globales Minimum.
+Daher ist $x + \frac{1}{x} \geq 2$ für alle $x > 0$, also $\abs{x + \frac{1}{x}} = x + \frac{1}{x} \geq 2$.
+
+Fall 2: $x < 0$. Setze $y = -x > 0$. Dann ist
+\[\abs{x + \frac{1}{x}} = \abs{-y + \frac{1}{-y}} = \abs{-y - \frac{1}{y}} = \abs{-(y + \frac{1}{y})} = y + \frac{1}{y} \geq 2\]
+nach Fall 1.
+
+In beiden Fällen gilt $\abs{\frac{a}{b} + \frac{b}{a}} \geq 2$. $\square$
+
+\end{document}

@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\DeclareMathOperator{\tr}{tr}
+
+\begin{document}
+
+\subsection*{Aufgabe: Trägheitstensor}
+
+Der \emph{Trägheitstensor} (um den Ursprung) der Massenverteilung
+$\mu$ ist die lineare Abbildung $\Theta \colon \R^3 \to \R^3$,
+$$
+\Theta v := \int_{\R^3} \left( |x|^2v - \langle x, v\rangle x \right) d\mu(x), \qquad v \in \R^3,
+$$
+wobei das Integral wieder komponentenweise definiert ist. Man zeige:
+
+\begin{enumerate}
+	\item[(a)] Für $|v| = 1$ ist $\langle v, \Theta v \rangle$ das Trägheitsmoment um
+	die Gerade durch den Ursprung in Richtung $v$.
+	\item[(b)] Die lineare Abbildung $\Theta$ ist symmetrisch und positiv
+	semidefinit; sie ist positiv definit außer im Fall, dass die gesamte
+	Masse entlang einer Geraden durch den Ursprung konzentriert ist.
+	\item[(c)] Sind $0 \le \lambda_1 \le \lambda_2 \le \lambda_3$ die der Größe
+	nach geordneten Eigenwerte von $\Theta$, so gilt $\lambda_3 \le \lambda_1 + \lambda_2$.
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\paragraph{(a)} Wir zeigen, dass für $|v| = 1$ der Ausdruck $\langle v, \Theta v \rangle$ das Trägheitsmoment um die Gerade durch den Ursprung in Richtung $v$ ist.
+
+Das Trägheitsmoment einer Massenverteilung $\mu$ um eine Achse ist definiert als
+$$I = \int_{\R^3} d(x)^2 \, d\mu(x),$$
+wobei $d(x)$ der senkrechte Abstand des Punktes $x$ zur Achse ist.
+
+Für eine Achse durch den Ursprung in Richtung des Einheitsvektors $v$ ist der senkrechte Abstand eines Punktes $x$ gegeben durch
+$$d(x) = |x - \langle x, v \rangle v|.$$
+
+Wir berechnen:
+\begin{align}
+d(x)^2 &= |x - \langle x, v \rangle v|^2\\
+&= \langle x - \langle x, v \rangle v, x - \langle x, v \rangle v \rangle\\
+&= |x|^2 - 2\langle x, v \rangle^2 + \langle x, v \rangle^2 |v|^2\\
+&= |x|^2 - \langle x, v \rangle^2,
+\end{align}
+wobei wir im letzten Schritt $|v| = 1$ verwendet haben.
+
+Nun berechnen wir $\langle v, \Theta v \rangle$:
+\begin{align}
+\langle v, \Theta v \rangle &= \left\langle v, \int_{\R^3} \left( |x|^2v - \langle x, v\rangle x \right) d\mu(x) \right\rangle\\
+&= \int_{\R^3} \langle v, |x|^2v - \langle x, v\rangle x \rangle \, d\mu(x)\\
+&= \int_{\R^3} \left( |x|^2 \langle v, v \rangle - \langle x, v\rangle \langle v, x \rangle \right) d\mu(x)\\
+&= \int_{\R^3} \left( |x|^2 - \langle x, v\rangle^2 \right) d\mu(x)\\
+&= \int_{\R^3} d(x)^2 \, d\mu(x) = I.
+\end{align}
+
+Damit ist gezeigt, dass $\langle v, \Theta v \rangle$ das Trägheitsmoment um die Achse in Richtung $v$ ist.
+
+\paragraph{(b)} Wir zeigen zunächst, dass $\Theta$ symmetrisch ist, und dann, dass $\Theta$ positiv semidefinit ist.
+
+\textbf{Symmetrie:} Für beliebige $u, v \in \R^3$ gilt:
+\begin{align}
+\langle u, \Theta v \rangle &= \left\langle u, \int_{\R^3} \left( |x|^2v - \langle x, v\rangle x \right) d\mu(x) \right\rangle\\
+&= \int_{\R^3} \langle u, |x|^2v - \langle x, v\rangle x \rangle \, d\mu(x)\\
+&= \int_{\R^3} \left( |x|^2 \langle u, v \rangle - \langle x, v\rangle \langle u, x \rangle \right) d\mu(x).
+\end{align}
+
+Analog erhalten wir:
+\begin{align}
+\langle \Theta u, v \rangle &= \int_{\R^3} \left( |x|^2 \langle u, v \rangle - \langle x, u\rangle \langle x, v \rangle \right) d\mu(x).
+\end{align}
+
+Da $\langle x, v\rangle \langle u, x \rangle = \langle x, u\rangle \langle x, v \rangle$, folgt $\langle u, \Theta v \rangle = \langle \Theta u, v \rangle$, also ist $\Theta$ symmetrisch.
+
+\textbf{Positive Semidefinitheit:} Für beliebiges $v \in \R^3$ mit $v \neq 0$ sei $\hat{v} = v/|v|$ der zugehörige Einheitsvektor. Dann gilt:
+\begin{align}
+\langle v, \Theta v \rangle &= |v|^2 \langle \hat{v}, \Theta \hat{v} \rangle\\
+&= |v|^2 \int_{\R^3} \left( |x|^2 - \langle x, \hat{v}\rangle^2 \right) d\mu(x).
+\end{align}
+
+Nach der Cauchy-Schwarz-Ungleichung gilt $\langle x, \hat{v}\rangle^2 \leq |x|^2 |\hat{v}|^2 = |x|^2$, also ist der Integrand nicht-negativ. Daher ist $\langle v, \Theta v \rangle \geq 0$ für alle $v \in \R^3$.
+
+\textbf{Positive Definitheit:} Es gilt $\langle v, \Theta v \rangle = 0$ genau dann, wenn
+$$\int_{\R^3} \left( |x|^2 - \langle x, \hat{v}\rangle^2 \right) d\mu(x) = 0.$$
+
+Da der Integrand nicht-negativ ist, bedeutet dies, dass $|x|^2 - \langle x, \hat{v}\rangle^2 = 0$ $\mu$-fast überall. Dies ist äquivalent zu $|x|^2 = \langle x, \hat{v}\rangle^2$ $\mu$-fast überall.
+
+Nach Cauchy-Schwarz gilt Gleichheit genau dann, wenn $x$ und $\hat{v}$ linear abhängig sind. Also ist $\langle v, \Theta v \rangle = 0$ genau dann, wenn die gesamte Masse auf einer Geraden durch den Ursprung in Richtung $v$ konzentriert ist.
+
+Daher ist $\Theta$ positiv definit, außer wenn die gesamte Masse entlang einer Geraden durch den Ursprung konzentriert ist.
+
+\paragraph{(c)} Wir zeigen $\lambda_3 \leq \lambda_1 + \lambda_2$ für die Eigenwerte $0 \leq \lambda_1 \leq \lambda_2 \leq \lambda_3$ von $\Theta$.
+
+Die Matrixdarstellung von $\Theta$ bezüglich der Standardbasis ist:
+$$\Theta_{ij} = \int_{\R^3} \left( |x|^2 \delta_{ij} - x_i x_j \right) d\mu(x),$$
+wobei $x = (x_1, x_2, x_3)$ und $\delta_{ij}$ das Kronecker-Delta ist.
+
+Die Spur von $\Theta$ ist:
+\begin{align}
+\tr(\Theta) &= \sum_{i=1}^3 \Theta_{ii} = \sum_{i=1}^3 \int_{\R^3} \left( |x|^2 - x_i^2 \right) d\mu(x)\\
+&= \int_{\R^3} \left( 3|x|^2 - \sum_{i=1}^3 x_i^2 \right) d\mu(x)\\
+&= \int_{\R^3} 2|x|^2 \, d\mu(x).
+\end{align}
+
+Da die Spur die Summe der Eigenwerte ist, gilt:
+$$\lambda_1 + \lambda_2 + \lambda_3 = 2\int_{\R^3} |x|^2 \, d\mu(x).$$
+
+Für jeden Eigenwert $\lambda_i$ mit zugehörigem normierten Eigenvektor $v_i$ gilt nach Teil (a):
+$$\lambda_i = \langle v_i, \Theta v_i \rangle = \int_{\R^3} \left( |x|^2 - \langle x, v_i\rangle^2 \right) d\mu(x) \leq \int_{\R^3} |x|^2 \, d\mu(x),$$
+da $\langle x, v_i\rangle^2 \geq 0$.
+
+Insbesondere gilt für den größten Eigenwert:
+$$\lambda_3 \leq \int_{\R^3} |x|^2 \, d\mu(x) = \frac{\lambda_1 + \lambda_2 + \lambda_3}{2}.$$
+
+Durch Umstellen erhalten wir:
+$$2\lambda_3 \leq \lambda_1 + \lambda_2 + \lambda_3,$$
+was äquivalent ist zu $\lambda_3 \leq \lambda_1 + \lambda_2$.
+
+\end{document}

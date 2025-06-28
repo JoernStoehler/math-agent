@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe: Fibonacci-Zahlen}
+Die Fibonacci-Zahlen sind definiert durch $f_0 = f_1 = 1$ und rekursiv
+weiter mit $f_{n+1} = f_n + f_{n-1}$. Zeige induktiv für alle $n \in \mathbb{N}$:
+\begin{enumerate}
+\item $\sum\limits_{i=0}^{n} f_i = f_{n+2} - 1$
+\item $f_{2n}$ ist teilbar durch $f_n$
+\item $f_n$ und $f_{n+1}$ sind relativ prim, das heißt es gibt keine Zahl
+  $a \in \mathbb{N}$ mit $a > 1$, die sowohl $f_n$ als auch $f_{n+1}$ teilt
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\textbf{Teil (a):} Wir zeigen durch vollständige Induktion, dass $\sum\limits_{i=0}^{n} f_i = f_{n+2} - 1$ für alle $n \in \mathbb{N}_0$ gilt.
+
+\textit{Induktionsanfang:}
+Für $n = 0$ haben wir:
+$$\sum_{i=0}^{0} f_i = f_0 = 1 = 2 - 1 = f_2 - 1$$
+Da $f_2 = f_1 + f_0 = 1 + 1 = 2$, stimmt die Formel.
+
+Für $n = 1$ haben wir:
+$$\sum_{i=0}^{1} f_i = f_0 + f_1 = 1 + 1 = 2 = 3 - 1 = f_3 - 1$$
+Da $f_3 = f_2 + f_1 = 2 + 1 = 3$, stimmt die Formel auch hier.
+
+\textit{Induktionsschritt:}
+Sei $n \in \mathbb{N}_0$ beliebig und die Aussage gelte für $n$, d.h., 
+$$\sum_{i=0}^{n} f_i = f_{n+2} - 1$$
+
+Wir müssen zeigen, dass die Aussage auch für $n+1$ gilt:
+\begin{align}
+\sum_{i=0}^{n+1} f_i &= \sum_{i=0}^{n} f_i + f_{n+1}\\
+&= (f_{n+2} - 1) + f_{n+1} \quad \text{(nach Induktionsvoraussetzung)}\\
+&= f_{n+2} + f_{n+1} - 1\\
+&= f_{n+3} - 1 \quad \text{(nach Definition der Fibonacci-Zahlen)}
+\end{align}
+
+Damit ist die Aussage für alle $n \in \mathbb{N}_0$ bewiesen.
+
+\vspace{0.5cm}
+
+\textbf{Teil (b):} Die Aussage, dass $f_{2n}$ durch $f_n$ teilbar ist, ist für die gegebene Fibonacci-Folge mit $f_0 = f_1 = 1$ im Allgemeinen falsch.
+
+\textit{Gegenbeispiel:} Für $n = 2$ haben wir $f_2 = 2$ und $f_4 = 5$. Es gilt $5 = 2 \cdot 2 + 1$, also teilt $f_2 = 2$ nicht $f_4 = 5$.
+
+\textit{Anmerkung:} Die korrekte Aussage für Fibonacci-Zahlen lautet: $f_n$ teilt $f_{kn}$ genau dann, wenn $n$ ein Teiler von $k$ ist. Insbesondere gilt $f_n | f_{kn}$ für alle $k \in \mathbb{N}$. Die spezielle Aussage $f_n | f_{2n}$ gilt nur für $n = 1$.
+
+\vspace{0.5cm}
+
+\textbf{Teil (c):} Wir zeigen, dass $\gcd(f_n, f_{n+1}) = 1$ für alle $n \in \mathbb{N}_0$.
+
+\textit{Beweis:} Sei $d = \gcd(f_n, f_{n+1})$. Dann gilt $d | f_n$ und $d | f_{n+1}$.
+
+Aus der Rekursionsformel $f_{n+1} = f_n + f_{n-1}$ folgt:
+$$f_{n-1} = f_{n+1} - f_n$$
+
+Da $d$ sowohl $f_n$ als auch $f_{n+1}$ teilt, muss $d$ auch deren Differenz teilen:
+$$d | (f_{n+1} - f_n) = f_{n-1}$$
+
+Also teilt $d$ auch $f_{n-1}$. Aus $f_n = f_{n-1} + f_{n-2}$ folgt analog:
+$$d | (f_n - f_{n-1}) = f_{n-2}$$
+
+Durch wiederholte Anwendung dieses Arguments erhalten wir, dass $d$ alle Fibonacci-Zahlen $f_k$ für $k \leq n$ teilt.
+
+Insbesondere muss $d$ auch $f_1 = 1$ teilen. Da die einzige natürliche Zahl, die 1 teilt, die 1 selbst ist, folgt $d = 1$.
+
+Somit gilt $\gcd(f_n, f_{n+1}) = 1$ für alle $n \in \mathbb{N}_0$.
+
+\end{document}

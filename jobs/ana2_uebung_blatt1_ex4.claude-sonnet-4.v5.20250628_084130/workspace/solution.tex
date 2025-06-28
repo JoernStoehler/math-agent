@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+% No enumerate package needed for basic enumeration
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Berechne die folgenden Integrale mittels Substitution:
+\begin{enumerate}
+\item $\int_a^b x\sin(x^2+1)\,dx$ mit dem Ansatz $u=x^2+1$;
+\item $\int_a^b \sqrt{1-x^2}\,dx$ für $-1\leq a<b\leq1$ mit dem Ansatz $x=\sin(t)$;
+\item $\int_a^b\frac{1}{1-x^2}\,dx$ für $-1<a<b<1$ mit dem Ansatz $x=\tanh(t)$;
+\item Zeige mit Hilfe einer Substitution, dass für jede Riemann-integrierbare Funktion $f:[a,b]\to\mathbb{R}$ gilt:
+$$
+\int_a^b\frac{f'(x)}{f(x)}\,dx = \log(|f(b)|)- \log(|f(a)|).
+$$
+ und bestimme damit das Integral $\int_a^b\tan(x)\,dx$ für $[a,b]\subset(-\pi/2,\pi/2)$.
+\end{enumerate} 
+
+\subsection*{Lösung}
+
+\textbf{(a)} Wir berechnen $\int_a^b x\sin(x^2+1)\,dx$ mit der Substitution $u=x^2+1$.
+
+Für die Substitution gilt:
+\begin{align}
+u &= x^2 + 1\\
+\frac{du}{dx} &= 2x\\
+dx &= \frac{du}{2x}
+\end{align}
+
+Die Integrationsgrenzen transformieren sich wie folgt:
+\begin{align}
+x = a &\implies u = a^2 + 1\\
+x = b &\implies u = b^2 + 1
+\end{align}
+
+Setzen wir die Substitution in das Integral ein:
+\begin{align}
+\int_a^b x\sin(x^2+1)\,dx &= \int_{a^2+1}^{b^2+1} x\sin(u)\,\frac{du}{2x}\\
+&= \int_{a^2+1}^{b^2+1} \frac{1}{2}\sin(u)\,du\\
+&= \frac{1}{2}\left[-\cos(u)\right]_{a^2+1}^{b^2+1}\\
+&= \frac{1}{2}\left(-\cos(b^2+1) + \cos(a^2+1)\right)\\
+&= \frac{1}{2}\left(\cos(a^2+1) - \cos(b^2+1)\right)
+\end{align}
+
+\textbf{(b)} Wir berechnen $\int_a^b \sqrt{1-x^2}\,dx$ für $-1\leq a<b\leq1$ mit der Substitution $x=\sin(t)$.
+
+Für die Substitution gilt:
+\begin{align}
+x &= \sin(t)\\
+\frac{dx}{dt} &= \cos(t)\\
+dx &= \cos(t)\,dt
+\end{align}
+
+Da $x\in[-1,1]$ und $\sin$ bijektiv auf $[-\pi/2,\pi/2]$ ist, wählen wir $t\in[-\pi/2,\pi/2]$.
+Die Integrationsgrenzen transformieren sich:
+\begin{align}
+x = a &\implies t = \arcsin(a)\\
+x = b &\implies t = \arcsin(b)
+\end{align}
+
+Setzen wir die Substitution ein:
+\begin{align}
+\int_a^b \sqrt{1-x^2}\,dx &= \int_{\arcsin(a)}^{\arcsin(b)} \sqrt{1-\sin^2(t)}\,\cos(t)\,dt\\
+&= \int_{\arcsin(a)}^{\arcsin(b)} \sqrt{\cos^2(t)}\,\cos(t)\,dt
+\end{align}
+
+Da $t\in[-\pi/2,\pi/2]$, ist $\cos(t)\geq 0$, also $\sqrt{\cos^2(t)} = \cos(t)$. Damit:
+\begin{align}
+\int_a^b \sqrt{1-x^2}\,dx &= \int_{\arcsin(a)}^{\arcsin(b)} \cos^2(t)\,dt\\
+&= \int_{\arcsin(a)}^{\arcsin(b)} \frac{1+\cos(2t)}{2}\,dt\\
+&= \frac{1}{2}\left[t + \frac{\sin(2t)}{2}\right]_{\arcsin(a)}^{\arcsin(b)}\\
+&= \frac{1}{2}\left[t + \frac{2\sin(t)\cos(t)}{2}\right]_{\arcsin(a)}^{\arcsin(b)}\\
+&= \frac{1}{2}\left[t + \sin(t)\cos(t)\right]_{\arcsin(a)}^{\arcsin(b)}
+\end{align}
+
+Mit $\sin(t) = x$ und $\cos(t) = \sqrt{1-x^2}$ erhalten wir:
+\begin{align}
+\int_a^b \sqrt{1-x^2}\,dx &= \frac{1}{2}\left[\arcsin(x) + x\sqrt{1-x^2}\right]_a^b\\
+&= \frac{1}{2}\left(\arcsin(b) + b\sqrt{1-b^2} - \arcsin(a) - a\sqrt{1-a^2}\right)
+\end{align}
+
+\textbf{(c)} Wir berechnen $\int_a^b\frac{1}{1-x^2}\,dx$ für $-1<a<b<1$ mit der Substitution $x=\tanh(t)$.
+
+Für die Substitution gilt:
+\begin{align}
+x &= \tanh(t) = \frac{e^t - e^{-t}}{e^t + e^{-t}}\\
+\frac{dx}{dt} &= \frac{1}{\cosh^2(t)} = 1 - \tanh^2(t) = 1 - x^2\\
+dx &= (1-x^2)\,dt
+\end{align}
+
+Die Integrationsgrenzen transformieren sich:
+\begin{align}
+x = a &\implies t = \text{artanh}(a) = \frac{1}{2}\log\left(\frac{1+a}{1-a}\right)\\
+x = b &\implies t = \text{artanh}(b) = \frac{1}{2}\log\left(\frac{1+b}{1-b}\right)
+\end{align}
+
+Setzen wir die Substitution ein:
+\begin{align}
+\int_a^b\frac{1}{1-x^2}\,dx &= \int_{\text{artanh}(a)}^{\text{artanh}(b)}\frac{1}{1-x^2}\,(1-x^2)\,dt\\
+&= \int_{\text{artanh}(a)}^{\text{artanh}(b)} 1\,dt\\
+&= \left[t\right]_{\text{artanh}(a)}^{\text{artanh}(b)}\\
+&= \text{artanh}(b) - \text{artanh}(a)\\
+&= \frac{1}{2}\log\left(\frac{1+b}{1-b}\right) - \frac{1}{2}\log\left(\frac{1+a}{1-a}\right)\\
+&= \frac{1}{2}\log\left(\frac{(1+b)(1-a)}{(1-b)(1+a)}\right)
+\end{align}
+
+\textbf{(d)} Wir zeigen mit Hilfe einer Substitution, dass für jede Riemann-integrierbare Funktion $f:[a,b]\to\mathbb{R}$ mit $f(x) \neq 0$ auf $[a,b]$ gilt:
+$$\int_a^b\frac{f'(x)}{f(x)}\,dx = \log(|f(b)|)- \log(|f(a)|).$$
+
+Wir verwenden die Substitution $u = f(x)$:
+\begin{align}
+u &= f(x)\\
+\frac{du}{dx} &= f'(x)\\
+dx &= \frac{du}{f'(x)}
+\end{align}
+
+Die Integrationsgrenzen transformieren sich:
+\begin{align}
+x = a &\implies u = f(a)\\
+x = b &\implies u = f(b)
+\end{align}
+
+Setzen wir die Substitution ein:
+\begin{align}
+\int_a^b\frac{f'(x)}{f(x)}\,dx &= \int_{f(a)}^{f(b)}\frac{f'(x)}{u}\,\frac{du}{f'(x)}\\
+&= \int_{f(a)}^{f(b)}\frac{1}{u}\,du
+\end{align}
+
+Falls $f(x) > 0$ auf $[a,b]$:
+$$\int_{f(a)}^{f(b)}\frac{1}{u}\,du = \left[\log(u)\right]_{f(a)}^{f(b)} = \log(f(b)) - \log(f(a)) = \log(|f(b)|) - \log(|f(a)|)$$
+
+Falls $f(x) < 0$ auf $[a,b]$, dann ist $f(a) < 0$ und $f(b) < 0$. Mit der Substitution $v = -u$ erhalten wir:
+$$\int_{f(a)}^{f(b)}\frac{1}{u}\,du = -\int_{-f(a)}^{-f(b)}\frac{1}{v}\,dv = -[\log(v)]_{-f(a)}^{-f(b)} = -\log(-f(b)) + \log(-f(a)) = \log(|f(b)|) - \log(|f(a)|)$$
+
+Falls $f$ das Vorzeichen wechselt, müssen wir das Integral an den Nullstellen aufteilen. Die Formel gilt dann für jeden Teilbereich, in dem $f$ das Vorzeichen nicht wechselt.
+
+Nun bestimmen wir $\int_a^b\tan(x)\,dx$ für $[a,b]\subset(-\pi/2,\pi/2)$:
+
+Es gilt $\tan(x) = \frac{\sin(x)}{\cos(x)}$. Wir können schreiben:
+$$\tan(x) = \frac{\sin(x)}{\cos(x)} = -\frac{(\cos(x))'}{\cos(x)}$$
+
+da $(\cos(x))' = -\sin(x)$. Mit der obigen Formel und $f(x) = \cos(x)$ erhalten wir:
+\begin{align}
+\int_a^b\tan(x)\,dx &= -\int_a^b\frac{(\cos(x))'}{\cos(x)}\,dx\\
+&= -[\log(|\cos(x)|)]_a^b\\
+&= -\log(|\cos(b)|) + \log(|\cos(a)|)\\
+&= \log\left(\frac{|\cos(a)|}{|\cos(b)|}\right)
+\end{align}
+
+Da $[a,b]\subset(-\pi/2,\pi/2)$, ist $\cos(x) > 0$ auf $[a,b]$, also:
+$$\int_a^b\tan(x)\,dx = \log\left(\frac{\cos(a)}{\cos(b)}\right) = \log(\cos(a)) - \log(\cos(b))$$
+
+\end{document}

@@ -1,0 +1,34 @@
+\begin{prob}
+Betrachte die Integrale
+$$
+   I_m := \int_0^{\pi/2}\sin^mx\,dx,\qquad m\in\N_0.
+$$
+\begin{enumerate}[label=(\alph*)]
+\item Beweise durch partielle Integration die Rekursionsformel
+$$
+   I_m = \frac{m-1}{m}I_{m-2},\qquad m\geq 2.
+$$
+\item Folgere aus (a) folgende Formeln f\"ur $n\in\N_0$:
+\begin{align*}
+   I_{2n} &= \frac{(2n-1)(2n-3)\cdots 3\cdot 1}{(2n-0)(2n-2)\cdots 4\cdot 2}\cdot\frac{\pi}{2},\qquad
+   I_{2n+1} = \frac{(2n-0)(2n-2)\cdots 4\cdot 2}{(2n+1)(2n-1)\cdots 5\cdot 3}\cdot 1.
+\end{align*}
+\item Beweise: 
+%direkt aus der Definition von $I_m$: 
+Die Folge $(I_m)$ ist streng monoton fallend und $\lim_{m\to\infty}I_m=0$.
+\item Zeige $\lim_{n\to\infty}\frac{I_{2n+1}}{I_{2n}}=1$ und folgere
+daraus die {\em Wallis'sche Produktdarstellung}
+$$
+   \frac{\pi}{2} = \prod_{n=1}^\infty \frac{4n^2}{4n^2-1} = \frac{2}{1} \cdot \frac{2}{3} \cdot \frac{4}{3} \cdot \frac{4}{5} \cdot \frac{6}{5} \cdot \frac{6}{7} \cdot \cdots
+$$
+\end{enumerate}
+%Wir definieren $I(n):=\int_0^\pi\sin(x)^n\,dx$.
+%\begin{enumerate}[label=(\alph*)]
+%\item Berechne rekursiv mittels partieller Integration die Werte von $I(n)$ für alle $n\in\N$
+%\item Zeige, dass $\lim_{n\to\infty} \frac{I(n)}{I(n+1)} = 1$
+%\item Zeige die \textit{Wallis-Produktformel}:
+%$$
+%\frac{\pi}{2} = \frac{2}{1} \cdot \frac{2}{3} \cdot \frac{4}{3} \cdot \frac{4}{5} \cdot \frac{6}{5} \cdot \frac{6}{7} \cdot \dots
+%$$
+%\end{enumerate} 
+\end{prob}

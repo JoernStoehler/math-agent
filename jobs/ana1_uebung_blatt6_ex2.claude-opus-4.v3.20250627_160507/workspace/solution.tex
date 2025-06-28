@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+
+\begin{document}
+
+\section*{Problem}
+
+Untersuche die folgenden Reihen auf Konvergenz:
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $\displaystyle \sum_{n=1}^\infty \frac{2^n n!}{n^n}$
+
+\item $\displaystyle \sum_{n=1}^\infty \frac{3^n n!}{n^n}$
+
+\item $\displaystyle \sum_{n=1}^\infty \frac{1 + (-1)^n n}{n^2}$
+
+\item $\displaystyle \sum_{n=0}^\infty \frac{x^n}{1+x^{2n}} \text{ für } x \in \mathbb{R}$
+
+\end{enumerate}
+
+\section*{Lösung}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item Für die Reihe $\displaystyle \sum_{n=1}^\infty \frac{2^n n!}{n^n}$ verwenden wir das Quotientenkriterium.
+
+Sei $a_n = \frac{2^n n!}{n^n}$. Dann gilt:
+
+\begin{align}
+\frac{a_{n+1}}{a_n} &= \frac{2^{n+1} (n+1)!}{(n+1)^{n+1}} \cdot \frac{n^n}{2^n n!}\\
+&= \frac{2 \cdot (n+1) \cdot n!}{(n+1)^{n+1}} \cdot \frac{n^n}{n!}\\
+&= \frac{2 \cdot (n+1) \cdot n^n}{(n+1)^{n+1}}\\
+&= \frac{2 \cdot (n+1) \cdot n^n}{(n+1) \cdot (n+1)^n}\\
+&= \frac{2 \cdot n^n}{(n+1)^n}\\
+&= 2 \cdot \left(\frac{n}{n+1}\right)^n\\
+&= 2 \cdot \left(1 - \frac{1}{n+1}\right)^n
+\end{align}
+
+Für den Grenzwert nutzen wir die bekannte Formel $\lim_{n \to \infty} \left(1 - \frac{1}{n+1}\right)^n = \lim_{n \to \infty} \left(1 - \frac{1}{n+1}\right)^{(n+1) \cdot \frac{n}{n+1}} = e^{-1}$.
+
+Daher gilt:
+$$\lim_{n \to \infty} \frac{a_{n+1}}{a_n} = 2 \cdot e^{-1} = \frac{2}{e} \approx 0.736 < 1$$
+
+Nach dem Quotientenkriterium konvergiert die Reihe.
+
+\item Für die Reihe $\displaystyle \sum_{n=1}^\infty \frac{3^n n!}{n^n}$ verwenden wir ebenfalls das Quotientenkriterium.
+
+Sei $b_n = \frac{3^n n!}{n^n}$. Analog zu Teilaufgabe (a) erhalten wir:
+
+\begin{align}
+\frac{b_{n+1}}{b_n} &= \frac{3^{n+1} (n+1)!}{(n+1)^{n+1}} \cdot \frac{n^n}{3^n n!}\\
+&= 3 \cdot \left(\frac{n}{n+1}\right)^n\\
+&= 3 \cdot \left(1 - \frac{1}{n+1}\right)^n
+\end{align}
+
+Wie in Teilaufgabe (a) gezeigt, gilt:
+$$\lim_{n \to \infty} \frac{b_{n+1}}{b_n} = 3 \cdot e^{-1} = \frac{3}{e} \approx 1.104 > 1$$
+
+Nach dem Quotientenkriterium divergiert die Reihe.
+
+\item Für die Reihe $\displaystyle \sum_{n=1}^\infty \frac{1 + (-1)^n n}{n^2}$ spalten wir die Reihe auf:
+
+$$\sum_{n=1}^\infty \frac{1 + (-1)^n n}{n^2} = \sum_{n=1}^\infty \frac{1}{n^2} + \sum_{n=1}^\infty \frac{(-1)^n n}{n^2} = \sum_{n=1}^\infty \frac{1}{n^2} + \sum_{n=1}^\infty \frac{(-1)^n}{n}$$
+
+Die erste Reihe $\sum_{n=1}^\infty \frac{1}{n^2}$ ist eine konvergente p-Reihe mit $p = 2 > 1$.
+
+Die zweite Reihe $\sum_{n=1}^\infty \frac{(-1)^n}{n}$ ist die alternierende harmonische Reihe. Nach dem Leibniz-Kriterium konvergiert sie, da:
+\begin{itemize}
+\item $\frac{1}{n} > 0$ für alle $n \geq 1$
+\item $\frac{1}{n+1} < \frac{1}{n}$ (die Folge ist monoton fallend)
+\item $\lim_{n \to \infty} \frac{1}{n} = 0$
+\end{itemize}
+
+Da beide Teilreihen konvergieren, konvergiert auch die ursprüngliche Reihe.
+
+\item Für die Reihe $\displaystyle \sum_{n=0}^\infty \frac{x^n}{1+x^{2n}}$ müssen wir verschiedene Fälle für $x \in \mathbb{R}$ betrachten.
+
+\textbf{Fall 1: $x = 0$}\\
+Für $n = 0$ ist der Term $\frac{0^0}{1+0^0} = \frac{1}{2}$ (mit der Konvention $0^0 = 1$).
+Für $n \geq 1$ sind alle Terme gleich 0. Die Reihe konvergiert gegen $\frac{1}{2}$.
+
+\textbf{Fall 2: $|x| < 1$}\\
+Für große $n$ gilt $x^{2n} \to 0$, also $\frac{x^n}{1+x^{2n}} \approx x^n$. 
+Da $\sum_{n=0}^\infty x^n$ eine geometrische Reihe mit $|x| < 1$ ist und konvergiert, konvergiert auch unsere Reihe nach dem Majorantenkriterium.
+
+\textbf{Fall 3: $|x| = 1$}\\
+Für $x = 1$: $\frac{1^n}{1+1^{2n}} = \frac{1}{1+1} = \frac{1}{2}$ für alle $n \geq 0$.
+Die Reihe wird zu $\sum_{n=0}^\infty \frac{1}{2}$, welche divergiert.
+
+Für $x = -1$: $\frac{(-1)^n}{1+(-1)^{2n}} = \frac{(-1)^n}{1+1} = \frac{(-1)^n}{2}$.
+Die Reihe wird zu $\sum_{n=0}^\infty \frac{(-1)^n}{2} = \frac{1}{2} \sum_{n=0}^\infty (-1)^n$, welche divergiert (die Partialsummen alternieren zwischen $\frac{1}{2}$ und 0).
+
+\textbf{Fall 4: $|x| > 1$}\\
+Für große $n$ gilt $\frac{x^n}{1+x^{2n}} \approx \frac{x^n}{x^{2n}} = x^{-n} = \frac{1}{x^n}$.
+Die Reihe verhält sich also wie $\sum_{n=0}^\infty \frac{1}{x^n} = \sum_{n=0}^\infty \left(\frac{1}{x}\right)^n$.
+Dies ist eine geometrische Reihe mit Quotient $\frac{1}{x}$. Da $|x| > 1$ ist $\left|\frac{1}{x}\right| < 1$, und die Reihe konvergiert.
+
+\textbf{Zusammenfassung:}\\
+Die Reihe $\sum_{n=0}^\infty \frac{x^n}{1+x^{2n}}$ konvergiert für $x \in \mathbb{R} \setminus \{-1, 1\}$ und divergiert für $x \in \{-1, 1\}$.
+
+\end{enumerate}
+
+\end{document}

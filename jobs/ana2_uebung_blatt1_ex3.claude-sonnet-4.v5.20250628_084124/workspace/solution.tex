@@ -1,0 +1,169 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Betrachte die Integrale
+$$
+   I_m := \int_0^{\pi/2}\sin^mx\,dx,\qquad m\in\mathbb{N}_0.
+$$
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\item Beweise durch partielle Integration die Rekursionsformel
+$$
+   I_m = \frac{m-1}{m}I_{m-2},\qquad m\geq 2.
+$$
+\item Folgere aus (a) folgende Formeln für $n\in\mathbb{N}_0$:
+\begin{align*}
+   I_{2n} &= \frac{(2n-1)(2n-3)\cdots 3\cdot 1}{(2n-0)(2n-2)\cdots 4\cdot 2}\cdot\frac{\pi}{2},\\
+   I_{2n+1} &= \frac{(2n-0)(2n-2)\cdots 4\cdot 2}{(2n+1)(2n-1)\cdots 5\cdot 3}\cdot 1.
+\end{align*}
+\item Beweise: Die Folge $(I_m)$ ist streng monoton fallend und $\lim_{m\to\infty}I_m=0$.
+\item Zeige $\lim_{n\to\infty}\frac{I_{2n+1}}{I_{2n}}=1$ und folgere
+daraus die {\em Wallis'sche Produktdarstellung}
+$$
+   \frac{\pi}{2} = \prod_{n=1}^\infty \frac{4n^2}{4n^2-1} = \frac{2}{1} \cdot \frac{2}{3} \cdot \frac{4}{3} \cdot \frac{4}{5} \cdot \frac{6}{5} \cdot \frac{6}{7} \cdot \cdots
+$$
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\textbf{(a)} Wir beweisen die Rekursionsformel $I_m = \frac{m-1}{m}I_{m-2}$ für $m \geq 2$ mittels partieller Integration.
+
+Für das Integral $I_m = \int_0^{\pi/2} \sin^m(x) \, dx$ schreiben wir
+$$I_m = \int_0^{\pi/2} \sin^{m-1}(x) \cdot \sin(x) \, dx$$
+
+Wir wenden partielle Integration an mit:
+\begin{align*}
+u &= \sin^{m-1}(x), \quad dv = \sin(x) \, dx\\
+du &= (m-1)\sin^{m-2}(x)\cos(x) \, dx, \quad v = -\cos(x)
+\end{align*}
+
+Damit erhalten wir:
+\begin{align*}
+I_m &= \left[\sin^{m-1}(x) \cdot (-\cos(x))\right]_0^{\pi/2} + \int_0^{\pi/2} \cos(x) \cdot (m-1)\sin^{m-2}(x)\cos(x) \, dx\\
+&= \left[-\sin^{m-1}(x)\cos(x)\right]_0^{\pi/2} + (m-1)\int_0^{\pi/2} \sin^{m-2}(x)\cos^2(x) \, dx
+\end{align*}
+
+Der Randterm verschwindet, da $\cos(\pi/2) = 0$ und $\sin(0) = 0$:
+$$I_m = 0 + (m-1)\int_0^{\pi/2} \sin^{m-2}(x)\cos^2(x) \, dx$$
+
+Mit der trigonometrischen Identität $\cos^2(x) = 1 - \sin^2(x)$ erhalten wir:
+\begin{align*}
+I_m &= (m-1)\int_0^{\pi/2} \sin^{m-2}(x)(1-\sin^2(x)) \, dx\\
+&= (m-1)\int_0^{\pi/2} \sin^{m-2}(x) \, dx - (m-1)\int_0^{\pi/2} \sin^m(x) \, dx\\
+&= (m-1)I_{m-2} - (m-1)I_m
+\end{align*}
+
+Umstellen nach $I_m$ liefert:
+\begin{align*}
+I_m + (m-1)I_m &= (m-1)I_{m-2}\\
+m \cdot I_m &= (m-1)I_{m-2}\\
+I_m &= \frac{m-1}{m}I_{m-2}
+\end{align*}
+
+\textbf{(b)} Wir folgern die expliziten Formeln für $I_{2n}$ und $I_{2n+1}$.
+
+Zunächst berechnen wir die Basiswerte:
+\begin{align*}
+I_0 &= \int_0^{\pi/2} 1 \, dx = \left[x\right]_0^{\pi/2} = \frac{\pi}{2}\\
+I_1 &= \int_0^{\pi/2} \sin(x) \, dx = \left[-\cos(x)\right]_0^{\pi/2} = -\cos(\pi/2) + \cos(0) = 0 + 1 = 1
+\end{align*}
+
+Für gerade Indizes $I_{2n}$ wenden wir die Rekursionsformel wiederholt an:
+\begin{align*}
+I_{2n} &= \frac{2n-1}{2n} \cdot I_{2n-2}\\
+&= \frac{2n-1}{2n} \cdot \frac{2n-3}{2n-2} \cdot I_{2n-4}\\
+&= \frac{2n-1}{2n} \cdot \frac{2n-3}{2n-2} \cdot \frac{2n-5}{2n-4} \cdot I_{2n-6}\\
+&\vdots\\
+&= \frac{(2n-1)(2n-3)(2n-5)\cdots 3 \cdot 1}{(2n)(2n-2)(2n-4)\cdots 4 \cdot 2} \cdot I_0\\
+&= \frac{(2n-1)(2n-3)\cdots 3 \cdot 1}{(2n)(2n-2)\cdots 4 \cdot 2} \cdot \frac{\pi}{2}
+\end{align*}
+
+Für ungerade Indizes $I_{2n+1}$ verfahren wir analog:
+\begin{align*}
+I_{2n+1} &= \frac{2n}{2n+1} \cdot I_{2n-1}\\
+&= \frac{2n}{2n+1} \cdot \frac{2n-2}{2n-1} \cdot I_{2n-3}\\
+&= \frac{2n}{2n+1} \cdot \frac{2n-2}{2n-1} \cdot \frac{2n-4}{2n-3} \cdot I_{2n-5}\\
+&\vdots\\
+&= \frac{(2n)(2n-2)(2n-4)\cdots 4 \cdot 2}{(2n+1)(2n-1)(2n-3)\cdots 5 \cdot 3} \cdot I_1\\
+&= \frac{(2n)(2n-2)\cdots 4 \cdot 2}{(2n+1)(2n-1)\cdots 5 \cdot 3} \cdot 1
+\end{align*}
+
+\textbf{(c)} Wir beweisen, dass die Folge $(I_m)$ streng monoton fallend ist und $\lim_{m\to\infty}I_m=0$.
+
+Für die strenge Monotonie betrachten wir: Für $x \in (0, \pi/2)$ gilt $0 < \sin(x) < 1$ (außer bei $x = \pi/2$, wo $\sin(x) = 1$).
+
+Daher gilt für alle $x \in (0, \pi/2)$:
+$$\sin^{m+1}(x) = \sin^m(x) \cdot \sin(x) < \sin^m(x)$$
+
+Da die Ungleichung auf einem Intervall positiven Maßes strikt ist, folgt:
+$$I_{m+1} = \int_0^{\pi/2} \sin^{m+1}(x) \, dx < \int_0^{\pi/2} \sin^m(x) \, dx = I_m$$
+
+Also ist $(I_m)$ streng monoton fallend.
+
+Für den Grenzwert: Da $0 \leq \sin(x) \leq 1$ auf $[0, \pi/2]$, gilt $0 \leq \sin^m(x) \leq 1$ für alle $m$.
+
+Für jedes feste $x \in [0, \pi/2)$ gilt $\sin(x) < 1$, also $\lim_{m\to\infty} \sin^m(x) = 0$.
+
+Die Funktionenfolge $\sin^m(x)$ wird durch die integrierbare Funktion $1$ dominiert. Nach dem Satz von der dominierten Konvergenz gilt:
+$$\lim_{m\to\infty} I_m = \lim_{m\to\infty} \int_0^{\pi/2} \sin^m(x) \, dx = \int_0^{\pi/2} \lim_{m\to\infty} \sin^m(x) \, dx = \int_0^{\pi/2} 0 \, dx = 0$$
+
+\textbf{(d)} Wir zeigen $\lim_{n\to\infty}\frac{I_{2n+1}}{I_{2n}}=1$ und folgern die Wallis'sche Produktdarstellung.
+
+Aus Teil (c) wissen wir, dass $(I_m)$ streng monoton fallend ist. Daher gilt:
+$$I_{2n+1} < I_{2n} < I_{2n-1}$$
+
+Aus der Rekursionsformel folgt:
+$$I_{2n+1} = \frac{2n}{2n+1} I_{2n-1}$$
+
+Also:
+$$\frac{2n}{2n+1} I_{2n-1} < I_{2n} < I_{2n-1}$$
+
+Division durch $I_{2n-1}$ liefert:
+$$\frac{2n}{2n+1} < \frac{I_{2n}}{I_{2n-1}} < 1$$
+
+Daraus folgt:
+$$\frac{2n}{2n+1} < \frac{I_{2n}}{I_{2n+1}} \cdot \frac{I_{2n+1}}{I_{2n-1}} < 1$$
+
+Mit $I_{2n+1} = \frac{2n}{2n+1} I_{2n-1}$ erhalten wir $\frac{I_{2n+1}}{I_{2n-1}} = \frac{2n}{2n+1}$, also:
+$$\frac{2n}{2n+1} < \frac{I_{2n}}{I_{2n+1}} \cdot \frac{2n}{2n+1} < 1$$
+
+Dies vereinfacht sich zu:
+$$1 < \frac{I_{2n}}{I_{2n+1}} < \frac{2n+1}{2n}$$
+
+Invertieren liefert:
+$$\frac{2n}{2n+1} < \frac{I_{2n+1}}{I_{2n}} < 1$$
+
+Da $\lim_{n\to\infty} \frac{2n}{2n+1} = 1$, folgt nach dem Sandwich-Theorem:
+$$\lim_{n\to\infty} \frac{I_{2n+1}}{I_{2n}} = 1$$
+
+Nun berechnen wir $\frac{I_{2n+1}}{I_{2n}}$ explizit:
+\begin{align*}
+\frac{I_{2n+1}}{I_{2n}} &= \frac{\frac{(2n)(2n-2)\cdots 4 \cdot 2}{(2n+1)(2n-1)\cdots 5 \cdot 3} \cdot 1}{\frac{(2n-1)(2n-3)\cdots 3 \cdot 1}{(2n)(2n-2)\cdots 4 \cdot 2} \cdot \frac{\pi}{2}}\\
+&= \frac{(2n)(2n-2)\cdots 4 \cdot 2}{(2n+1)(2n-1)\cdots 5 \cdot 3} \cdot \frac{(2n)(2n-2)\cdots 4 \cdot 2}{(2n-1)(2n-3)\cdots 3 \cdot 1} \cdot \frac{2}{\pi}\\
+&= \frac{[(2n)(2n-2)\cdots 4 \cdot 2]^2}{(2n+1)(2n-1)\cdots 5 \cdot 3 \cdot (2n-1)(2n-3)\cdots 3 \cdot 1} \cdot \frac{2}{\pi}\\
+&= \frac{[(2n)!!]^2}{(2n+1)! / 2^n} \cdot \frac{2}{\pi}
+\end{align*}
+
+Wir können dies umschreiben als:
+$$\frac{I_{2n+1}}{I_{2n}} = \frac{2}{\pi} \cdot \frac{[(2n)!!]^2}{(2n+1)!!^2} \cdot (2n+1)$$
+
+Mit etwas Umformung erhalten wir:
+$$\frac{I_{2n+1}}{I_{2n}} = \frac{2}{\pi} \cdot \prod_{k=1}^n \frac{(2k)^2}{(2k-1)(2k+1)}$$
+
+Da $\lim_{n\to\infty} \frac{I_{2n+1}}{I_{2n}} = 1$, folgt:
+$$1 = \frac{2}{\pi} \cdot \prod_{k=1}^\infty \frac{(2k)^2}{(2k-1)(2k+1)}$$
+
+Umstellen nach $\pi/2$ liefert:
+$$\frac{\pi}{2} = \prod_{k=1}^\infty \frac{(2k)^2}{(2k-1)(2k+1)} = \prod_{k=1}^\infty \frac{4k^2}{4k^2-1}$$
+
+Dies ist die Wallis'sche Produktdarstellung. Ausgeschrieben:
+$$\frac{\pi}{2} = \frac{2 \cdot 2}{1 \cdot 3} \cdot \frac{4 \cdot 4}{3 \cdot 5} \cdot \frac{6 \cdot 6}{5 \cdot 7} \cdot \cdots = \frac{2}{1} \cdot \frac{2}{3} \cdot \frac{4}{3} \cdot \frac{4}{5} \cdot \frac{6}{5} \cdot \frac{6}{7} \cdot \cdots$$
+
+\end{document}

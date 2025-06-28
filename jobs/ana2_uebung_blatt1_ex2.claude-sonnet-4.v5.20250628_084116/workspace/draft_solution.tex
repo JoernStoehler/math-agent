@@ -1,0 +1,159 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Berechne die folgenden Integrale für $a<b$ mittels partieller Integration:
+
+\begin{enumerate}[label=(\alph*)]
+\item $\int_a^b x\sin(x)\,dx$;
+\item $\int_a^b x^2\log(x)\,dx$, wobei $0<a$;
+\item $\int_a^b x^n e^x\,dx$, wobei $n\in\mathbb{N}$;
+\item $\int_a^b \sin(x)\cos(x)\,dx$;
+\item $\int_a^b e^x\sin(x)\,dx$;
+\item $\int_a^b \arctan(x)\,dx$.
+\end{enumerate}
+
+\subsection*{Lösung}
+
+Die partielle Integration basiert auf der Formel:
+$$\int_a^b u(x)v'(x)\,dx = [u(x)v(x)]_a^b - \int_a^b u'(x)v(x)\,dx$$
+
+\begin{enumerate}[label=(\alph*)]
+\item $\int_a^b x\sin(x)\,dx$
+
+Wir setzen $u(x) = x$ und $v'(x) = \sin(x)$. Dann ist $u'(x) = 1$ und $v(x) = -\cos(x)$.
+
+Durch partielle Integration erhalten wir:
+\begin{align}
+\int_a^b x\sin(x)\,dx &= [x(-\cos(x))]_a^b - \int_a^b 1 \cdot (-\cos(x))\,dx\\
+&= [-x\cos(x)]_a^b + \int_a^b \cos(x)\,dx\\
+&= [-x\cos(x)]_a^b + [\sin(x)]_a^b\\
+&= -b\cos(b) + a\cos(a) + \sin(b) - \sin(a)\\
+&= \sin(b) - \sin(a) - b\cos(b) + a\cos(a)
+\end{align}
+
+\item $\int_a^b x^2\log(x)\,dx$, wobei $0<a$
+
+Wir setzen $u(x) = \log(x)$ und $v'(x) = x^2$. Dann ist $u'(x) = \frac{1}{x}$ und $v(x) = \frac{x^3}{3}$.
+
+Durch partielle Integration erhalten wir:
+\begin{align}
+\int_a^b x^2\log(x)\,dx &= \left[\log(x) \cdot \frac{x^3}{3}\right]_a^b - \int_a^b \frac{1}{x} \cdot \frac{x^3}{3}\,dx\\
+&= \left[\frac{x^3\log(x)}{3}\right]_a^b - \int_a^b \frac{x^2}{3}\,dx\\
+&= \left[\frac{x^3\log(x)}{3}\right]_a^b - \left[\frac{x^3}{9}\right]_a^b\\
+&= \frac{b^3\log(b)}{3} - \frac{a^3\log(a)}{3} - \frac{b^3}{9} + \frac{a^3}{9}\\
+&= \frac{b^3\log(b)}{3} - \frac{b^3}{9} - \frac{a^3\log(a)}{3} + \frac{a^3}{9}\\
+&= \frac{b^3}{9}(3\log(b) - 1) - \frac{a^3}{9}(3\log(a) - 1)
+\end{align}
+
+\item $\int_a^b x^n e^x\,dx$, wobei $n\in\mathbb{N}$
+
+Wir lösen dies durch wiederholte partielle Integration. Setzen wir $u(x) = x^n$ und $v'(x) = e^x$. 
+Dann ist $u'(x) = nx^{n-1}$ und $v(x) = e^x$.
+
+\begin{align}
+\int_a^b x^n e^x\,dx &= [x^n e^x]_a^b - \int_a^b nx^{n-1} e^x\,dx\\
+&= [x^n e^x]_a^b - n\int_a^b x^{n-1} e^x\,dx
+\end{align}
+
+Wir erkennen, dass wir eine Rekursionsformel erhalten haben. Sei $I_n = \int_a^b x^n e^x\,dx$. Dann gilt:
+$$I_n = [x^n e^x]_a^b - n \cdot I_{n-1}$$
+
+Für $n = 0$ haben wir $I_0 = \int_a^b e^x\,dx = [e^x]_a^b = e^b - e^a$.
+
+Durch wiederholte Anwendung der Rekursion erhalten wir:
+$$I_n = e^x \sum_{k=0}^{n} (-1)^{n-k} \frac{n!}{k!} x^k \Bigg|_a^b$$
+
+Dies kann auch geschrieben werden als:
+$$\int_a^b x^n e^x\,dx = e^b \sum_{k=0}^{n} (-1)^{n-k} \frac{n!}{k!} b^k - e^a \sum_{k=0}^{n} (-1)^{n-k} \frac{n!}{k!} a^k$$
+
+\item $\int_a^b \sin(x)\cos(x)\,dx$
+
+Hier können wir entweder partielle Integration verwenden oder die Identität $\sin(x)\cos(x) = \frac{1}{2}\sin(2x)$ nutzen.
+
+Methode 1 (mit Identität):
+\begin{align}
+\int_a^b \sin(x)\cos(x)\,dx &= \int_a^b \frac{1}{2}\sin(2x)\,dx\\
+&= \frac{1}{2} \left[-\frac{\cos(2x)}{2}\right]_a^b\\
+&= -\frac{1}{4}[\cos(2x)]_a^b\\
+&= -\frac{1}{4}(\cos(2b) - \cos(2a))\\
+&= \frac{1}{4}(\cos(2a) - \cos(2b))
+\end{align}
+
+Methode 2 (mit partieller Integration):
+Setzen wir $u(x) = \sin(x)$ und $v'(x) = \cos(x)$. Dann ist $u'(x) = \cos(x)$ und $v(x) = \sin(x)$.
+\begin{align}
+\int_a^b \sin(x)\cos(x)\,dx &= [\sin(x)\sin(x)]_a^b - \int_a^b \cos(x)\sin(x)\,dx\\
+&= [\sin^2(x)]_a^b - \int_a^b \sin(x)\cos(x)\,dx
+\end{align}
+
+Dies führt zu:
+$$2\int_a^b \sin(x)\cos(x)\,dx = [\sin^2(x)]_a^b$$
+
+Also:
+$$\int_a^b \sin(x)\cos(x)\,dx = \frac{1}{2}[\sin^2(x)]_a^b = \frac{1}{2}(\sin^2(b) - \sin^2(a))$$
+
+\item $\int_a^b e^x\sin(x)\,dx$
+
+Setzen wir $u(x) = \sin(x)$ und $v'(x) = e^x$. Dann ist $u'(x) = \cos(x)$ und $v(x) = e^x$.
+
+\begin{align}
+\int_a^b e^x\sin(x)\,dx &= [e^x\sin(x)]_a^b - \int_a^b e^x\cos(x)\,dx
+\end{align}
+
+Nun wenden wir partielle Integration auf $\int_a^b e^x\cos(x)\,dx$ an.
+Setzen wir $u(x) = \cos(x)$ und $v'(x) = e^x$. Dann ist $u'(x) = -\sin(x)$ und $v(x) = e^x$.
+
+\begin{align}
+\int_a^b e^x\cos(x)\,dx &= [e^x\cos(x)]_a^b - \int_a^b e^x(-\sin(x))\,dx\\
+&= [e^x\cos(x)]_a^b + \int_a^b e^x\sin(x)\,dx
+\end{align}
+
+Setzen wir dies in die erste Gleichung ein:
+\begin{align}
+\int_a^b e^x\sin(x)\,dx &= [e^x\sin(x)]_a^b - [e^x\cos(x)]_a^b - \int_a^b e^x\sin(x)\,dx
+\end{align}
+
+Dies führt zu:
+$$2\int_a^b e^x\sin(x)\,dx = [e^x\sin(x)]_a^b - [e^x\cos(x)]_a^b = [e^x(\sin(x) - \cos(x))]_a^b$$
+
+Also:
+\begin{align}
+\int_a^b e^x\sin(x)\,dx &= \frac{1}{2}[e^x(\sin(x) - \cos(x))]_a^b\\
+&= \frac{1}{2}(e^b(\sin(b) - \cos(b)) - e^a(\sin(a) - \cos(a)))
+\end{align}
+
+\item $\int_a^b \arctan(x)\,dx$
+
+Setzen wir $u(x) = \arctan(x)$ und $v'(x) = 1$. Dann ist $u'(x) = \frac{1}{1+x^2}$ und $v(x) = x$.
+
+\begin{align}
+\int_a^b \arctan(x)\,dx &= [x\arctan(x)]_a^b - \int_a^b \frac{x}{1+x^2}\,dx
+\end{align}
+
+Für das zweite Integral substituieren wir $t = 1 + x^2$, dann ist $dt = 2x\,dx$, also $x\,dx = \frac{1}{2}dt$.
+
+Bei $x = a$ ist $t = 1 + a^2$, bei $x = b$ ist $t = 1 + b^2$.
+
+\begin{align}
+\int_a^b \frac{x}{1+x^2}\,dx &= \frac{1}{2}\int_{1+a^2}^{1+b^2} \frac{1}{t}\,dt\\
+&= \frac{1}{2}[\ln(t)]_{1+a^2}^{1+b^2}\\
+&= \frac{1}{2}(\ln(1+b^2) - \ln(1+a^2))\\
+&= \frac{1}{2}\ln\left(\frac{1+b^2}{1+a^2}\right)
+\end{align}
+
+Daher:
+\begin{align}
+\int_a^b \arctan(x)\,dx &= [x\arctan(x)]_a^b - \frac{1}{2}\ln\left(\frac{1+b^2}{1+a^2}\right)\\
+&= b\arctan(b) - a\arctan(a) - \frac{1}{2}\ln\left(\frac{1+b^2}{1+a^2}\right)
+\end{align}
+
+\end{enumerate}
+
+\end{document}

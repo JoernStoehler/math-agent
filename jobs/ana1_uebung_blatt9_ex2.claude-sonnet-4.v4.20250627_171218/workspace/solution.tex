@@ -1,0 +1,91 @@
+\begin{prob}
+  Beweise für alle $n \in \N$ und alle $x \in \R$ die beiden folgenden
+  Identitäten:
+  \begin{equation*}
+    \begin{split}
+      \cos(nx) &= \sum_{k=0}^{\floor{\frac{n}{2}}} (-1)^k\binom{n}{2k} \cos(x)^{n-2k}\sin(x)^{2k}\\
+      \sin(nx) &= \sum_{k=0}^{\floor{\frac{n}{2}}} (-1)^k\binom{n}{2k+1} \cos(x)^{n-2k-1}\sin(x)^{2k+1}
+    \end{split}
+  \end{equation*}
+\end{prob}
+
+\textbf{Lösung:}
+
+Wir beweisen beide Identitäten gleichzeitig mithilfe der komplexen Exponentialfunktion und des Satzes von De Moivre.
+
+Nach dem Satz von De Moivre gilt für alle $n \in \mathbb{N}$ und $x \in \mathbb{R}$:
+\begin{equation}
+(\cos x + i\sin x)^n = \cos(nx) + i\sin(nx)
+\end{equation}
+
+Wir entwickeln die linke Seite mit dem binomischen Lehrsatz:
+\begin{equation}
+(\cos x + i\sin x)^n = \sum_{k=0}^{n} \binom{n}{k} \cos^{n-k}(x) \cdot (i\sin x)^k
+\end{equation}
+
+Dies können wir umschreiben zu:
+\begin{equation}
+(\cos x + i\sin x)^n = \sum_{k=0}^{n} \binom{n}{k} \cos^{n-k}(x) \cdot i^k \cdot \sin^k(x)
+\end{equation}
+
+Nun betrachten wir die Potenzen von $i$:
+\begin{itemize}
+  \item $i^0 = 1$
+  \item $i^1 = i$
+  \item $i^2 = -1$
+  \item $i^3 = -i$
+  \item $i^4 = 1$
+  \item ...
+\end{itemize}
+
+Allgemein gilt:
+\begin{align}
+  i^{4m} &= 1\\
+  i^{4m+1} &= i\\
+  i^{4m+2} &= -1\\
+  i^{4m+3} &= -i
+\end{align}
+
+Insbesondere haben wir:
+\begin{align}
+  i^{2k} &= (-1)^k \quad \text{(reell)}\\
+  i^{2k+1} &= i \cdot (-1)^k \quad \text{(rein imaginär)}
+\end{align}
+
+Trennen wir nun die Summe in gerade und ungerade Indizes auf:
+\begin{equation}
+\begin{split}
+(\cos x + i\sin x)^n &= \sum_{k=0}^{n} \binom{n}{k} \cos^{n-k}(x) \cdot i^k \cdot \sin^k(x)\\
+&= \sum_{k=0}^{\lfloor n/2 \rfloor} \binom{n}{2k} \cos^{n-2k}(x) \cdot i^{2k} \cdot \sin^{2k}(x)\\
+&\quad + \sum_{k=0}^{\lfloor (n-1)/2 \rfloor} \binom{n}{2k+1} \cos^{n-2k-1}(x) \cdot i^{2k+1} \cdot \sin^{2k+1}(x)
+\end{split}
+\end{equation}
+
+Setzen wir $i^{2k} = (-1)^k$ und $i^{2k+1} = i(-1)^k$ ein:
+\begin{equation}
+\begin{split}
+(\cos x + i\sin x)^n &= \sum_{k=0}^{\lfloor n/2 \rfloor} (-1)^k \binom{n}{2k} \cos^{n-2k}(x) \sin^{2k}(x)\\
+&\quad + i \sum_{k=0}^{\lfloor (n-1)/2 \rfloor} (-1)^k \binom{n}{2k+1} \cos^{n-2k-1}(x) \sin^{2k+1}(x)
+\end{split}
+\end{equation}
+
+Da $(\cos x + i\sin x)^n = \cos(nx) + i\sin(nx)$, erhalten wir durch Vergleich von Real- und Imaginärteil:
+
+\textbf{Realteil:}
+\begin{equation}
+\cos(nx) = \sum_{k=0}^{\lfloor n/2 \rfloor} (-1)^k \binom{n}{2k} \cos^{n-2k}(x) \sin^{2k}(x)
+\end{equation}
+
+\textbf{Imaginärteil:}
+\begin{equation}
+\sin(nx) = \sum_{k=0}^{\lfloor (n-1)/2 \rfloor} (-1)^k \binom{n}{2k+1} \cos^{n-2k-1}(x) \sin^{2k+1}(x)
+\end{equation}
+
+Für die zweite Formel bemerken wir, dass für $n$ gerade gilt: $\lfloor (n-1)/2 \rfloor = n/2 - 1$, und für $n$ ungerade: $\lfloor (n-1)/2 \rfloor = (n-1)/2$. In beiden Fällen ist dies gleich $\lfloor n/2 \rfloor$, wenn wir beachten, dass für $k = \lfloor n/2 \rfloor$ und gerades $n$ der Index $2k+1 = n+1$ größer als $n$ ist und somit $\binom{n}{2k+1} = 0$ gilt.
+
+Daher können wir die zweite Formel auch schreiben als:
+\begin{equation}
+\sin(nx) = \sum_{k=0}^{\lfloor n/2 \rfloor} (-1)^k \binom{n}{2k+1} \cos^{n-2k-1}(x) \sin^{2k+1}(x)
+\end{equation}
+
+Damit sind beide Identitäten bewiesen. $\square$

@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Bestimme zu den folgenden Mengen $M_{i}$ die Potenzmenge
+$\mathcal{P}(M_{i})$. Wie viele Elemente hat diese jeweils?
+\begin{enumerate}
+\item $M_{1} = \{0, 1, 2, 3\}$
+\item $M_{2} = \{a, b, c\}$
+\item $M_{3} = \{\emptyset, \lambda, z\}$
+\end{enumerate}
+
+\subsection*{Lösung}
+Die Potenzmenge $\mathcal{P}(M)$ einer Menge $M$ ist die Menge aller Teilmengen von $M$, einschließlich der leeren Menge und $M$ selbst. Für eine Menge mit $n$ Elementen hat die Potenzmenge genau $2^n$ Elemente.
+
+\begin{enumerate}
+\item Für $M_{1} = \{0, 1, 2, 3\}$ gilt $|M_{1}| = 4$, also $|\mathcal{P}(M_{1})| = 2^4 = 16$.
+
+Die Potenzmenge $\mathcal{P}(M_{1})$ besteht aus allen Teilmengen von $M_{1}$:
+\begin{align*}
+\mathcal{P}(M_{1}) = \{&\emptyset, \\
+&\{0\}, \{1\}, \{2\}, \{3\}, \\
+&\{0,1\}, \{0,2\}, \{0,3\}, \{1,2\}, \{1,3\}, \{2,3\}, \\
+&\{0,1,2\}, \{0,1,3\}, \{0,2,3\}, \{1,2,3\}, \\
+&\{0,1,2,3\}\}
+\end{align*}
+
+Die Potenzmenge hat 16 Elemente.
+
+\item Für $M_{2} = \{a, b, c\}$ gilt $|M_{2}| = 3$, also $|\mathcal{P}(M_{2})| = 2^3 = 8$.
+
+Die Potenzmenge $\mathcal{P}(M_{2})$ besteht aus allen Teilmengen von $M_{2}$:
+\begin{align*}
+\mathcal{P}(M_{2}) = \{&\emptyset, \\
+&\{a\}, \{b\}, \{c\}, \\
+&\{a,b\}, \{a,c\}, \{b,c\}, \\
+&\{a,b,c\}\}
+\end{align*}
+
+Die Potenzmenge hat 8 Elemente.
+
+\item Für $M_{3} = \{\emptyset, \lambda, z\}$ gilt $|M_{3}| = 3$, also $|\mathcal{P}(M_{3})| = 2^3 = 8$.
+
+Beachte: Hier ist $\emptyset$ ein Element der Menge $M_{3}$, nicht die leere Menge selbst. Um Verwechslungen zu vermeiden, bezeichnen wir die leere Teilmenge von $M_{3}$ weiterhin als $\emptyset$ und das Element $\emptyset$ in $M_{3}$ bleibt als solches erkennbar durch den Kontext.
+
+Die Potenzmenge $\mathcal{P}(M_{3})$ besteht aus allen Teilmengen von $M_{3}$:
+\begin{align*}
+\mathcal{P}(M_{3}) = \{&\emptyset, \\
+&\{\emptyset\}, \{\lambda\}, \{z\}, \\
+&\{\emptyset,\lambda\}, \{\emptyset,z\}, \{\lambda,z\}, \\
+&\{\emptyset,\lambda,z\}\}
+\end{align*}
+
+Die Potenzmenge hat 8 Elemente.
+\end{enumerate}
+
+\end{document}

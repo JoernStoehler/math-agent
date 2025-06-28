@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Bestimme mittels Polynomdivision und Partialbruchzerlegung Stammfunktionen der folgenden Funktionen:
+$$
+(a)\ \frac{x^5}{x-1};\quad
+(b)\ \frac{x}{x^3+x^2-x-1};\quad
+(c)\ \frac{x}{x^3-x^2+x-1}.
+$$
+
+\textit{Vorsicht!} Die Nenner bei (b) und (c) sind verschieden!
+
+\subsection*{Lösung}
+
+\textbf{(a)} Wir bestimmen die Stammfunktion von $\frac{x^5}{x-1}$ mittels Polynomdivision.
+
+Wir führen die Polynomdivision $x^5 : (x-1)$ durch:
+\begin{align*}
+x^5 &= (x-1) \cdot (x^4 + x^3 + x^2 + x + 1) + 1
+\end{align*}
+
+Dies können wir schrittweise nachrechnen:
+\begin{align*}
+(x-1)(x^4 + x^3 + x^2 + x + 1) &= x^5 + x^4 + x^3 + x^2 + x - x^4 - x^3 - x^2 - x - 1\\
+&= x^5 - 1
+\end{align*}
+Also ist $x^5 = (x-1)(x^4 + x^3 + x^2 + x + 1) + 1$, und damit:
+$$\frac{x^5}{x-1} = x^4 + x^3 + x^2 + x + 1 + \frac{1}{x-1}$$
+
+Die Stammfunktion ergibt sich durch Integration:
+\begin{align*}
+\int \frac{x^5}{x-1} \, dx &= \int \left(x^4 + x^3 + x^2 + x + 1 + \frac{1}{x-1}\right) dx\\
+&= \frac{x^5}{5} + \frac{x^4}{4} + \frac{x^3}{3} + \frac{x^2}{2} + x + \ln|x-1| + C
+\end{align*}
+
+\textbf{(b)} Wir bestimmen die Stammfunktion von $\frac{x}{x^3+x^2-x-1}$ mittels Partialbruchzerlegung.
+
+Zunächst faktorisieren wir den Nenner:
+\begin{align*}
+x^3 + x^2 - x - 1 &= x^2(x+1) - 1(x+1)\\
+&= (x+1)(x^2-1)\\
+&= (x+1)(x-1)(x+1)\\
+&= (x-1)(x+1)^2
+\end{align*}
+
+Für die Partialbruchzerlegung setzen wir an:
+$$\frac{x}{(x-1)(x+1)^2} = \frac{A}{x-1} + \frac{B}{x+1} + \frac{C}{(x+1)^2}$$
+
+Multiplizieren wir beide Seiten mit $(x-1)(x+1)^2$:
+$$x = A(x+1)^2 + B(x-1)(x+1) + C(x-1)$$
+
+Durch Einsetzen spezieller Werte:
+\begin{itemize}
+\item Für $x = 1$: $1 = A \cdot 4 + 0 + 0$, also $A = \frac{1}{4}$
+\item Für $x = -1$: $-1 = 0 + 0 + C \cdot (-2)$, also $C = \frac{1}{2}$
+\end{itemize}
+
+Durch Koeffizientenvergleich (Koeffizient von $x^2$):
+$$0 = A + B$$
+Also $B = -A = -\frac{1}{4}$.
+
+Damit erhalten wir:
+$$\frac{x}{x^3+x^2-x-1} = \frac{1/4}{x-1} - \frac{1/4}{x+1} + \frac{1/2}{(x+1)^2}$$
+
+Die Stammfunktion ist:
+\begin{align*}
+\int \frac{x}{x^3+x^2-x-1} \, dx &= \int \left(\frac{1/4}{x-1} - \frac{1/4}{x+1} + \frac{1/2}{(x+1)^2}\right) dx\\
+&= \frac{1}{4}\ln|x-1| - \frac{1}{4}\ln|x+1| - \frac{1}{2(x+1)} + C\\
+&= \frac{1}{4}\ln\left|\frac{x-1}{x+1}\right| - \frac{1}{2(x+1)} + C
+\end{align*}
+
+\textbf{(c)} Wir bestimmen die Stammfunktion von $\frac{x}{x^3-x^2+x-1}$ mittels Partialbruchzerlegung.
+
+Zunächst faktorisieren wir den Nenner:
+\begin{align*}
+x^3 - x^2 + x - 1 &= x^2(x-1) + 1(x-1)\\
+&= (x-1)(x^2+1)
+\end{align*}
+
+Da $x^2 + 1$ über den reellen Zahlen irreduzibel ist, setzen wir für die Partialbruchzerlegung an:
+$$\frac{x}{(x-1)(x^2+1)} = \frac{A}{x-1} + \frac{Bx + C}{x^2+1}$$
+
+Multiplizieren wir beide Seiten mit $(x-1)(x^2+1)$:
+$$x = A(x^2+1) + (Bx + C)(x-1)$$
+
+Für $x = 1$: $1 = A \cdot 2 + 0$, also $A = \frac{1}{2}$
+
+Ausmultiplizieren der rechten Seite:
+$$x = Ax^2 + A + Bx^2 - Bx + Cx - C$$
+
+Koeffizientenvergleich:
+\begin{itemize}
+\item Koeffizient von $x^2$: $0 = A + B = \frac{1}{2} + B$, also $B = -\frac{1}{2}$
+\item Koeffizient von $x$: $1 = -B + C = \frac{1}{2} + C$, also $C = \frac{1}{2}$
+\item Konstanter Term: $0 = A - C = \frac{1}{2} - \frac{1}{2} = 0$ \checkmark
+\end{itemize}
+
+Damit erhalten wir:
+$$\frac{x}{x^3-x^2+x-1} = \frac{1/2}{x-1} + \frac{-x/2 + 1/2}{x^2+1} = \frac{1/2}{x-1} + \frac{1-x}{2(x^2+1)}$$
+
+Die Stammfunktion ist:
+\begin{align*}
+\int \frac{x}{x^3-x^2+x-1} \, dx &= \int \left(\frac{1/2}{x-1} + \frac{1-x}{2(x^2+1)}\right) dx\\
+&= \frac{1}{2}\ln|x-1| + \frac{1}{2}\int \frac{1}{x^2+1} \, dx - \frac{1}{2}\int \frac{x}{x^2+1} \, dx\\
+&= \frac{1}{2}\ln|x-1| + \frac{1}{2}\arctan(x) - \frac{1}{4}\ln(x^2+1) + C
+\end{align*}
+
+\end{document}

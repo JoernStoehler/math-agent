@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Überprüfe die folgenden Funktionen auf Injektivität, Surjektivität und
+Bijektivität:
+\begin{enumerate}
+\item $f_{1} \colon \mathbb{Z} \to \mathbb{Z}, \: z \mapsto z$
+\item $f_{2} \colon \mathbb{Z} \to \mathbb{Q}, \: z \mapsto z$
+\item $f_{3}\colon \mathbb{Z} \to \mathbb{N}, \: z \mapsto \binom{n}{z}$ für gegebenes
+  $n \in \mathbb{N}$
+\item $f_{4}\colon \mathbb{R} \to f_{4}(\mathbb{R}), \: y \mapsto y^{2}$
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\textbf{1. Funktion $f_1: \mathbb{Z} \to \mathbb{Z}, z \mapsto z$}
+
+Diese Funktion ist die Identitätsfunktion auf den ganzen Zahlen.
+
+\textit{Injektivität:} Seien $z_1, z_2 \in \mathbb{Z}$ mit $f_1(z_1) = f_1(z_2)$. Dann gilt:
+$$f_1(z_1) = f_1(z_2) \Rightarrow z_1 = z_2$$
+Also ist $f_1$ injektiv.
+
+\textit{Surjektivität:} Sei $y \in \mathbb{Z}$ beliebig. Wir müssen ein $z \in \mathbb{Z}$ finden mit $f_1(z) = y$. 
+Wähle $z = y$. Dann gilt:
+$$f_1(z) = f_1(y) = y$$
+Also ist $f_1$ surjektiv.
+
+\textit{Bijektivität:} Da $f_1$ sowohl injektiv als auch surjektiv ist, ist $f_1$ bijektiv.
+
+\textbf{2. Funktion $f_2: \mathbb{Z} \to \mathbb{Q}, z \mapsto z$}
+
+Diese Funktion bettet die ganzen Zahlen in die rationalen Zahlen ein.
+
+\textit{Injektivität:} Seien $z_1, z_2 \in \mathbb{Z}$ mit $f_2(z_1) = f_2(z_2)$. Dann gilt:
+$$f_2(z_1) = f_2(z_2) \Rightarrow z_1 = z_2$$
+(in $\mathbb{Q}$, aber da $z_1, z_2$ ganze Zahlen sind, folgt die Gleichheit auch in $\mathbb{Z}$).
+Also ist $f_2$ injektiv.
+
+\textit{Surjektivität:} Die Funktion $f_2$ ist nicht surjektiv. 
+Gegenbeispiel: Es gibt kein $z \in \mathbb{Z}$ mit $f_2(z) = \frac{1}{2}$, da $\frac{1}{2} \notin \mathbb{Z}$.
+
+\textit{Bijektivität:} Da $f_2$ nicht surjektiv ist, ist $f_2$ auch nicht bijektiv.
+
+\textbf{3. Funktion $f_3: \mathbb{Z} \to \mathbb{N}, z \mapsto \binom{n}{z}$ für gegebenes $n \in \mathbb{N}$}
+
+Zunächst müssen wir klären, wie der Binomialkoeffizient $\binom{n}{z}$ für $z \in \mathbb{Z}$ definiert ist.
+Für $z < 0$ oder $z > n$ ist $\binom{n}{z} = 0$ per Definition.
+Für $0 \leq z \leq n$ ist $\binom{n}{z} = \frac{n!}{z!(n-z)!}$.
+
+\textit{Injektivität:} Die Funktion $f_3$ ist im Allgemeinen nicht injektiv.
+Gegenbeispiel: Für $n \geq 1$ gilt $f_3(-1) = \binom{n}{-1} = 0$ und $f_3(n+1) = \binom{n}{n+1} = 0$.
+Da $-1 \neq n+1$ aber $f_3(-1) = f_3(n+1)$, ist $f_3$ nicht injektiv.
+
+\textit{Surjektivität:} Die Funktion $f_3$ ist im Allgemeinen nicht surjektiv.
+Für $n = 0$ gilt $f_3(z) = \binom{0}{z} = 1$ für $z = 0$ und $f_3(z) = 0$ für $z \neq 0$.
+Also nimmt $f_3$ nur die Werte 0 und 1 an, aber nicht alle natürlichen Zahlen.
+Selbst für größere $n$ werden nicht alle natürlichen Zahlen erreicht.
+
+\textit{Bijektivität:} Da $f_3$ weder injektiv noch surjektiv ist, ist $f_3$ nicht bijektiv.
+
+\textbf{4. Funktion $f_4: \mathbb{R} \to f_4(\mathbb{R}), y \mapsto y^2$}
+
+Zunächst bestimmen wir $f_4(\mathbb{R})$: Da $y^2 \geq 0$ für alle $y \in \mathbb{R}$, ist $f_4(\mathbb{R}) = \mathbb{R}_{\geq 0} = [0, \infty)$.
+
+\textit{Injektivität:} Die Funktion $f_4$ ist nicht injektiv.
+Gegenbeispiel: $f_4(2) = 4 = f_4(-2)$, aber $2 \neq -2$.
+
+\textit{Surjektivität:} Per Definition des Zielbereichs als $f_4(\mathbb{R})$ ist $f_4$ surjektiv.
+Für jedes $z \in f_4(\mathbb{R}) = [0, \infty)$ existiert ein $y \in \mathbb{R}$ mit $f_4(y) = z$, 
+nämlich $y = \sqrt{z}$ (oder $y = -\sqrt{z}$).
+
+\textit{Bijektivität:} Da $f_4$ nicht injektiv ist, ist $f_4$ nicht bijektiv.
+
+\end{document}

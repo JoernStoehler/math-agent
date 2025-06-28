@@ -1,0 +1,119 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Betrachte die Kurve in der Ebene $f:[0,2\pi)\to\R^2$, 
+$$
+   f(t) := \bigl(\sin(2t)\cos t,\sin(2t)\sin t\bigr).
+$$
+(a) Zeichne die Kurve $f$ und bestimme ihre singulären Punkte und
+Doppelpunkte. 
+
+(b) Berechne die Länge von $f$. 
+
+\subsection*{Lösung}
+
+\textbf{Teil (a): Zeichnung und Analyse der Kurve}
+
+Die Kurve kann in der Form $f(t) = \sin(2t) \cdot (\cos t, \sin t)$ geschrieben werden, was zeigt, dass es sich um eine radiale Modulation der Einheitskreisrichtung handelt.
+
+Die Kurve bildet eine vierblättrige Rosette mit dem Ursprung als Zentrum. Die vier Blätter erstrecken sich in die Richtungen der positiven und negativen $x$- und $y$-Achsen, wobei jedes Blatt die maximale Ausdehnung von $|\sin(2t)| = 1$ erreicht.
+
+\textbf{Bestimmung der singulären Punkte:}
+
+Ein Punkt ist singulär, wenn $f'(t) = 0$. Berechnen wir die Ableitung:
+
+Für $f(t) = (\sin(2t)\cos t, \sin(2t)\sin t)$ erhalten wir mittels Produktregel:
+\begin{align}
+x'(t) &= \frac{d}{dt}[\sin(2t)\cos t] = 2\cos(2t)\cos t - \sin(2t)\sin t\\
+y'(t) &= \frac{d}{dt}[\sin(2t)\sin t] = 2\cos(2t)\sin t + \sin(2t)\cos t
+\end{align}
+
+Mit den Additionstheoremen können wir diese umformen zu:
+\begin{align}
+x'(t) &= 2\cos(2t)\cos t - \sin(2t)\sin t = \cos t + \cos(3t)\\
+y'(t) &= 2\cos(2t)\sin t + \sin(2t)\cos t = \sin t + \sin(3t)
+\end{align}
+
+Für einen singulären Punkt muss gelten: $x'(t) = 0$ und $y'(t) = 0$, also:
+$$\cos t + \cos(3t) = 0 \quad \text{und} \quad \sin t + \sin(3t) = 0$$
+
+Dies bedeutet $\cos t = -\cos(3t)$ und $\sin t = -\sin(3t)$, was äquivalent ist zu:
+$$e^{it} = -e^{i3t}$$
+
+Dies führt zu $t = 3t + \pi \pmod{2\pi}$, also $-2t = \pi \pmod{2\pi}$.
+
+Die Lösungen im Intervall $[0, 2\pi)$ sind:
+$$t = \frac{\pi}{2} \quad \text{und} \quad t = \frac{3\pi}{2}$$
+
+An diesen Stellen ist $f(\pi/2) = f(3\pi/2) = (0,0)$, der Ursprung.
+
+\textbf{Bestimmung der Doppelpunkte:}
+
+Die Kurve passiert den Ursprung bei $t \in \{0, \pi/2, \pi, 3\pi/2\}$ (wenn $\sin(2t) = 0$).
+
+Der Ursprung ist also ein vierfacher Punkt. Die Tangentenvektoren an diesen Stellen sind:
+\begin{align}
+f'(0) &= (2, 0)\\
+f'(\pi/2) &= (0, -2)\\
+f'(\pi) &= (-2, 0)\\
+f'(3\pi/2) &= (0, 2)
+\end{align}
+
+Zwei dieser Durchgänge ($t = \pi/2$ und $t = 3\pi/2$) haben $f'(t) = 0$, sind also singulär.
+
+\textbf{Zusammenfassung:}
+\begin{itemize}
+\item Singuläre Punkte: Der Ursprung $(0,0)$ bei $t = \pi/2$ und $t = 3\pi/2$
+\item Doppelpunkte: Der Ursprung $(0,0)$ ist ein vierfacher Punkt (bei $t = 0, \pi/2, \pi, 3\pi/2$)
+\end{itemize}
+
+\textbf{Teil (b): Berechnung der Kurvenlänge}
+
+Die Länge der Kurve berechnet sich durch:
+$$L = \int_0^{2\pi} |f'(t)| \, dt$$
+
+wobei $|f'(t)|^2 = (x'(t))^2 + (y'(t))^2$.
+
+Wir haben bereits gezeigt:
+\begin{align}
+x'(t) &= \cos t + \cos(3t)\\
+y'(t) &= \sin t + \sin(3t)
+\end{align}
+
+Berechnen wir $|f'(t)|^2$:
+\begin{align}
+|f'(t)|^2 &= (\cos t + \cos(3t))^2 + (\sin t + \sin(3t))^2\\
+&= \cos^2 t + 2\cos t \cos(3t) + \cos^2(3t) + \sin^2 t + 2\sin t \sin(3t) + \sin^2(3t)\\
+&= 1 + 1 + 2(\cos t \cos(3t) + \sin t \sin(3t))\\
+&= 2 + 2\cos(3t - t)\\
+&= 2 + 2\cos(2t)\\
+&= 2(1 + \cos(2t))\\
+&= 4\cos^2 t
+\end{align}
+
+Daher ist $|f'(t)| = 2|\cos t|$.
+
+Die Länge berechnet sich zu:
+$$L = \int_0^{2\pi} 2|\cos t| \, dt$$
+
+Da $\cos t$ das Vorzeichen bei $t = \pi/2$ und $t = 3\pi/2$ wechselt, müssen wir das Integral aufteilen:
+\begin{align}
+L &= \int_0^{\pi/2} 2\cos t \, dt + \int_{\pi/2}^{\pi} 2(-\cos t) \, dt + \int_{\pi}^{3\pi/2} 2(-\cos t) \, dt + \int_{3\pi/2}^{2\pi} 2\cos t \, dt\\
+&= 2\sin t \Big|_0^{\pi/2} - 2\sin t \Big|_{\pi/2}^{\pi} - 2\sin t \Big|_{\pi}^{3\pi/2} + 2\sin t \Big|_{3\pi/2}^{2\pi}\\
+&= 2(1 - 0) - 2(0 - 1) - 2(-1 - 0) + 2(0 - (-1))\\
+&= 2 + 2 + 2 + 2\\
+&= 8
+\end{align}
+
+Die Länge der Kurve beträgt also $L = 8$.
+
+\end{document}

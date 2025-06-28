@@ -1,0 +1,56 @@
+% Draft solution for the exercise
+
+Part (a): Prove I_m = (m-1)/m * I_{m-2}
+
+For I_m = ∫₀^{π/2} sin^m(x) dx, we use partial integration.
+
+Let u = sin^{m-1}(x) and dv = sin(x)dx
+Then du = (m-1)sin^{m-2}(x)cos(x)dx and v = -cos(x)
+
+I_m = [sin^{m-1}(x)(-cos(x))]₀^{π/2} + ∫₀^{π/2} cos(x)(m-1)sin^{m-2}(x)cos(x)dx
+    = 0 + (m-1)∫₀^{π/2} sin^{m-2}(x)cos²(x)dx
+    = (m-1)∫₀^{π/2} sin^{m-2}(x)(1-sin²(x))dx
+    = (m-1)∫₀^{π/2} sin^{m-2}(x)dx - (m-1)∫₀^{π/2} sin^m(x)dx
+    = (m-1)I_{m-2} - (m-1)I_m
+
+So: I_m + (m-1)I_m = (m-1)I_{m-2}
+    m·I_m = (m-1)I_{m-2}
+    I_m = (m-1)/m · I_{m-2}
+
+Part (b): Derive formulas for I_{2n} and I_{2n+1}
+
+First, we need base cases:
+I_0 = ∫₀^{π/2} 1 dx = π/2
+I_1 = ∫₀^{π/2} sin(x) dx = [-cos(x)]₀^{π/2} = 1
+
+For even indices:
+I_{2n} = (2n-1)/(2n) · I_{2n-2} = (2n-1)/(2n) · (2n-3)/(2n-2) · I_{2n-4} = ...
+       = (2n-1)(2n-3)···3·1 / (2n)(2n-2)···4·2 · I_0
+       = (2n-1)!!! / (2n)!! · π/2
+
+For odd indices:
+I_{2n+1} = (2n)/(2n+1) · I_{2n-1} = (2n)/(2n+1) · (2n-2)/(2n-1) · I_{2n-3} = ...
+         = (2n)(2n-2)···4·2 / (2n+1)(2n-1)···5·3 · I_1
+         = (2n)!! / (2n+1)!! · 1
+
+Part (c): Prove monotonicity and limit
+
+For monotonicity: For x ∈ (0, π/2), we have 0 < sin(x) < 1
+Therefore sin^{m+1}(x) < sin^m(x)
+Thus I_{m+1} = ∫₀^{π/2} sin^{m+1}(x)dx < ∫₀^{π/2} sin^m(x)dx = I_m
+
+For the limit: Since 0 ≤ sin(x) ≤ 1 on [0, π/2], we have:
+0 ≤ I_m ≤ ∫₀^{π/2} sin(x)^m dx
+
+For x ∈ (0, π/2), sin(x) < 1 except at x = π/2.
+As m → ∞, sin(x)^m → 0 for all x ∈ [0, π/2) 
+By dominated convergence theorem, lim_{m→∞} I_m = 0
+
+Part (d): Show lim I_{2n+1}/I_{2n} = 1 and derive Wallis product
+
+I_{2n+1}/I_{2n} = [(2n)!!/(2n+1)!! · 1] / [(2n-1)!!/(2n)!! · π/2]
+                = (2n)!! · (2n)!! · 2 / [(2n+1)!! · (2n-1)!! · π]
+                = 2(2n)!!² / [(2n+1)(2n-1)!! · (2n-1)!! · π]
+                = 2(2n)!!² / [(2n+1) · ((2n-1)!!)² · π]
+
+Need to show this → 1 as n → ∞

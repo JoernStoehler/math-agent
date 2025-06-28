@@ -1,0 +1,102 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Sei $f:[a,b]\to\R^n$ eine stetige Kurve. Zeige:
+
+(a) Ist $f$ rektifizierbar, so sind auch für jedes $c\in(a,b)$ sind
+die Restriktionen $f|_{[a,c]}$ und $f|_{[c,b]}$ rektifizierbar und es gilt
+$$
+   L(f) = L(f|_{[a,c]}) + L(f|_{[c,b]}).
+$$
+(b) Ist $f$ rektifizierbar, so gilt
+\begin{equation}\label{eq:sup}
+   L(f) = \sup\{P_f(t_0,\dots,t_k)\mid a=t_0<t_1<\cdots<t_k=b \text{
+     Unterteilung von }[a,b]\}.
+\end{equation}
+(c) Ist umgekehrt das Supremum auf der rechten Seite
+von~\eqref{eq:sup} endlich, so ist $f$ rektifizierbar und die
+Formel~\eqref{eq:sup} gilt.
+
+\subsection*{Lösung}
+
+Wir beginnen mit einigen Definitionen: Für eine Kurve $f:[a,b]\to\R^n$ und eine Unterteilung $a=t_0<t_1<\cdots<t_k=b$ definieren wir
+$$P_f(t_0,\dots,t_k) = \sum_{i=1}^k \|f(t_i) - f(t_{i-1})\|.$$
+
+Die Kurve $f$ heißt rektifizierbar, wenn ihre Länge
+$$L(f) = \sup\{P_f(t_0,\dots,t_k) \mid \text{Unterteilungen von } [a,b]\}$$
+endlich ist.
+
+\textbf{Teil (a):} Sei $f:[a,b]\to\R^n$ rektifizierbar und $c\in(a,b)$.
+
+Wir zeigen zunächst, dass $f|_{[a,c]}$ und $f|_{[c,b]}$ rektifizierbar sind.
+
+Für jede Unterteilung $a=s_0<s_1<\cdots<s_m=c$ von $[a,c]$ ist $(s_0,\dots,s_m,b)$ eine Unterteilung von $[a,b]$, also gilt
+$$P_{f|_{[a,c]}}(s_0,\dots,s_m) = \sum_{i=1}^m \|f(s_i)-f(s_{i-1})\| \leq P_f(s_0,\dots,s_m,b) \leq L(f).$$
+
+Da dies für alle Unterteilungen von $[a,c]$ gilt, folgt $L(f|_{[a,c]}) \leq L(f) < \infty$, also ist $f|_{[a,c]}$ rektifizierbar.
+
+Analog zeigt man, dass $f|_{[c,b]}$ rektifizierbar ist.
+
+Nun zeigen wir die Gleichheit $L(f) = L(f|_{[a,c]}) + L(f|_{[c,b]})$.
+
+\textbf{Richtung "$\leq$":} Sei $a=t_0<t_1<\cdots<t_k=b$ eine beliebige Unterteilung von $[a,b]$. Falls $c \in \{t_0,\dots,t_k\}$, etwa $c = t_j$, dann gilt
+\begin{align}
+P_f(t_0,\dots,t_k) &= \sum_{i=1}^k \|f(t_i)-f(t_{i-1})\|\\
+&= \sum_{i=1}^j \|f(t_i)-f(t_{i-1})\| + \sum_{i=j+1}^k \|f(t_i)-f(t_{i-1})\|\\
+&= P_{f|_{[a,c]}}(t_0,\dots,t_j) + P_{f|_{[c,b]}}(t_j,\dots,t_k)\\
+&\leq L(f|_{[a,c]}) + L(f|_{[c,b]}).
+\end{align}
+
+Falls $c \notin \{t_0,\dots,t_k\}$, dann existiert ein $j$ mit $t_{j-1} < c < t_j$. Wir verfeinern die Unterteilung, indem wir $c$ hinzufügen:
+\begin{align}
+P_f(t_0,\dots,t_k) &\leq P_f(t_0,\dots,t_{j-1},c,t_j,\dots,t_k)\\
+&= P_{f|_{[a,c]}}(t_0,\dots,t_{j-1},c) + P_{f|_{[c,b]}}(c,t_j,\dots,t_k)\\
+&\leq L(f|_{[a,c]}) + L(f|_{[c,b]}).
+\end{align}
+
+Die erste Ungleichung gilt, da das Hinzufügen von Punkten zu einer Unterteilung die Länge nicht verkleinert (Dreiecksungleichung).
+
+Da dies für alle Unterteilungen gilt, folgt $L(f) \leq L(f|_{[a,c]}) + L(f|_{[c,b]})$.
+
+\textbf{Richtung "$\geq$":} Seien $\varepsilon > 0$ beliebig und Unterteilungen 
+$$a = s_0 < s_1 < \cdots < s_m = c \quad \text{und} \quad c = u_0 < u_1 < \cdots < u_l = b$$
+so gewählt, dass
+$$P_{f|_{[a,c]}}(s_0,\dots,s_m) > L(f|_{[a,c]}) - \frac{\varepsilon}{2}$$
+und
+$$P_{f|_{[c,b]}}(u_0,\dots,u_l) > L(f|_{[c,b]}) - \frac{\varepsilon}{2}.$$
+
+Dann ist $(s_0,\dots,s_m=u_0,u_1,\dots,u_l)$ eine Unterteilung von $[a,b]$ und es gilt
+\begin{align}
+L(f) &\geq P_f(s_0,\dots,s_m,u_1,\dots,u_l)\\
+&= P_{f|_{[a,c]}}(s_0,\dots,s_m) + P_{f|_{[c,b]}}(u_0,\dots,u_l)\\
+&> L(f|_{[a,c]}) + L(f|_{[c,b]}) - \varepsilon.
+\end{align}
+
+Da $\varepsilon > 0$ beliebig war, folgt $L(f) \geq L(f|_{[a,c]}) + L(f|_{[c,b]})$.
+
+Zusammen erhalten wir $L(f) = L(f|_{[a,c]}) + L(f|_{[c,b]})$.
+
+\textbf{Teil (b):} Sei $f$ rektifizierbar. 
+
+Die Gleichheit \eqref{eq:sup} folgt direkt aus der Definition der Länge einer rektifizierbaren Kurve, denn per Definition ist
+$$L(f) = \sup\{P_f(t_0,\dots,t_k) \mid a=t_0<t_1<\cdots<t_k=b \text{ Unterteilung von }[a,b]\}.$$
+
+\textbf{Teil (c):} Sei nun
+$$S := \sup\{P_f(t_0,\dots,t_k) \mid a=t_0<t_1<\cdots<t_k=b \text{ Unterteilung von }[a,b]\} < \infty.$$
+
+Nach Definition der Rektifizierbarkeit ist $f$ genau dann rektifizierbar, wenn $L(f) < \infty$ ist, wobei $L(f)$ als das Supremum über alle Unterteilungslängen definiert ist. 
+
+Da $S$ genau dieses Supremum ist und $S < \infty$ nach Voraussetzung, folgt $L(f) = S < \infty$, also ist $f$ rektifizierbar.
+
+Die Formel \eqref{eq:sup} gilt dann per Definition von $L(f)$.
+
+\end{document}

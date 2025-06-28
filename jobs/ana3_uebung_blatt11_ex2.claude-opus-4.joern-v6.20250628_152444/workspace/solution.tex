@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+% \usepackage[ngerman]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{mathtools}
+
+\newcommand{\R}{\mathbb{R}}
+% \DeclareMathOperator{\det}{det} % Already defined in amsmath
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe: Orientierungstreue von Diffeomorphismen}
+
+\begin{enumerate}[(a)]
+    \item Sei $\Phi \colon U \stackrel{\cong} \longrightarrow V$ ein Diffeomorphismus zwischen offenen Mengen $U, V \subset \R^n$. Man zeige: Ist $U$ wegzusammenhängend, so ist $\Phi$ entweder orientierungserhaltend oder orientierungsumkehrend.
+    \item Sei $U=B_1\cup B_2\subset\R^n$ die disjunkte Vereinigung zweier offener Bälle. Man zeige: Es gibt einen Diffeomorphismus $\Phi \colon U \mapsto U$, der weder orientierungserhaltend noch orientierungsumkehrend ist.
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\textbf{Teil (a):}
+
+Wir müssen zeigen, dass für einen Diffeomorphismus $\Phi: U \to V$ auf einer wegzusammenhängenden offenen Menge $U \subset \R^n$ gilt: Entweder ist $\det(D\Phi_x) > 0$ für alle $x \in U$ (orientierungserhaltend) oder $\det(D\Phi_x) < 0$ für alle $x \in U$ (orientierungsumkehrend).
+
+\textbf{Beweis:}
+
+Da $\Phi$ ein Diffeomorphismus ist, ist $\Phi$ insbesondere stetig differenzierbar und die Ableitung $D\Phi_x$ ist für jedes $x \in U$ invertierbar. Daraus folgt, dass $\det(D\Phi_x) \neq 0$ für alle $x \in U$.
+
+Betrachten wir die Funktion
+\[
+f: U \to \R \setminus \{0\}, \quad f(x) = \det(D\Phi_x).
+\]
+
+Diese Funktion ist stetig, da die Determinante eine stetige Funktion der Matrixeinträge ist und die partiellen Ableitungen von $\Phi$ nach Voraussetzung stetig sind.
+
+Da $U$ wegzusammenhängend ist und $f$ stetig ist, muss das Bild $f(U)$ wegzusammenhängend in $\R \setminus \{0\}$ sein.
+
+Nun ist aber $\R \setminus \{0\} = (-\infty, 0) \cup (0, \infty)$ die disjunkte Vereinigung zweier offener Intervalle. Diese Menge ist nicht wegzusammenhängend: Es gibt keinen stetigen Weg, der einen Punkt aus $(-\infty, 0)$ mit einem Punkt aus $(0, \infty)$ verbindet, ohne durch $0$ zu gehen.
+
+Da $f(U)$ wegzusammenhängend sein muss, kann $f(U)$ nicht sowohl Punkte aus $(-\infty, 0)$ als auch aus $(0, \infty)$ enthalten. Daher gilt entweder $f(U) \subset (0, \infty)$ oder $f(U) \subset (-\infty, 0)$.
+
+Dies bedeutet:
+\begin{itemize}
+    \item Falls $f(U) \subset (0, \infty)$, dann ist $\det(D\Phi_x) > 0$ für alle $x \in U$, also ist $\Phi$ orientierungserhaltend.
+    \item Falls $f(U) \subset (-\infty, 0)$, dann ist $\det(D\Phi_x) < 0$ für alle $x \in U$, also ist $\Phi$ orientierungsumkehrend.
+\end{itemize}
+
+\textbf{Teil (b):}
+
+Wir konstruieren einen Diffeomorphismus $\Phi: U \to U$ auf $U = B_1 \cup B_2$, der weder orientierungserhaltend noch orientierungsumkehrend ist.
+
+\textbf{Konstruktion:}
+
+Seien $B_1 = B((-2, 0, \ldots, 0), 1)$ und $B_2 = B((2, 0, \ldots, 0), 1)$ zwei disjunkte offene Bälle in $\R^n$ mit Radius $1$ und Mittelpunkten bei $(-2, 0, \ldots, 0)$ bzw. $(2, 0, \ldots, 0)$.
+
+Definiere $\Phi: U \to U$ durch:
+\[
+\Phi(x) = \begin{cases}
+    x & \text{falls } x \in B_1, \\
+    (4 - x_1, x_2, \ldots, x_n) & \text{falls } x = (x_1, x_2, \ldots, x_n) \in B_2.
+\end{cases}
+\]
+
+\textbf{Verifikation, dass $\Phi$ ein Diffeomorphismus ist:}
+
+\begin{enumerate}
+    \item \textit{$\Phi$ ist wohldefiniert und bijektiv:} 
+    
+    Auf $B_1$ ist $\Phi$ die Identität, also trivialerweise bijektiv von $B_1$ nach $B_1$.
+    
+    Auf $B_2$ ist $\Phi$ eine Spiegelung an der Hyperebene $x_1 = 2$. Für $x = (x_1, x_2, \ldots, x_n) \in B_2$ gilt $|x_1 - 2| < 1$, also $1 < x_1 < 3$. Dann ist $1 < 4 - x_1 < 3$, also $|4 - x_1 - 2| = |2 - x_1| < 1$. Da die anderen Koordinaten unverändert bleiben, folgt $\Phi(x) \in B_2$. Die Umkehrabbildung ist $\Phi^{-1}(y) = (4 - y_1, y_2, \ldots, y_n)$ für $y \in B_2$, also $\Phi|_{B_2}$ bijektiv.
+    
+    \item \textit{$\Phi$ ist glatt:} 
+    
+    Auf $B_1$ ist $\Phi(x) = x$ offensichtlich glatt.
+    
+    Auf $B_2$ ist $\Phi(x_1, \ldots, x_n) = (4 - x_1, x_2, \ldots, x_n)$ ebenfalls glatt als affin-lineare Abbildung.
+    
+    \item \textit{$\Phi^{-1}$ ist glatt:}
+    
+    Es gilt $\Phi^{-1} = \Phi$, da sowohl die Identität als auch die Spiegelung selbstinvers sind. Daher ist $\Phi^{-1}$ aus denselben Gründen glatt.
+\end{enumerate}
+
+\textbf{Berechnung der Jacobi-Matrix:}
+
+Für $x \in B_1$ ist $D\Phi_x = I$ (Einheitsmatrix), also $\det(D\Phi_x) = 1 > 0$.
+
+Für $x \in B_2$ ist 
+\[
+D\Phi_x = \begin{pmatrix}
+    -1 & 0 & \cdots & 0 \\
+    0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \cdots & 1
+\end{pmatrix},
+\]
+also $\det(D\Phi_x) = -1 < 0$.
+
+\textbf{Schlussfolgerung:}
+
+Der konstruierte Diffeomorphismus $\Phi$ hat die Eigenschaft, dass $\det(D\Phi_x) > 0$ für alle $x \in B_1$ und $\det(D\Phi_x) < 0$ für alle $x \in B_2$. Daher ist $\Phi$ weder orientierungserhaltend (da die Determinante auf $B_2$ negativ ist) noch orientierungsumkehrend (da die Determinante auf $B_1$ positiv ist).
+
+\end{document}

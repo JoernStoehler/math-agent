@@ -1,0 +1,111 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Commands from exercise
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\C}{\mathbb{C}}
+% \Im and \Re are already defined by amsmath
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\Set}[1]{\left\{#1\right\}}
+
+\begin{document}
+
+\subsection*{Aufgabe}
+\textbf{Komplexe Zahlenmengen zeichnen}
+
+Skizziere die folgenden Mengen in der komplexen Zahlenebene:
+\begin{enumerate}
+  \item[(a)] $\Set{ z \in \C | -3 \leq \Im(z+5-3\im) \leq 2 }$
+  \item[(b)] $\Set{ z \in \C | \abs{z + 2 - \im} \geq 3 }$
+  \item[(c)] $\Set{ z \in \C | z \conj{z} - (z + \conj{z} )^2 \leq 1 }$
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\textbf{(a)} Wir betrachten die Menge $M_a = \Set{ z \in \C | -3 \leq \Im(z+5-3\im) \leq 2 }$.
+
+Sei $z = x + y\im$ mit $x, y \in \mathbb{R}$. Dann berechnen wir schrittweise:
+\begin{align}
+z + 5 - 3\im &= (x + y\im) + 5 - 3\im \\
+&= (x + 5) + (y - 3)\im
+\end{align}
+
+Der Imaginärteil von $z + 5 - 3\im$ ist also $\Im(z + 5 - 3\im) = y - 3$. 
+
+Die Bedingung $-3 \leq \Im(z+5-3\im) \leq 2$ wird somit zu:
+$$-3 \leq y - 3 \leq 2$$
+
+Wir addieren 3 auf allen Seiten der Ungleichung:
+$$-3 + 3 \leq y - 3 + 3 \leq 2 + 3$$
+$$0 \leq y \leq 5$$
+
+Die gesuchte Menge $M_a$ ist also ein horizontaler Streifen in der komplexen Ebene zwischen den Geraden $y = 0$ (reelle Achse) und $y = 5$, wobei beide Randgeraden zur Menge gehören.
+
+\textbf{Skizze:} Ein horizontaler Streifen zwischen der reellen Achse und der Geraden $\Im(z) = 5$.
+
+\textbf{(b)} Wir betrachten die Menge $M_b = \Set{ z \in \C | \abs{z + 2 - \im} \geq 3 }$.
+
+Sei wieder $z = x + y\im$. Dann ist:
+\begin{align}
+z + 2 - \im &= (x + y\im) + 2 - \im \\
+&= (x + 2) + (y - 1)\im
+\end{align}
+
+Der Betrag dieser komplexen Zahl ist:
+$$\abs{z + 2 - \im} = \abs{(x + 2) + (y - 1)\im} = \sqrt{(x + 2)^2 + (y - 1)^2}$$
+
+Die Bedingung $\abs{z + 2 - \im} \geq 3$ bedeutet:
+$$\sqrt{(x + 2)^2 + (y - 1)^2} \geq 3$$
+
+Durch Quadrieren beider Seiten (erlaubt, da beide Seiten nicht-negativ sind) erhalten wir:
+$$(x + 2)^2 + (y - 1)^2 \geq 9$$
+
+Dies beschreibt das Äußere (einschließlich Rand) eines Kreises mit Mittelpunkt $z_0 = -2 + \im$ (also dem Punkt $(-2, 1)$ in der komplexen Ebene) und Radius $r = 3$.
+
+\textbf{Skizze:} Das Äußere eines Kreises mit Mittelpunkt bei $-2 + \im$ und Radius $3$ (einschließlich des Kreisrandes).
+
+\textbf{(c)} Wir betrachten die Menge $M_c = \Set{ z \in \C | z \conj{z} - (z + \conj{z} )^2 \leq 1 }$.
+
+Sei $z = x + y\im$. Dann ist $\conj{z} = x - y\im$. Wir berechnen die einzelnen Terme:
+
+Zuerst $z \conj{z}$:
+\begin{align}
+z \conj{z} &= (x + y\im)(x - y\im) \\
+&= x^2 - xy\im + xy\im - y^2\im^2 \\
+&= x^2 - y^2(-1) \\
+&= x^2 + y^2
+\end{align}
+
+Dann $z + \conj{z}$:
+\begin{align}
+z + \conj{z} &= (x + y\im) + (x - y\im) \\
+&= 2x
+\end{align}
+
+Somit ist:
+$$(z + \conj{z})^2 = (2x)^2 = 4x^2$$
+
+Die Ungleichung $z \conj{z} - (z + \conj{z} )^2 \leq 1$ wird zu:
+$$x^2 + y^2 - 4x^2 \leq 1$$
+
+Wir vereinfachen schrittweise:
+$$x^2 + y^2 - 4x^2 \leq 1$$
+$$-3x^2 + y^2 \leq 1$$
+$$y^2 - 3x^2 \leq 1$$
+
+Dies können wir umschreiben als:
+$$\frac{y^2}{1} - \frac{x^2}{1/3} \leq 1$$
+
+Der Rand dieser Menge (für Gleichheit) ist eine Hyperbel mit der Gleichung:
+$$y^2 - 3x^2 = 1$$
+
+Diese Hyperbel hat ihre Scheitelpunkte bei $(0, \pm 1)$ und öffnet sich in $y$-Richtung. Die Asymptoten haben die Steigung $\pm\sqrt{3}$, also die Gleichungen $y = \pm\sqrt{3}x$.
+
+Die Ungleichung $y^2 - 3x^2 \leq 1$ beschreibt den Bereich zwischen den beiden Hyperbelästen (einschließlich der Hyperbel selbst).
+
+\textbf{Skizze:} Der Bereich zwischen den beiden Ästen einer Hyperbel mit Scheitelpunkten bei $(0, \pm 1)$ und Asymptoten $y = \pm\sqrt{3}x$.
+
+\end{document}

@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\subsection*{Teil a) Binomialkoeffizienten berechnen}
+
+Berechnung für $n = 1$:
+\begin{align}
+\binom{1}{0} &= \frac{1!}{0! \cdot 1!} = \frac{1}{1 \cdot 1} = 1 \\
+\binom{1}{1} &= \frac{1!}{1! \cdot 0!} = \frac{1}{1 \cdot 1} = 1
+\end{align}
+
+Berechnung für $n = 2$:
+\begin{align}
+\binom{2}{0} &= \frac{2!}{0! \cdot 2!} = \frac{2}{1 \cdot 2} = 1 \\
+\binom{2}{1} &= \frac{2!}{1! \cdot 1!} = \frac{2}{1 \cdot 1} = 2 \\
+\binom{2}{2} &= \frac{2!}{2! \cdot 0!} = \frac{2}{2 \cdot 1} = 1
+\end{align}
+
+Berechnung für $n = 3$:
+\begin{align}
+\binom{3}{0} &= \frac{3!}{0! \cdot 3!} = \frac{6}{1 \cdot 6} = 1 \\
+\binom{3}{1} &= \frac{3!}{1! \cdot 2!} = \frac{6}{1 \cdot 2} = 3 \\
+\binom{3}{2} &= \frac{3!}{2! \cdot 1!} = \frac{6}{2 \cdot 1} = 3 \\
+\binom{3}{3} &= \frac{3!}{3! \cdot 0!} = \frac{6}{6 \cdot 1} = 1
+\end{align}
+
+Berechnung für $n = 4$:
+\begin{align}
+\binom{4}{0} &= \frac{4!}{0! \cdot 4!} = \frac{24}{1 \cdot 24} = 1 \\
+\binom{4}{1} &= \frac{4!}{1! \cdot 3!} = \frac{24}{1 \cdot 6} = 4 \\
+\binom{4}{2} &= \frac{4!}{2! \cdot 2!} = \frac{24}{2 \cdot 2} = 6 \\
+\binom{4}{3} &= \frac{4!}{3! \cdot 1!} = \frac{24}{6 \cdot 1} = 4 \\
+\binom{4}{4} &= \frac{4!}{4! \cdot 0!} = \frac{24}{24 \cdot 1} = 1
+\end{align}
+
+\subsection*{Teil b) Beweis der verallgemeinerten Beziehung}
+
+Zu zeigen: $\binom{a}{n} + \binom{a}{n + 1} = \binom{a + 1}{n + 1}$
+
+Wir nutzen die rekursive Definition:
+- $\binom{a}{0} = 1$
+- $\binom{a}{n + 1} = \frac{a - n}{n + 1} \binom{a}{n}$
+
+Schritt 1: Wir drücken $\binom{a}{n}$ rekursiv aus:
+$$\binom{a}{n} = \frac{a}{n} \cdot \frac{a-1}{n-1} \cdot ... \cdot \frac{a-n+1}{1} \cdot \binom{a}{0} = \frac{a(a-1)(a-2)...(a-n+1)}{n!}$$
+
+Schritt 2: Analog für $\binom{a}{n+1}$:
+$$\binom{a}{n+1} = \frac{a-n}{n+1} \binom{a}{n} = \frac{a-n}{n+1} \cdot \frac{a(a-1)(a-2)...(a-n+1)}{n!} = \frac{a(a-1)(a-2)...(a-n)}{(n+1)!}$$
+
+Schritt 3: Berechne die Summe:
+\begin{align}
+\binom{a}{n} + \binom{a}{n+1} &= \frac{a(a-1)...(a-n+1)}{n!} + \frac{a(a-1)...(a-n)}{(n+1)!} \\
+&= \frac{a(a-1)...(a-n+1)}{n!} + \frac{a(a-1)...(a-n+1)(a-n)}{(n+1)!} \\
+&= \frac{a(a-1)...(a-n+1)}{n!} \left(1 + \frac{a-n}{n+1}\right) \\
+&= \frac{a(a-1)...(a-n+1)}{n!} \cdot \frac{n+1+a-n}{n+1} \\
+&= \frac{a(a-1)...(a-n+1)}{n!} \cdot \frac{a+1}{n+1} \\
+&= \frac{(a+1)a(a-1)...(a-n+1)}{(n+1)!}
+\end{align}
+
+Schritt 4: Vergleiche mit $\binom{a+1}{n+1}$:
+$$\binom{a+1}{n+1} = \frac{(a+1)(a)(a-1)...(a+1-n)}{(n+1)!} = \frac{(a+1)a(a-1)...(a-n+1)}{(n+1)!}$$
+
+Damit ist die Beziehung bewiesen.
+
+\subsection*{Teil c) Symmetrie der Binomialkoeffizienten}
+
+Zu zeigen: Für natürliche Zahlen $n \leq m$ gilt $\binom{m}{n} = \frac{m!}{n!(m-n)!} = \binom{m}{m-n}$
+
+Beweis:
+\begin{align}
+\binom{m}{n} &= \frac{m!}{n!(m-n)!} \\
+\binom{m}{m-n} &= \frac{m!}{(m-n)!(m-(m-n))!} \\
+&= \frac{m!}{(m-n)!n!} \\
+&= \frac{m!}{n!(m-n)!} \\
+&= \binom{m}{n}
+\end{align}
+
+Die Gleichheit folgt direkt aus der Kommutativität der Multiplikation im Nenner.
+
+\end{document}

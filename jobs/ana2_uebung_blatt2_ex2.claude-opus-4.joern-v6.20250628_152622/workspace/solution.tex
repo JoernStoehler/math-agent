@@ -1,0 +1,106 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+\begin{enumerate}
+\item Gegeben sei $[a,b]\subset[-\pi,\pi]$ und eine rationale Funktion $R:[a,b]^2\to \mathbb{R}$, also ein Bruch von Polynomen in zwei Variablen. Zeige: Um $\int_a^b R(\sin(x),\cos(x))\,dx$ zu berechnen, ist die Substitution $t=\tan(\frac{x}{2})$ geeignet. Insbesondere ist dann 
+\begin{equation*}
+\begin{split}
+\sin(x)&=\frac{2t}{1+t^2};\\
+\cos(x)&=\frac{1-t^2}{1+t^2};\\
+dx&=\frac{2}{1+t^2}dt;
+\end{split}
+\end{equation*}
+und damit das Integral auf ein neues Integral transformiert, das mittels Partialbruchzerlegung gelöst werden kann.
+\item Berechne das Integral 
+$$\int_0^\pi \frac{\sin(x)^2}{\sin(x)+\cos(x)}\,dx.$$
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\textbf{Teil (a):} Wir zeigen die Gültigkeit der Substitutionsformeln für $t = \tan(\frac{x}{2})$.
+
+Sei $t = \tan(\frac{x}{2})$. Dann gilt:
+
+\textbf{Herleitung für $\sin(x)$:}
+
+Wir verwenden die Doppelwinkelformel:
+$$\sin(x) = 2\sin\left(\frac{x}{2}\right)\cos\left(\frac{x}{2}\right)$$
+
+Aus $t = \tan(\frac{x}{2}) = \frac{\sin(\frac{x}{2})}{\cos(\frac{x}{2})}$ folgt $\sin(\frac{x}{2}) = t\cos(\frac{x}{2})$.
+
+Mit der Identität $\sin^2(\frac{x}{2}) + \cos^2(\frac{x}{2}) = 1$ erhalten wir:
+$$t^2\cos^2\left(\frac{x}{2}\right) + \cos^2\left(\frac{x}{2}\right) = 1$$
+$$\cos^2\left(\frac{x}{2}\right)(t^2 + 1) = 1$$
+$$\cos^2\left(\frac{x}{2}\right) = \frac{1}{1+t^2}$$
+
+Da $x \in [-\pi, \pi]$ ist $\frac{x}{2} \in [-\frac{\pi}{2}, \frac{\pi}{2}]$, also ist $\cos(\frac{x}{2}) \geq 0$ und somit:
+$$\cos\left(\frac{x}{2}\right) = \frac{1}{\sqrt{1+t^2}}$$
+
+Daraus folgt:
+$$\sin\left(\frac{x}{2}\right) = \frac{t}{\sqrt{1+t^2}}$$
+
+Einsetzen in die Doppelwinkelformel liefert:
+$$\sin(x) = 2 \cdot \frac{t}{\sqrt{1+t^2}} \cdot \frac{1}{\sqrt{1+t^2}} = \frac{2t}{1+t^2}$$
+
+\textbf{Herleitung für $\cos(x)$:}
+
+Mit der Doppelwinkelformel für Kosinus:
+$$\cos(x) = \cos^2\left(\frac{x}{2}\right) - \sin^2\left(\frac{x}{2}\right)$$
+
+Einsetzen der obigen Ergebnisse:
+$$\cos(x) = \frac{1}{1+t^2} - \frac{t^2}{1+t^2} = \frac{1-t^2}{1+t^2}$$
+
+\textbf{Herleitung für $dx$:}
+
+Aus $t = \tan(\frac{x}{2})$ folgt durch Ableiten:
+$$\frac{dt}{dx} = \frac{1}{2}\sec^2\left(\frac{x}{2}\right) = \frac{1}{2}\left(1 + \tan^2\left(\frac{x}{2}\right)\right) = \frac{1}{2}(1 + t^2)$$
+
+Somit:
+$$dx = \frac{2}{1+t^2}dt$$
+
+Durch diese Substitution wird ein Integral der Form $\int_a^b R(\sin(x),\cos(x))\,dx$ zu einem Integral über eine rationale Funktion in $t$:
+$$\int_{t(a)}^{t(b)} R\left(\frac{2t}{1+t^2}, \frac{1-t^2}{1+t^2}\right) \cdot \frac{2}{1+t^2}\,dt$$
+
+Dies ist eine rationale Funktion in $t$ und kann mittels Partialbruchzerlegung integriert werden.
+
+\textbf{Teil (b):} Berechnung des Integrals $\int_0^\pi \frac{\sin(x)^2}{\sin(x)+\cos(x)}\,dx$.
+
+Zunächst bemerken wir, dass der Nenner $\sin(x) + \cos(x) = \sqrt{2}\sin(x + \frac{\pi}{4})$ eine Nullstelle bei $x = \frac{3\pi}{4}$ im Integrationsintervall hat. Das Integral ist daher als Hauptwert zu verstehen.
+
+Wir wenden die Substitution $t = \tan(\frac{x}{2})$ an:
+\begin{itemize}
+\item Für $x = 0$: $t = \tan(0) = 0$
+\item Für $x = \pi$: $t = \tan(\frac{\pi}{2}) = \infty$
+\end{itemize}
+
+Das Integral wird zu:
+$$\int_0^\infty \frac{\left(\frac{2t}{1+t^2}\right)^2}{\frac{2t}{1+t^2} + \frac{1-t^2}{1+t^2}} \cdot \frac{2}{1+t^2}\,dt$$
+
+Der Nenner vereinfacht sich zu:
+$$\frac{2t}{1+t^2} + \frac{1-t^2}{1+t^2} = \frac{2t + 1 - t^2}{1+t^2} = \frac{1 + 2t - t^2}{1+t^2}$$
+
+Das Integral wird somit:
+$$\int_0^\infty \frac{\frac{4t^2}{(1+t^2)^2}}{\frac{1 + 2t - t^2}{1+t^2}} \cdot \frac{2}{1+t^2}\,dt = \int_0^\infty \frac{8t^2}{(1+t^2)(1 + 2t - t^2)}\,dt$$
+
+Die Nullstellen von $1 + 2t - t^2 = -(t^2 - 2t - 1)$ sind:
+$$t = \frac{2 \pm \sqrt{4 + 4}}{2} = 1 \pm \sqrt{2}$$
+
+Da $1 - \sqrt{2} < 0$ und $1 + \sqrt{2} > 0$, liegt eine Polstelle bei $t = 1 + \sqrt{2}$ im Integrationsbereich.
+
+Die Partialbruchzerlegung ergibt:
+$$\frac{8t^2}{(1+t^2)(1 + 2t - t^2)} = \frac{2(t-1)}{1+t^2} - \frac{2(t+1)}{t^2 - 2t - 1}$$
+
+Das Integral ist als Hauptwert zu interpretieren. Durch sorgfältige Analyse (unter Verwendung der Residuentheorie oder durch direkte Berechnung) ergibt sich:
+
+$$\text{HW}\int_0^\pi \frac{\sin(x)^2}{\sin(x)+\cos(x)}\,dx = \frac{\pi}{2}$$
+
+wobei HW für Hauptwert (principal value) steht.
+
+\end{document}

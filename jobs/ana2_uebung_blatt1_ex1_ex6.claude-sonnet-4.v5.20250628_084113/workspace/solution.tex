@@ -1,0 +1,439 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newtheorem{prob}{Aufgabe}
+\newtheorem{wrongsol}{Falsche L\"osung}[prob]
+\newtheorem{sol}{L\"osung}
+
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+
+\begin{prob} 
+Berechne die folgenden Integrale f\"ur $a<b$ mittels partieller Integration:
+
+\begin{enumerate}
+\item $\int_a^b x\sin(x)\,dx$;
+\item $\int_a^b x^2\log(x)\,dx$, wobei $0<a$;
+\item $\int_a^b x^n e^x\,dx$, wobei $n\in\mathbb{N}$;
+\item $\int_a^b \sin(x)\cos(x)\,dx$;
+\item $\int_a^b e^x\sin(x)\,dx$;
+\item $\int_a^b \arctan(x)\,dx$.
+\end{enumerate}
+\end{prob}
+
+\begin{prob}
+Betrachte die Integrale
+$$
+   I_m := \int_0^{\pi/2}\sin^mx\,dx,\qquad m\in\mathbb{N}_0.
+$$
+\begin{enumerate}
+\item Beweise durch partielle Integration die Rekursionsformel
+$$
+   I_m = \frac{m-1}{m}I_{m-2},\qquad m\geq 2.
+$$
+\item Folgere aus (a) folgende Formeln f\"ur $n\in\mathbb{N}_0$:
+\begin{align*}
+   I_{2n} &= \frac{(2n-1)(2n-3)\cdots 3\cdot 1}{(2n-0)(2n-2)\cdots 4\cdot 2}\cdot\frac{\pi}{2},\qquad
+   I_{2n+1} = \frac{(2n-0)(2n-2)\cdots 4\cdot 2}{(2n+1)(2n-1)\cdots 5\cdot 3}\cdot 1.
+\end{align*}
+\item Beweise: 
+Die Folge $(I_m)$ ist streng monoton fallend und $\lim_{m\to\infty}I_m=0$.
+\item Zeige $\lim_{n\to\infty}\frac{I_{2n+1}}{I_{2n}}=1$ und folgere
+daraus die {\em Wallis'sche Produktdarstellung}
+$$
+   \frac{\pi}{2} = \prod_{n=1}^\infty \frac{4n^2}{4n^2-1} = \frac{2}{1} \cdot \frac{2}{3} \cdot \frac{4}{3} \cdot \frac{4}{5} \cdot \frac{6}{5} \cdot \frac{6}{7} \cdot \cdots
+$$
+\end{enumerate}
+\end{prob}
+
+\begin{prob}
+Berechne die folgenden Integrale mittels Substitution:
+\begin{enumerate}
+\item $\int_a^b x\sin(x^2+1)\,dx$ mit dem Ansatz $u=x^2+1$;
+\item $\int_a^b \sqrt{1-x^2}\,dx$ f\"ur $-1\leq a<b\leq1$ mit dem Ansatz $x=\sin(t)$;
+\item $\int_a^b\frac{1}{1-x^2}\,dx$ f\"ur $-1<a<b<1$ mit dem Ansatz $x=\tanh(t)$;
+\item Zeige mit Hilfe einer Substitution, dass für jede Riemann-integrierbare Funktion $f:[a,b]\to\mathbb{R}$ gilt:
+$$
+\int_a^b\frac{f'(x)}{f(x)}\,dx = \log(|f(b)|)- \log(|f(a)|).
+$$
+ und bestimme damit das Integral $\int_a^b\tan(x)\,dx$ für $[a,b]\subset(-\pi/2,\pi/2)$.
+\end{enumerate} 
+\end{prob}
+
+\begin{prob}
+Bestimme mittels Polynomdivision und Partialbruchzerlegung Stammfunktionen der folgenden Funktionen:
+$$
+(a)\ \frac{x^5}{x-1};\quad
+(b)\ \frac{x}{x^3+x^2-x-1};\quad
+(c)\ \frac{x}{x^3-x^2+x-1}.
+$$
+
+\textit{Vorsicht!} Die Nenner bei (b) und (c) sind verschieden!
+\end{prob}
+
+\begin{prob}
+Berechne den Wert von $\zeta(2)=\sum_{n=1}^\infty n^{-2}$ mit dem
+Integralvergleichskriterium bis auf zwei Stellen hinter dem Komma genau.
+\end{prob}
+
+\subsection*{Lösung}
+
+\textbf{Aufgabe 1:} Partielle Integration
+
+Wir verwenden die Formel der partiellen Integration: $\int u\,dv = uv - \int v\,du$.
+
+(a) $\int_a^b x\sin(x)\,dx$
+
+Wir wählen $u = x$, $dv = \sin(x)\,dx$. Dann ist $du = dx$ und $v = -\cos(x)$.
+
+\begin{align}
+\int_a^b x\sin(x)\,dx &= \Big[x \cdot (-\cos(x))\Big]_a^b - \int_a^b (-\cos(x))\,dx \\
+&= -b\cos(b) + a\cos(a) + \int_a^b \cos(x)\,dx \\
+&= -b\cos(b) + a\cos(a) + \Big[\sin(x)\Big]_a^b \\
+&= -b\cos(b) + a\cos(a) + \sin(b) - \sin(a)
+\end{align}
+
+(b) $\int_a^b x^2\log(x)\,dx$ mit $0 < a$
+
+Wir wählen $u = \log(x)$, $dv = x^2\,dx$. Dann ist $du = \frac{1}{x}\,dx$ und $v = \frac{x^3}{3}$.
+
+\begin{align}
+\int_a^b x^2\log(x)\,dx &= \Big[\log(x) \cdot \frac{x^3}{3}\Big]_a^b - \int_a^b \frac{x^3}{3} \cdot \frac{1}{x}\,dx \\
+&= \frac{b^3\log(b)}{3} - \frac{a^3\log(a)}{3} - \int_a^b \frac{x^2}{3}\,dx \\
+&= \frac{b^3\log(b)}{3} - \frac{a^3\log(a)}{3} - \Big[\frac{x^3}{9}\Big]_a^b \\
+&= \frac{b^3\log(b)}{3} - \frac{a^3\log(a)}{3} - \frac{b^3}{9} + \frac{a^3}{9}
+\end{align}
+
+(c) $\int_a^b x^n e^x\,dx$ mit $n \in \mathbb{N}$
+
+Wir verwenden partielle Integration mit $u = x^n$, $dv = e^x\,dx$. Dann ist $du = nx^{n-1}\,dx$ und $v = e^x$.
+
+\begin{align}
+\int_a^b x^n e^x\,dx &= \Big[x^n e^x\Big]_a^b - \int_a^b nx^{n-1}e^x\,dx \\
+&= b^n e^b - a^n e^a - n\int_a^b x^{n-1}e^x\,dx
+\end{align}
+
+Dies gibt uns eine Rekursionsformel. Durch wiederholte Anwendung erhalten wir:
+\begin{align}
+\int_a^b x^n e^x\,dx = e^x \sum_{k=0}^{n} (-1)^k \frac{n!}{(n-k)!} x^{n-k} \Big|_a^b
+\end{align}
+
+(d) $\int_a^b \sin(x)\cos(x)\,dx$
+
+Wir wählen $u = \sin(x)$, $dv = \cos(x)\,dx$. Dann ist $du = \cos(x)\,dx$ und $v = \sin(x)$.
+
+\begin{align}
+\int_a^b \sin(x)\cos(x)\,dx &= \Big[\sin^2(x)\Big]_a^b - \int_a^b \sin(x)\cos(x)\,dx
+\end{align}
+
+Daraus folgt:
+\begin{align}
+2\int_a^b \sin(x)\cos(x)\,dx &= \sin^2(b) - \sin^2(a) \\
+\int_a^b \sin(x)\cos(x)\,dx &= \frac{\sin^2(b) - \sin^2(a)}{2}
+\end{align}
+
+Alternativ können wir die Identität $\sin(x)\cos(x) = \frac{1}{2}\sin(2x)$ nutzen:
+\begin{align}
+\int_a^b \sin(x)\cos(x)\,dx = \frac{1}{2}\int_a^b \sin(2x)\,dx = -\frac{1}{4}\Big[\cos(2x)\Big]_a^b = \frac{\cos(2a) - \cos(2b)}{4}
+\end{align}
+
+(e) $\int_a^b e^x\sin(x)\,dx$
+
+Wir wählen $u = \sin(x)$, $dv = e^x\,dx$. Dann ist $du = \cos(x)\,dx$ und $v = e^x$.
+
+\begin{align}
+\int_a^b e^x\sin(x)\,dx &= \Big[e^x\sin(x)\Big]_a^b - \int_a^b e^x\cos(x)\,dx
+\end{align}
+
+Für das zweite Integral wählen wir $u = \cos(x)$, $dv = e^x\,dx$. Dann ist $du = -\sin(x)\,dx$ und $v = e^x$.
+
+\begin{align}
+\int_a^b e^x\cos(x)\,dx &= \Big[e^x\cos(x)\Big]_a^b + \int_a^b e^x\sin(x)\,dx
+\end{align}
+
+Setzen wir dies in die erste Gleichung ein:
+\begin{align}
+\int_a^b e^x\sin(x)\,dx &= e^b\sin(b) - e^a\sin(a) - \Big(e^b\cos(b) - e^a\cos(a) + \int_a^b e^x\sin(x)\,dx\Big) \\
+2\int_a^b e^x\sin(x)\,dx &= e^b\sin(b) - e^a\sin(a) - e^b\cos(b) + e^a\cos(a) \\
+\int_a^b e^x\sin(x)\,dx &= \frac{e^b(\sin(b) - \cos(b)) - e^a(\sin(a) - \cos(a))}{2}
+\end{align}
+
+(f) $\int_a^b \arctan(x)\,dx$
+
+Wir wählen $u = \arctan(x)$, $dv = dx$. Dann ist $du = \frac{1}{1+x^2}\,dx$ und $v = x$.
+
+\begin{align}
+\int_a^b \arctan(x)\,dx &= \Big[x\arctan(x)\Big]_a^b - \int_a^b \frac{x}{1+x^2}\,dx \\
+&= b\arctan(b) - a\arctan(a) - \frac{1}{2}\int_a^b \frac{2x}{1+x^2}\,dx \\
+&= b\arctan(b) - a\arctan(a) - \frac{1}{2}\Big[\log(1+x^2)\Big]_a^b \\
+&= b\arctan(b) - a\arctan(a) - \frac{1}{2}\log(1+b^2) + \frac{1}{2}\log(1+a^2)
+\end{align}
+
+\textbf{Aufgabe 2:} Wallis'sche Produktdarstellung
+
+(a) Beweis der Rekursionsformel $I_m = \frac{m-1}{m}I_{m-2}$ für $m \geq 2$
+
+Wir verwenden partielle Integration mit $u = \sin^{m-1}(x)$ und $dv = \sin(x)\,dx$. 
+Dann ist $du = (m-1)\sin^{m-2}(x)\cos(x)\,dx$ und $v = -\cos(x)$.
+
+\begin{align}
+I_m &= \int_0^{\pi/2} \sin^m(x)\,dx \\
+&= \Big[-\sin^{m-1}(x)\cos(x)\Big]_0^{\pi/2} + \int_0^{\pi/2} (m-1)\sin^{m-2}(x)\cos^2(x)\,dx \\
+&= 0 + (m-1)\int_0^{\pi/2} \sin^{m-2}(x)\cos^2(x)\,dx
+\end{align}
+
+Da $\cos^2(x) = 1 - \sin^2(x)$:
+\begin{align}
+I_m &= (m-1)\int_0^{\pi/2} \sin^{m-2}(x)(1-\sin^2(x))\,dx \\
+&= (m-1)\int_0^{\pi/2} \sin^{m-2}(x)\,dx - (m-1)\int_0^{\pi/2} \sin^m(x)\,dx \\
+&= (m-1)I_{m-2} - (m-1)I_m
+\end{align}
+
+Umformen ergibt:
+\begin{align}
+I_m + (m-1)I_m &= (m-1)I_{m-2} \\
+mI_m &= (m-1)I_{m-2} \\
+I_m &= \frac{m-1}{m}I_{m-2}
+\end{align}
+
+(b) Formeln für $I_{2n}$ und $I_{2n+1}$
+
+Wir berechnen zunächst $I_0$ und $I_1$:
+\begin{align}
+I_0 &= \int_0^{\pi/2} 1\,dx = \frac{\pi}{2} \\
+I_1 &= \int_0^{\pi/2} \sin(x)\,dx = \Big[-\cos(x)\Big]_0^{\pi/2} = 1
+\end{align}
+
+Für gerade Indizes $I_{2n}$:
+\begin{align}
+I_{2n} &= \frac{2n-1}{2n}I_{2n-2} = \frac{2n-1}{2n} \cdot \frac{2n-3}{2n-2}I_{2n-4} = \ldots \\
+&= \frac{(2n-1)(2n-3)\cdots 3 \cdot 1}{2n(2n-2)\cdots 4 \cdot 2} \cdot I_0 \\
+&= \frac{(2n-1)(2n-3)\cdots 3 \cdot 1}{2n(2n-2)\cdots 4 \cdot 2} \cdot \frac{\pi}{2}
+\end{align}
+
+Für ungerade Indizes $I_{2n+1}$:
+\begin{align}
+I_{2n+1} &= \frac{2n}{2n+1}I_{2n-1} = \frac{2n}{2n+1} \cdot \frac{2n-2}{2n-1}I_{2n-3} = \ldots \\
+&= \frac{2n(2n-2)\cdots 4 \cdot 2}{(2n+1)(2n-1)\cdots 5 \cdot 3} \cdot I_1 \\
+&= \frac{2n(2n-2)\cdots 4 \cdot 2}{(2n+1)(2n-1)\cdots 5 \cdot 3} \cdot 1
+\end{align}
+
+(c) Monotonie und Grenzwert
+
+Für $0 < x < \pi/2$ gilt $0 < \sin(x) < 1$, also $\sin^{m+1}(x) < \sin^m(x)$.
+Daher ist
+$$I_{m+1} = \int_0^{\pi/2} \sin^{m+1}(x)\,dx < \int_0^{\pi/2} \sin^m(x)\,dx = I_m$$
+
+Die Folge $(I_m)$ ist also streng monoton fallend.
+
+Für den Grenzwert: Da $0 \leq \sin(x) \leq 1$ für $x \in [0, \pi/2]$, gilt
+$$0 \leq I_m = \int_0^{\pi/2} \sin^m(x)\,dx \leq \int_0^{\pi/2} \sin^m(\pi/2)\,dx = \frac{\pi}{2} \cdot 0 = 0 \text{ für } m \to \infty$$
+
+Genauer: Für $0 < x < \pi/2$ ist $\sin(x) < 1$, also $\lim_{m \to \infty} \sin^m(x) = 0$.
+Mit dominierter Konvergenz folgt $\lim_{m \to \infty} I_m = 0$.
+
+(d) Wallis'sche Produktdarstellung
+
+Wir betrachten das Verhältnis:
+\begin{align}
+\frac{I_{2n+1}}{I_{2n}} &= \frac{\frac{2n(2n-2)\cdots 4 \cdot 2}{(2n+1)(2n-1)\cdots 5 \cdot 3}}{\frac{(2n-1)(2n-3)\cdots 3 \cdot 1}{2n(2n-2)\cdots 4 \cdot 2} \cdot \frac{\pi}{2}} \\
+&= \frac{[2n(2n-2)\cdots 4 \cdot 2]^2}{(2n+1)(2n-1)\cdots 5 \cdot 3 \cdot (2n-1)(2n-3)\cdots 3 \cdot 1} \cdot \frac{2}{\pi} \\
+&= \frac{[2n(2n-2)\cdots 4 \cdot 2]^2}{(2n+1)[(2n-1)]^2[(2n-3)]^2\cdots [3]^2 \cdot 1} \cdot \frac{2}{\pi}
+\end{align}
+
+Da $I_m$ streng monoton fallend ist, gilt $I_{2n+2} < I_{2n+1} < I_{2n}$, also
+$$\frac{I_{2n+2}}{I_{2n}} < \frac{I_{2n+1}}{I_{2n}} < 1$$
+
+Nun ist $\frac{I_{2n+2}}{I_{2n}} = \frac{2n+1}{2n+2}$, also
+$$\frac{2n+1}{2n+2} < \frac{I_{2n+1}}{I_{2n}} < 1$$
+
+Für $n \to \infty$ geht $\frac{2n+1}{2n+2} \to 1$, also $\lim_{n \to \infty} \frac{I_{2n+1}}{I_{2n}} = 1$.
+
+Aus der obigen Formel folgt dann:
+\begin{align}
+\frac{\pi}{2} &= \lim_{n \to \infty} \frac{[2n(2n-2)\cdots 4 \cdot 2]^2}{(2n+1)[(2n-1)]^2[(2n-3)]^2\cdots [3]^2 \cdot 1} \\
+&= \lim_{n \to \infty} \prod_{k=1}^n \frac{4k^2}{4k^2-1} \\
+&= \prod_{n=1}^\infty \frac{4n^2}{4n^2-1}
+\end{align}
+
+\textbf{Aufgabe 3:} Integration durch Substitution
+
+(a) $\int_a^b x\sin(x^2+1)\,dx$ mit $u = x^2 + 1$
+
+Wir substituieren $u = x^2 + 1$, also $du = 2x\,dx$ und $x\,dx = \frac{1}{2}du$.
+
+Die Grenzen transformieren sich zu: $u(a) = a^2 + 1$ und $u(b) = b^2 + 1$.
+
+\begin{align}
+\int_a^b x\sin(x^2+1)\,dx &= \int_{a^2+1}^{b^2+1} \sin(u) \cdot \frac{1}{2}\,du \\
+&= \frac{1}{2}\int_{a^2+1}^{b^2+1} \sin(u)\,du \\
+&= \frac{1}{2}\Big[-\cos(u)\Big]_{a^2+1}^{b^2+1} \\
+&= \frac{1}{2}\Big(-\cos(b^2+1) + \cos(a^2+1)\Big) \\
+&= \frac{\cos(a^2+1) - \cos(b^2+1)}{2}
+\end{align}
+
+(b) $\int_a^b \sqrt{1-x^2}\,dx$ für $-1 \leq a < b \leq 1$ mit $x = \sin(t)$
+
+Wir substituieren $x = \sin(t)$, also $dx = \cos(t)\,dt$ und $\sqrt{1-x^2} = \sqrt{1-\sin^2(t)} = |\cos(t)| = \cos(t)$ 
+(da wir $t \in [-\pi/2, \pi/2]$ wählen können).
+
+Die Grenzen sind: $t(a) = \arcsin(a)$ und $t(b) = \arcsin(b)$.
+
+\begin{align}
+\int_a^b \sqrt{1-x^2}\,dx &= \int_{\arcsin(a)}^{\arcsin(b)} \cos(t) \cdot \cos(t)\,dt \\
+&= \int_{\arcsin(a)}^{\arcsin(b)} \cos^2(t)\,dt \\
+&= \int_{\arcsin(a)}^{\arcsin(b)} \frac{1 + \cos(2t)}{2}\,dt \\
+&= \frac{1}{2}\Big[t + \frac{\sin(2t)}{2}\Big]_{\arcsin(a)}^{\arcsin(b)} \\
+&= \frac{1}{2}\Big(\arcsin(b) - \arcsin(a) + \frac{\sin(2\arcsin(b)) - \sin(2\arcsin(a))}{2}\Big)
+\end{align}
+
+Mit $\sin(2\arcsin(x)) = 2x\sqrt{1-x^2}$ erhalten wir:
+\begin{align}
+\int_a^b \sqrt{1-x^2}\,dx = \frac{1}{2}\Big(\arcsin(b) - \arcsin(a) + b\sqrt{1-b^2} - a\sqrt{1-a^2}\Big)
+\end{align}
+
+(c) $\int_a^b \frac{1}{1-x^2}\,dx$ für $-1 < a < b < 1$ mit $x = \tanh(t)$
+
+Wir substituieren $x = \tanh(t)$, also $dx = \mathrm{sech}^2(t)\,dt = (1-\tanh^2(t))\,dt = (1-x^2)\,dt$.
+
+Die Grenzen sind: $t(a) = \mathrm{artanh}(a)$ und $t(b) = \mathrm{artanh}(b)$.
+
+\begin{align}
+\int_a^b \frac{1}{1-x^2}\,dx &= \int_{\mathrm{artanh}(a)}^{\mathrm{artanh}(b)} \frac{1}{1-\tanh^2(t)} \cdot (1-\tanh^2(t))\,dt \\
+&= \int_{\mathrm{artanh}(a)}^{\mathrm{artanh}(b)} 1\,dt \\
+&= \mathrm{artanh}(b) - \mathrm{artanh}(a) \\
+&= \frac{1}{2}\log\left(\frac{1+b}{1-b}\right) - \frac{1}{2}\log\left(\frac{1+a}{1-a}\right) \\
+&= \frac{1}{2}\log\left(\frac{(1+b)(1-a)}{(1-b)(1+a)}\right)
+\end{align}
+
+(d) Zeige $\int_a^b \frac{f'(x)}{f(x)}\,dx = \log(|f(b)|) - \log(|f(a)|)$
+
+Wir substituieren $u = f(x)$, also $du = f'(x)\,dx$.
+
+Die Grenzen sind: $u(a) = f(a)$ und $u(b) = f(b)$.
+
+\begin{align}
+\int_a^b \frac{f'(x)}{f(x)}\,dx &= \int_{f(a)}^{f(b)} \frac{1}{u}\,du \\
+&= \Big[\log(|u|)\Big]_{f(a)}^{f(b)} \\
+&= \log(|f(b)|) - \log(|f(a)|)
+\end{align}
+
+Für $\int_a^b \tan(x)\,dx$ mit $[a,b] \subset (-\pi/2, \pi/2)$:
+
+\begin{align}
+\int_a^b \tan(x)\,dx &= \int_a^b \frac{\sin(x)}{\cos(x)}\,dx \\
+&= -\int_a^b \frac{-\sin(x)}{\cos(x)}\,dx \\
+&= -\int_a^b \frac{(\cos(x))'}{\cos(x)}\,dx \\
+&= -\Big(\log(|\cos(b)|) - \log(|\cos(a)|)\Big) \\
+&= \log(|\cos(a)|) - \log(|\cos(b)|)
+\end{align}
+
+Da $\cos(x) > 0$ für $x \in (-\pi/2, \pi/2)$:
+$$\int_a^b \tan(x)\,dx = \log(\cos(a)) - \log(\cos(b)) = \log\left(\frac{\cos(a)}{\cos(b)}\right)$$
+
+\textbf{Aufgabe 4:} Partialbruchzerlegung
+
+(a) $\frac{x^5}{x-1}$
+
+Zuerst führen wir Polynomdivision durch:
+\begin{align}
+x^5 : (x-1) = x^4 + x^3 + x^2 + x + 1 + \frac{1}{x-1}
+\end{align}
+
+Verifikation: $(x-1)(x^4 + x^3 + x^2 + x + 1) = x^5 - 1$, also $x^5 = (x-1)(x^4 + x^3 + x^2 + x + 1) + 1$.
+
+Die Stammfunktion ist:
+\begin{align}
+\int \frac{x^5}{x-1}\,dx &= \int \left(x^4 + x^3 + x^2 + x + 1 + \frac{1}{x-1}\right)\,dx \\
+&= \frac{x^5}{5} + \frac{x^4}{4} + \frac{x^3}{3} + \frac{x^2}{2} + x + \log|x-1| + C
+\end{align}
+
+(b) $\frac{x}{x^3+x^2-x-1}$
+
+Wir faktorisieren den Nenner:
+$x^3 + x^2 - x - 1 = x^2(x+1) - (x+1) = (x+1)(x^2-1) = (x+1)(x-1)(x+1) = (x+1)^2(x-1)$
+
+Partialbruchzerlegung:
+$$\frac{x}{(x+1)^2(x-1)} = \frac{A}{x+1} + \frac{B}{(x+1)^2} + \frac{C}{x-1}$$
+
+Multiplizieren mit dem Nenner:
+$$x = A(x+1)(x-1) + B(x-1) + C(x+1)^2$$
+
+Einsetzen spezieller Werte:
+- $x = 1$: $1 = 0 + 0 + C \cdot 4$, also $C = \frac{1}{4}$
+- $x = -1$: $-1 = 0 + B \cdot (-2) + 0$, also $B = \frac{1}{2}$
+- $x = 0$: $0 = A \cdot 1 \cdot (-1) + B \cdot (-1) + C \cdot 1 = -A - \frac{1}{2} + \frac{1}{4}$, also $A = -\frac{1}{4}$
+
+Die Stammfunktion ist:
+\begin{align}
+\int \frac{x}{(x+1)^2(x-1)}\,dx &= -\frac{1}{4}\int \frac{1}{x+1}\,dx + \frac{1}{2}\int \frac{1}{(x+1)^2}\,dx + \frac{1}{4}\int \frac{1}{x-1}\,dx \\
+&= -\frac{1}{4}\log|x+1| - \frac{1}{2} \cdot \frac{1}{x+1} + \frac{1}{4}\log|x-1| + C \\
+&= \frac{1}{4}\log\left|\frac{x-1}{x+1}\right| - \frac{1}{2(x+1)} + C
+\end{align}
+
+(c) $\frac{x}{x^3-x^2+x-1}$
+
+Wir faktorisieren den Nenner:
+$x^3 - x^2 + x - 1 = x^2(x-1) + (x-1) = (x-1)(x^2+1)$
+
+Da $x^2 + 1$ über $\mathbb{R}$ irreduzibel ist, lautet die Partialbruchzerlegung:
+$$\frac{x}{(x-1)(x^2+1)} = \frac{A}{x-1} + \frac{Bx+C}{x^2+1}$$
+
+Multiplizieren mit dem Nenner:
+$$x = A(x^2+1) + (Bx+C)(x-1)$$
+
+Einsetzen spezieller Werte:
+- $x = 1$: $1 = A \cdot 2 + 0$, also $A = \frac{1}{2}$
+- $x = 0$: $0 = A \cdot 1 + C \cdot (-1) = \frac{1}{2} - C$, also $C = \frac{1}{2}$
+- $x = i$: $i = 0 + (Bi + \frac{1}{2})(i-1) = Bi(i-1) + \frac{1}{2}(i-1) = -B - Bi + \frac{i-1}{2}$
+
+Koeffizientenvergleich bei $x^2$: $0 = A + B = \frac{1}{2} + B$, also $B = -\frac{1}{2}$
+
+Die Stammfunktion ist:
+\begin{align}
+\int \frac{x}{(x-1)(x^2+1)}\,dx &= \frac{1}{2}\int \frac{1}{x-1}\,dx + \int \frac{-\frac{1}{2}x + \frac{1}{2}}{x^2+1}\,dx \\
+&= \frac{1}{2}\log|x-1| - \frac{1}{2}\int \frac{x}{x^2+1}\,dx + \frac{1}{2}\int \frac{1}{x^2+1}\,dx \\
+&= \frac{1}{2}\log|x-1| - \frac{1}{4}\log(x^2+1) + \frac{1}{2}\arctan(x) + C
+\end{align}
+
+\textbf{Aufgabe 5:} Berechnung von $\zeta(2)$
+
+Das Integralvergleichskriterium besagt:
+$$\int_k^\infty \frac{1}{x^2}\,dx \leq \sum_{n=k}^\infty \frac{1}{n^2} \leq \frac{1}{k^2} + \int_k^\infty \frac{1}{x^2}\,dx$$
+
+Wir berechnen:
+$$\int_k^\infty \frac{1}{x^2}\,dx = \Big[-\frac{1}{x}\Big]_k^\infty = \frac{1}{k}$$
+
+Also gilt für die Teilsumme $S_N = \sum_{n=1}^N \frac{1}{n^2}$:
+$$S_N + \frac{1}{N+1} \leq \zeta(2) \leq S_N + \frac{1}{N^2} + \frac{1}{N}$$
+
+Wir berechnen einige Teilsummen:
+\begin{align}
+S_1 &= 1 \\
+S_2 &= 1 + \frac{1}{4} = 1.25 \\
+S_3 &= 1.25 + \frac{1}{9} \approx 1.361 \\
+S_4 &= 1.361 + \frac{1}{16} = 1.4235 \\
+S_5 &= 1.4235 + \frac{1}{25} = 1.4635 \\
+S_{10} &\approx 1.5498 \\
+S_{20} &\approx 1.5962 \\
+S_{50} &\approx 1.6251 \\
+S_{100} &\approx 1.6350 \\
+S_{200} &\approx 1.6399 \\
+S_{500} &\approx 1.6429
+\end{align}
+
+Mit $N = 500$ erhalten wir:
+$$1.6429 + \frac{1}{501} \leq \zeta(2) \leq 1.6429 + \frac{1}{500^2} + \frac{1}{500}$$
+$$1.6449 \leq \zeta(2) \leq 1.6449$$
+
+Also ist $\zeta(2) \approx 1.64$ auf zwei Dezimalstellen genau.
+
+(Der exakte Wert ist $\zeta(2) = \frac{\pi^2}{6} \approx 1.6449$.)
+
+\end{document}

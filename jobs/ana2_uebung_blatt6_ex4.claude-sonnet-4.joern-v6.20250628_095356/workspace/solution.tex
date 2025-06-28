@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\norm}[1]{\|#1\|}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Beweise: Die kürzeste Verbindung zwischen zwei Punkten $x,y\in\R^n$
+ist eine Gerade, d.h.: Jede rektifizierbare Kurve $f:[a,b]\to\R^n$ 
+mit $f(a)=x$ und $f(b)=y$ hat Länge $\geq\norm{x-y}$, und Gleichheit
+gilt genau dann, wenn $f$ eine monotone Parametrisierung der Geraden
+von $x$ nach $y$ ist (d.h.~$f(t)=x+\phi(t)(y-x)$ mit
+$\phi:[a,b]\to[0,1]$ monoton).
+
+\subsection*{Lösung}
+
+Wir beweisen die Aussage in zwei Teilen: Zuerst zeigen wir die untere Schranke für die Länge einer beliebigen rektifizierbaren Kurve, dann charakterisieren wir den Fall der Gleichheit.
+
+\textbf{Teil 1: Untere Schranke}
+
+Sei $f:[a,b]\to\R^n$ eine rektifizierbare Kurve mit $f(a)=x$ und $f(b)=y$. Die Länge von $f$ ist definiert als
+\[
+L(f) = \sup\left\{\sum_{i=0}^{n-1} \norm{f(t_{i+1}) - f(t_i)} : a = t_0 < t_1 < \ldots < t_n = b\right\}.
+\]
+
+Für jede Partition $a = t_0 < t_1 < \ldots < t_n = b$ gilt nach der Dreiecksungleichung:
+\begin{align}
+\sum_{i=0}^{n-1} \norm{f(t_{i+1}) - f(t_i)} &\geq \norm{\sum_{i=0}^{n-1} (f(t_{i+1}) - f(t_i))}\\
+&= \norm{f(t_n) - f(t_0)}\\
+&= \norm{f(b) - f(a)}\\
+&= \norm{y - x}.
+\end{align}
+
+Da diese Ungleichung für jede Partition gilt, folgt durch Bildung des Supremums:
+\[
+L(f) \geq \norm{y - x}.
+\]
+
+\textbf{Teil 2: Charakterisierung der Gleichheit}
+
+Wir zeigen nun, dass Gleichheit genau dann gilt, wenn $f$ eine monotone Parametrisierung der Geraden von $x$ nach $y$ ist.
+
+\textbf{``$\Leftarrow$'':} Sei $f(t) = x + \phi(t)(y-x)$ mit $\phi:[a,b]\to[0,1]$ monoton wachsend, $\phi(a)=0$, $\phi(b)=1$.
+
+Zunächst betrachten wir den Fall, dass $\phi$ stetig differenzierbar ist. Dann gilt:
+\[
+f'(t) = \phi'(t)(y-x),
+\]
+und somit
+\[
+\norm{f'(t)} = |\phi'(t)| \cdot \norm{y-x} = \phi'(t) \cdot \norm{y-x},
+\]
+wobei die letzte Gleichheit gilt, da $\phi$ monoton wachsend ist und somit $\phi'(t) \geq 0$.
+
+Die Länge der Kurve berechnet sich als:
+\begin{align}
+L(f) &= \int_a^b \norm{f'(t)} \, dt\\
+&= \int_a^b \phi'(t) \cdot \norm{y-x} \, dt\\
+&= \norm{y-x} \int_a^b \phi'(t) \, dt\\
+&= \norm{y-x} \cdot [\phi(b) - \phi(a)]\\
+&= \norm{y-x} \cdot [1 - 0]\\
+&= \norm{y-x}.
+\end{align}
+
+Für den allgemeinen Fall einer monotonen Funktion $\phi$ (nicht notwendig differenzierbar) nutzen wir die Definition der Länge direkt. Für jede Partition $a = t_0 < t_1 < \ldots < t_n = b$ gilt:
+\begin{align}
+\sum_{i=0}^{n-1} \norm{f(t_{i+1}) - f(t_i)} &= \sum_{i=0}^{n-1} \norm{(x + \phi(t_{i+1})(y-x)) - (x + \phi(t_i)(y-x))}\\
+&= \sum_{i=0}^{n-1} \norm{(\phi(t_{i+1}) - \phi(t_i))(y-x)}\\
+&= \sum_{i=0}^{n-1} |\phi(t_{i+1}) - \phi(t_i)| \cdot \norm{y-x}\\
+&= \sum_{i=0}^{n-1} (\phi(t_{i+1}) - \phi(t_i)) \cdot \norm{y-x}\\
+&= (\phi(b) - \phi(a)) \cdot \norm{y-x}\\
+&= \norm{y-x}.
+\end{align}
+
+Hierbei haben wir verwendet, dass $\phi$ monoton wachsend ist, also $\phi(t_{i+1}) - \phi(t_i) \geq 0$ für alle $i$.
+
+\textbf{``$\Rightarrow$'':} Angenommen, $L(f) = \norm{y-x}$. Wir müssen zeigen, dass $f$ eine monotone Parametrisierung der Geraden von $x$ nach $y$ ist.
+
+Da $L(f) = \norm{y-x}$, muss in der Dreiecksungleichung aus Teil 1 für jede Partition Gleichheit gelten. Dies bedeutet, dass für jede Partition $a = t_0 < t_1 < \ldots < t_n = b$ gilt:
+\[
+\sum_{i=0}^{n-1} \norm{f(t_{i+1}) - f(t_i)} = \norm{\sum_{i=0}^{n-1} (f(t_{i+1}) - f(t_i))}.
+\]
+
+Gleichheit in der Dreiecksungleichung tritt genau dann ein, wenn alle Vektoren $f(t_{i+1}) - f(t_i)$ in dieselbe Richtung zeigen, d.h., es gibt nicht-negative Zahlen $\lambda_i \geq 0$ und einen Einheitsvektor $v \in \R^n$ mit $\norm{v} = 1$, sodass
+\[
+f(t_{i+1}) - f(t_i) = \lambda_i v
+\]
+für alle $i = 0, 1, \ldots, n-1$.
+
+Da dies für jede Partition gelten muss und $f(b) - f(a) = y - x$, folgt $v = \frac{y-x}{\norm{y-x}}$ (falls $x \neq y$; für $x = y$ ist die Aussage trivial).
+
+Für den Fall einer stetig differenzierbaren Kurve $f$ bedeutet dies, dass $f'(t) = \lambda(t) v$ für eine nicht-negative Funktion $\lambda(t) \geq 0$. Durch Integration erhalten wir:
+\[
+f(t) = x + \int_a^t \lambda(s) v \, ds = x + \phi(t)(y-x),
+\]
+wobei $\phi(t) = \frac{1}{\norm{y-x}} \int_a^t \lambda(s) \, ds$ monoton wachsend ist mit $\phi(a) = 0$ und $\phi(b) = 1$.
+
+Für den allgemeinen Fall einer rektifizierbaren Kurve kann man zeigen, dass $f$ fast überall differenzierbar ist und die obige Argumentation fast überall gilt. Die Details dieser Argumentation würden jedoch den Rahmen dieser Aufgabe sprengen.
+
+Damit ist der Beweis vollständig. \qed
+
+\end{document}

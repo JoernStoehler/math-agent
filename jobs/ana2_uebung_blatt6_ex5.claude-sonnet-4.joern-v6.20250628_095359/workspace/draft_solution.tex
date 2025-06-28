@@ -1,0 +1,23 @@
+% Draft solution for the exercise
+
+% Key definitions:
+% - A curve f:[a,b] → ℝⁿ is rectifiable if its length L(f) is finite
+% - L(f) = sup{P_f(t_0,...,t_k) | partitions of [a,b]}
+% - P_f(t_0,...,t_k) = Σ_{i=1}^k ||f(t_i) - f(t_{i-1})||
+
+% Part (a): 
+% Need to show:
+% 1. f|_{[a,c]} and f|_{[c,b]} are rectifiable
+% 2. L(f) = L(f|_{[a,c]}) + L(f|_{[c,b]})
+
+% Strategy: 
+% - Use that any partition of [a,b] containing c can be split into partitions of [a,c] and [c,b]
+% - Show both directions of the equality
+
+% Part (b):
+% This seems like it should follow from the definition of L(f)
+% Need to verify that the supremum formula holds
+
+% Part (c):
+% The converse: if the supremum is finite, then f is rectifiable
+% This is essentially showing that the definition is well-posed

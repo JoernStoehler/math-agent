@@ -1,0 +1,38 @@
+% Draft for part (a)
+% We need to show that f(x,t) = 1/sqrt(4πkt) * exp(-x²/4kt) satisfies ∂f/∂t = k * ∂²f/∂x²
+
+% Let's compute ∂f/∂t first:
+% f(x,t) = (4πkt)^(-1/2) * exp(-x²/4kt)
+
+% Using the product rule and chain rule:
+% ∂f/∂t = ∂/∂t[(4πkt)^(-1/2)] * exp(-x²/4kt) + (4πkt)^(-1/2) * ∂/∂t[exp(-x²/4kt)]
+
+% For the first term:
+% ∂/∂t[(4πkt)^(-1/2)] = -1/2 * (4πkt)^(-3/2) * 4πk = -2πk * (4πkt)^(-3/2)
+%                      = -1/2 * (4πkt)^(-1/2) * t^(-1)
+
+% For the second term:
+% ∂/∂t[exp(-x²/4kt)] = exp(-x²/4kt) * ∂/∂t[-x²/4kt]
+%                    = exp(-x²/4kt) * x²/4kt²
+
+% So:
+% ∂f/∂t = -1/2t * (4πkt)^(-1/2) * exp(-x²/4kt) + (4πkt)^(-1/2) * exp(-x²/4kt) * x²/4kt²
+%       = (4πkt)^(-1/2) * exp(-x²/4kt) * [-1/2t + x²/4kt²]
+%       = f(x,t) * [-1/2t + x²/4kt²]
+
+% Now let's compute ∂²f/∂x²:
+% ∂f/∂x = (4πkt)^(-1/2) * ∂/∂x[exp(-x²/4kt)]
+%       = (4πkt)^(-1/2) * exp(-x²/4kt) * (-2x/4kt)
+%       = -x/2kt * f(x,t)
+
+% ∂²f/∂x² = ∂/∂x[-x/2kt * f(x,t)]
+%         = -1/2kt * f(x,t) + (-x/2kt) * ∂f/∂x
+%         = -1/2kt * f(x,t) + (-x/2kt) * (-x/2kt * f(x,t))
+%         = f(x,t) * [-1/2kt + x²/4k²t²]
+
+% Therefore:
+% k * ∂²f/∂x² = k * f(x,t) * [-1/2kt + x²/4k²t²]
+%             = f(x,t) * [-1/2t + x²/4kt²]
+%             = ∂f/∂t
+
+% This proves that f satisfies the heat equation!

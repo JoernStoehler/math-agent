@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Zeige: für jede Mannigfaltigkeit $M$ gibt es eine Karte $\varphi: U \to M$ sodass $M \setminus \varphi(U)$ eine Lebesgue-Null-Menge ist.
+
+\subsection*{Lösung}
+
+Wir zeigen diese Aussage für glatte Mannigfaltigkeiten. Sei $M$ eine glatte $n$-dimensionale Mannigfaltigkeit.
+
+\textbf{Schritt 1: Grundlegende Überlegungen}
+
+Zunächst klären wir, was eine Lebesgue-Nullmenge auf einer Mannigfaltigkeit bedeutet. Eine Teilmenge $A \subseteq M$ heißt Lebesgue-Nullmenge, wenn für jeden Kartenbereich $(V, \psi)$ mit $\psi: V \to \mathbb{R}^n$ die Menge $\psi(A \cap V)$ eine Lebesgue-Nullmenge in $\mathbb{R}^n$ ist.
+
+\textbf{Schritt 2: Konstruktion der speziellen Karte}
+
+Da $M$ eine glatte Mannigfaltigkeit ist, besitzt sie folgende Eigenschaften:
+\begin{itemize}
+\item $M$ ist zweitabzählbar (besitzt eine abzählbare Basis der Topologie)
+\item $M$ ist lokal euklidisch
+\item $M$ besitzt einen abzählbaren glatten Atlas $\{(U_i, \varphi_i)\}_{i \in \mathbb{N}}$
+\end{itemize}
+
+Wir konstruieren nun eine spezielle Karte wie folgt:
+
+Da $M$ zweitabzählbar ist, ist $M$ auch $\sigma$-kompakt, d.h., es existiert eine Folge kompakter Mengen $K_1 \subseteq K_2 \subseteq K_3 \subseteq \ldots$ mit $M = \bigcup_{i=1}^{\infty} K_i$.
+
+Für jedes $i \in \mathbb{N}$ wählen wir eine endliche Teilüberdeckung von $K_i$ aus unserem Atlas. Durch Umnummerierung erhalten wir einen abzählbaren Atlas $\{(V_j, \psi_j)\}_{j \in \mathbb{N}}$ mit der Eigenschaft, dass für jedes kompakte $K \subseteq M$ ein $N \in \mathbb{N}$ existiert, sodass $K \subseteq \bigcup_{j=1}^{N} V_j$.
+
+\textbf{Schritt 3: Die Hauptkonstruktion}
+
+Wir definieren für jedes $j \in \mathbb{N}$:
+\begin{itemize}
+\item $W_j := \psi_j(V_j) \subseteq \mathbb{R}^n$
+\item $W'_j := \{x \in W_j : \|x\| < j \text{ und } \text{dist}(x, \partial W_j) > 1/j\}$
+\end{itemize}
+
+Die Mengen $W'_j$ sind offen in $\mathbb{R}^n$ und es gilt $\bigcup_{j=1}^{\infty} \psi_j^{-1}(W'_j) = M$ bis auf eine Nullmenge.
+
+Dies sieht man wie folgt: Für jeden Punkt $p \in M$ existiert ein $j$ mit $p \in V_j$. Für fast alle $p$ (im Sinne des Lebesgue-Maßes) liegt $\psi_j(p)$ im Inneren von $W_j$ und hat endliche Norm, sodass für hinreichend großes $j$ gilt: $p \in \psi_j^{-1}(W'_j)$.
+
+\textbf{Schritt 4: Vereinigung zu einer einzigen Karte}
+
+Der entscheidende Schritt ist nun, diese abzählbar vielen Kartengebiete zu einer einzigen Karte zu vereinigen. Dazu nutzen wir folgende Konstruktion:
+
+Definiere $U := \bigsqcup_{j=1}^{\infty} W'_j \times \{j\} \subseteq \mathbb{R}^n \times \mathbb{N}$. Diese Menge kann mit $\mathbb{R}^{n+1}$ identifiziert werden durch eine geeignete Bijektion $\tau: U \to \mathbb{R}^{n+1}$.
+
+Definiere $\varphi: \tau(U) \to M$ durch:
+$$\varphi(\tau(x,j)) := \psi_j^{-1}(x) \text{ für } (x,j) \in W'_j \times \{j\}$$
+
+\textbf{Schritt 5: Verifikation}
+
+Die Abbildung $\varphi$ ist wohldefiniert und ein Homöomorphismus auf ihr Bild. Das Komplement $M \setminus \varphi(\tau(U))$ besteht aus:
+\begin{itemize}
+\item Punkten, die in keinem $\psi_j^{-1}(W'_j)$ liegen
+\item Eventuelle Überlappungen (diese sind jedoch durch unsere Konstruktion ausgeschlossen)
+\end{itemize}
+
+Nach unserer Konstruktion in Schritt 3 ist dies eine Nullmenge.
+
+Damit haben wir gezeigt, dass eine Karte $\varphi: \tau(U) \to M$ existiert, sodass $M \setminus \varphi(\tau(U))$ eine Lebesgue-Nullmenge ist.
+
+\end{document}

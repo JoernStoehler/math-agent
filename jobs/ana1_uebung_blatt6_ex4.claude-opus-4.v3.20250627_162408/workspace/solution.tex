@@ -1,0 +1,94 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\newtheorem{prob}{Aufgabe}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{prob}
+
+  Gegeben seien $a,\ b \in \R$ mit $a < b$. Zeige, dass die Intervalle $(a,b)$
+
+  und $[a,b]$ die gleiche Mächtigkeit wie $\R$ haben.
+
+\end{prob}
+
+\textbf{Lösung:}
+
+Wir zeigen die Behauptung in zwei Teilen.
+
+\textbf{Teil 1: Das offene Intervall $(a,b)$ hat die gleiche Mächtigkeit wie $\R$.}
+
+Wir konstruieren eine Bijektion $f: (a,b) \to \R$.
+
+Zunächst transformieren wir das Intervall $(a,b)$ auf das Intervall $(-\frac{\pi}{2}, \frac{\pi}{2})$ durch die lineare Abbildung
+$$g: (a,b) \to \left(-\frac{\pi}{2}, \frac{\pi}{2}\right), \quad g(x) = \frac{\pi}{b-a} \cdot (x - a) - \frac{\pi}{2}.$$
+
+Diese Abbildung ist bijektiv, denn:
+\begin{itemize}
+\item Sie ist linear mit positiver Steigung $\frac{\pi}{b-a} > 0$, also streng monoton wachsend und damit injektiv.
+\item Für $x = a$ erhalten wir $g(a) = \frac{\pi}{b-a} \cdot 0 - \frac{\pi}{2} = -\frac{\pi}{2}$.
+\item Für $x = b$ erhalten wir $g(b) = \frac{\pi}{b-a} \cdot (b-a) - \frac{\pi}{2} = \pi - \frac{\pi}{2} = \frac{\pi}{2}$.
+\item Da $g$ stetig ist und die Grenzwerte bei $a$ und $b$ die Randpunkte des Zielintervalls sind, ist $g$ surjektiv.
+\end{itemize}
+
+Nun verwenden wir die Tangensfunktion:
+$$h: \left(-\frac{\pi}{2}, \frac{\pi}{2}\right) \to \R, \quad h(y) = \tan(y).$$
+
+Die Tangensfunktion ist auf dem Intervall $(-\frac{\pi}{2}, \frac{\pi}{2})$ bijektiv:
+\begin{itemize}
+\item Sie ist streng monoton wachsend auf diesem Intervall, also injektiv.
+\item Es gilt $\lim_{y \to -\frac{\pi}{2}^+} \tan(y) = -\infty$ und $\lim_{y \to \frac{\pi}{2}^-} \tan(y) = +\infty$.
+\item Da $\tan$ stetig ist auf $(-\frac{\pi}{2}, \frac{\pi}{2})$, nimmt sie nach dem Zwischenwertsatz jeden reellen Wert an, ist also surjektiv.
+\end{itemize}
+
+Die gesuchte Bijektion ist die Komposition
+$$f = h \circ g: (a,b) \to \R, \quad f(x) = \tan\left(\frac{\pi}{b-a} \cdot (x - a) - \frac{\pi}{2}\right).$$
+
+Als Komposition zweier Bijektionen ist $f$ selbst eine Bijektion. Damit haben $(a,b)$ und $\R$ die gleiche Mächtigkeit.
+
+\textbf{Teil 2: Das abgeschlossene Intervall $[a,b]$ hat die gleiche Mächtigkeit wie $\R$.}
+
+Wir haben bereits gezeigt, dass $(a,b) \sim \R$ (gleiche Mächtigkeit). Es genügt zu zeigen, dass $[a,b] \sim (a,b)$.
+
+Betrachte die Menge $A = \{a, b, a + \frac{b-a}{2}, a + \frac{b-a}{3}, a + \frac{b-a}{4}, \ldots\}$. Diese Menge ist abzählbar unendlich.
+
+Wir definieren eine Bijektion $\varphi: [a,b] \to (a,b)$ wie folgt:
+\begin{align}
+\varphi(a) &= a + \frac{b-a}{2}\\
+\varphi(b) &= a + \frac{b-a}{3}\\
+\varphi\left(a + \frac{b-a}{2}\right) &= a + \frac{b-a}{4}\\
+\varphi\left(a + \frac{b-a}{3}\right) &= a + \frac{b-a}{5}\\
+&\vdots\\
+\varphi\left(a + \frac{b-a}{n}\right) &= a + \frac{b-a}{n+2} \quad \text{für } n \geq 2\\
+\varphi(x) &= x \quad \text{für alle } x \in [a,b] \setminus A
+\end{align}
+
+Diese Abbildung ist eine Bijektion:
+\begin{itemize}
+\item \textbf{Injektivität:} Für $x, y \in [a,b]$ mit $x \neq y$:
+  \begin{itemize}
+  \item Falls $x, y \notin A$, dann $\varphi(x) = x \neq y = \varphi(y)$.
+  \item Falls $x \in A$ und $y \notin A$, dann ist $\varphi(x) \in \{a + \frac{b-a}{n} : n \geq 2\}$ und $\varphi(y) = y \notin \{a + \frac{b-a}{n} : n \geq 2\}$, also $\varphi(x) \neq \varphi(y)$.
+  \item Falls $x, y \in A$, dann werden sie auf verschiedene Elemente der Folge abgebildet, also $\varphi(x) \neq \varphi(y)$.
+  \end{itemize}
+  
+\item \textbf{Surjektivität:} Sei $y \in (a,b)$.
+  \begin{itemize}
+  \item Falls $y \notin \{a + \frac{b-a}{n} : n \geq 2\}$, dann ist $y \notin A$ und $\varphi(y) = y$.
+  \item Falls $y = a + \frac{b-a}{n}$ für ein $n \geq 2$, dann ist $y$ das Bild eines Elements aus $A$ gemäß der obigen Definition.
+  \end{itemize}
+\end{itemize}
+
+Damit ist $\varphi$ eine Bijektion zwischen $[a,b]$ und $(a,b)$.
+
+Aus Teil 1 wissen wir $(a,b) \sim \R$, und aus Teil 2 folgt $[a,b] \sim (a,b)$. 
+Mit der Transitivität der Gleichmächtigkeit folgt $[a,b] \sim \R$.
+
+Somit haben sowohl $(a,b)$ als auch $[a,b]$ die gleiche Mächtigkeit wie $\R$. \qed
+
+\end{document}

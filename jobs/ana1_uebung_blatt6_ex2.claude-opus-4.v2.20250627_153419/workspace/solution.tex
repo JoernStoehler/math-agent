@@ -1,0 +1,117 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+
+\newtheorem*{satz}{Satz}
+
+\begin{document}
+
+\section*{Lösung}
+
+Wir untersuchen die gegebenen Reihen auf Konvergenz.
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $\displaystyle \sum_{n=1}^\infty \frac{2^n n!}{n^n}$
+
+Wir verwenden das Quotientenkriterium. Sei $a_n = \frac{2^n n!}{n^n}$. Dann gilt:
+\begin{align}
+\frac{a_{n+1}}{a_n} &= \frac{2^{n+1} (n+1)!}{(n+1)^{n+1}} \cdot \frac{n^n}{2^n n!}\\
+&= \frac{2 \cdot (n+1) \cdot n^n}{(n+1)^{n+1}}\\
+&= \frac{2 \cdot (n+1) \cdot n^n}{(n+1) \cdot (n+1)^n}\\
+&= \frac{2 \cdot n^n}{(n+1)^n}\\
+&= 2 \cdot \left(\frac{n}{n+1}\right)^n\\
+&= 2 \cdot \left(1 - \frac{1}{n+1}\right)^n
+\end{align}
+
+Für den Grenzwert $n \to \infty$ verwenden wir, dass $\lim_{n \to \infty} \left(1 - \frac{1}{n+1}\right)^n = \lim_{n \to \infty} \left(1 - \frac{1}{n+1}\right)^{(n+1) \cdot \frac{n}{n+1}} = e^{-1}$.
+
+Somit gilt:
+\[
+\lim_{n \to \infty} \frac{a_{n+1}}{a_n} = \frac{2}{e} \approx 0.736 < 1
+\]
+
+Nach dem Quotientenkriterium konvergiert die Reihe.
+
+\item $\displaystyle \sum_{n=1}^\infty \frac{3^n n!}{n^n}$
+
+Analog zu Teil (a) erhalten wir mit $a_n = \frac{3^n n!}{n^n}$:
+\[
+\frac{a_{n+1}}{a_n} = 3 \cdot \left(\frac{n}{n+1}\right)^n
+\]
+
+Für den Grenzwert gilt:
+\[
+\lim_{n \to \infty} \frac{a_{n+1}}{a_n} = \frac{3}{e} \approx 1.104 > 1
+\]
+
+Nach dem Quotientenkriterium divergiert die Reihe.
+
+\item $\displaystyle \sum_{n=1}^\infty \frac{1 + (-1)^n n}{n^2}$
+
+Wir zerlegen die Reihe:
+\[
+\sum_{n=1}^\infty \frac{1 + (-1)^n n}{n^2} = \sum_{n=1}^\infty \frac{1}{n^2} + \sum_{n=1}^\infty \frac{(-1)^n n}{n^2} = \sum_{n=1}^\infty \frac{1}{n^2} + \sum_{n=1}^\infty \frac{(-1)^n}{n}
+\]
+
+Die erste Reihe $\sum_{n=1}^\infty \frac{1}{n^2}$ ist eine konvergente $p$-Reihe mit $p = 2 > 1$.
+
+Die zweite Reihe $\sum_{n=1}^\infty \frac{(-1)^n}{n}$ ist die alternierende harmonische Reihe, welche nach dem Leibniz-Kriterium konvergiert, da:
+\begin{itemize}
+\item $\frac{1}{n}$ ist monoton fallend
+\item $\lim_{n \to \infty} \frac{1}{n} = 0$
+\end{itemize}
+
+Da beide Teilreihen konvergieren, konvergiert auch die ursprüngliche Reihe.
+
+\item $\displaystyle \sum_{n=0}^\infty \frac{x^n}{1+x^{2n}}$ für $x \in \mathbb{R}$
+
+Wir unterscheiden verschiedene Fälle:
+
+\textbf{Fall 1: $|x| < 1$}
+
+Für $|x| < 1$ gilt $x^{2n} \to 0$ für $n \to \infty$. Daher gilt für große $n$:
+\[
+\frac{x^n}{1+x^{2n}} \approx x^n
+\]
+
+Die Reihe verhält sich asymptotisch wie die geometrische Reihe $\sum_{n=0}^\infty x^n$, welche für $|x| < 1$ konvergiert.
+
+\textbf{Fall 2: $|x| > 1$}
+
+Für $|x| > 1$ können wir schreiben:
+\[
+\frac{x^n}{1+x^{2n}} = \frac{1}{x^{-n} + x^n} = \frac{1}{x^n(x^{-2n} + 1)} = \frac{1}{x^n} \cdot \frac{1}{1 + x^{-2n}}
+\]
+
+Für große $n$ gilt $x^{-2n} \to 0$, also:
+\[
+\frac{x^n}{1+x^{2n}} \approx \frac{1}{x^n} = \left(\frac{1}{|x|}\right)^n
+\]
+
+Da $|x| > 1$ ist $\frac{1}{|x|} < 1$, und die Reihe konvergiert wie eine geometrische Reihe.
+
+\textbf{Fall 3: $x = 1$}
+
+Für $x = 1$ erhalten wir:
+\[
+\sum_{n=0}^\infty \frac{1}{1+1} = \sum_{n=0}^\infty \frac{1}{2}
+\]
+
+Diese Reihe divergiert, da der allgemeine Term nicht gegen 0 konvergiert.
+
+\textbf{Fall 4: $x = -1$}
+
+Für $x = -1$ erhalten wir:
+\[
+\sum_{n=0}^\infty \frac{(-1)^n}{1+(-1)^{2n}} = \sum_{n=0}^\infty \frac{(-1)^n}{1+1} = \sum_{n=0}^\infty \frac{(-1)^n}{2}
+\]
+
+Diese alternierende Reihe divergiert, da der allgemeine Term $\frac{(-1)^n}{2}$ nicht gegen 0 konvergiert.
+
+\textbf{Zusammenfassung:} Die Reihe konvergiert für $x \in \mathbb{R} \setminus \{-1, 1\}$ und divergiert für $x \in \{-1, 1\}$.
+
+\end{enumerate}
+
+\end{document}

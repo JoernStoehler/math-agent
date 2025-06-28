@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+% \usepackage{tikz} % Not available in this environment
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Konstruiere eine \textit{Peano-Kurve}, d.h.~eine stetige surjektive
+Abbildung $f:[0,1]\to[0,1]^2$ vom Einheitsintervall auf das
+Einheitsquadrat in der Ebene! 
+
+\textit{Hinweis:} O.~Forster, Übungsbuch zu Analysis 2, Aufgabe 2 G. 
+\textit{Bemerkung:} Nach einem nichttrivialen Satz aus der Algebraischen Topologie kann eine
+solche Abbildung nicht bijektiv sein. 
+
+\subsection*{Lösung}
+
+Wir konstruieren die Peano-Kurve durch eine rekursive Methode, die auf der Unterteilung des Einheitsintervalls und des Einheitsquadrats basiert.
+
+\subsubsection*{Grundidee}
+
+Die Konstruktion beruht darauf, dass wir das Intervall $[0,1]$ und das Quadrat $[0,1]^2$ wiederholt in jeweils 9 gleiche Teile unterteilen und eine spezielle Zuordnung zwischen diesen Teilen definieren.
+
+\subsubsection*{Schritt 1: Ternäre Darstellung}
+
+Jede Zahl $t \in [0,1]$ lässt sich in ternärer Darstellung schreiben als:
+$$t = \sum_{k=1}^{\infty} \frac{a_k}{3^k}$$
+wobei $a_k \in \{0, 1, 2\}$ für alle $k \in \mathbb{N}$.
+
+\subsubsection*{Schritt 2: Definition der Hilfsfunktionen}
+
+Wir definieren zwei Funktionen $\varphi, \psi: \{0,1,2\} \times \{0,1,2\} \to \{0,1,2\}$ durch die folgenden Tabellen:
+
+Für $\varphi(i,j)$ (erste Koordinate):
+\begin{center}
+\begin{tabular}{c|ccc}
+$j \backslash i$ & 0 & 1 & 2 \\
+\hline
+0 & 0 & 1 & 2 \\
+1 & 2 & 1 & 0 \\
+2 & 0 & 1 & 2 \\
+\end{tabular}
+\end{center}
+
+Für $\psi(i,j)$ (zweite Koordinate):
+\begin{center}
+\begin{tabular}{c|ccc}
+$j \backslash i$ & 0 & 1 & 2 \\
+\hline
+0 & 0 & 0 & 0 \\
+1 & 1 & 1 & 1 \\
+2 & 2 & 2 & 2 \\
+\end{tabular}
+\end{center}
+
+Diese Funktionen beschreiben, wie wir die 9 Teilintervalle von $[0,1]$ auf die 9 Teilquadrate von $[0,1]^2$ abbilden.
+
+\subsubsection*{Schritt 3: Definition der Peano-Kurve}
+
+Für $t \in [0,1]$ mit ternärer Darstellung $t = \sum_{k=1}^{\infty} \frac{a_k}{3^k}$ definieren wir:
+
+$$f(t) = (x(t), y(t))$$
+
+wobei:
+\begin{align}
+x(t) &= \sum_{k=1}^{\infty} \frac{b_k}{3^k} \\
+y(t) &= \sum_{k=1}^{\infty} \frac{c_k}{3^k}
+\end{align}
+
+Die Ziffern $b_k$ und $c_k$ werden rekursiv berechnet:
+\begin{align}
+b_1 &= \varphi(a_1, 0), \quad c_1 = \psi(a_1, 0) \\
+b_k &= \varphi(a_k, c_{k-1}), \quad c_k = \psi(a_k, c_{k-1}) \quad \text{für } k \geq 2
+\end{align}
+
+\subsubsection*{Schritt 4: Nachweis der Stetigkeit}
+
+Die Stetigkeit von $f$ folgt aus der Konstruktion:
+
+Sei $\varepsilon > 0$ gegeben. Wähle $n \in \mathbb{N}$ so groß, dass $\frac{2}{3^n} < \varepsilon$.
+
+Für $t, t' \in [0,1]$ mit $|t - t'| < \frac{1}{3^n}$ stimmen die ersten $n$ Ternärziffern von $t$ und $t'$ überein. 
+
+Aus der Definition der Funktionen $\varphi$ und $\psi$ folgt, dass auch die ersten $n$ Ternärziffern von $x(t)$ und $x(t')$ sowie von $y(t)$ und $y(t')$ übereinstimmen.
+
+Daher gilt:
+$$|x(t) - x(t')| \leq \frac{1}{3^n} \quad \text{und} \quad |y(t) - y(t')| \leq \frac{1}{3^n}$$
+
+Somit:
+$$\|f(t) - f(t')\| = \sqrt{(x(t) - x(t'))^2 + (y(t) - y(t'))^2} \leq \sqrt{2} \cdot \frac{1}{3^n} < \varepsilon$$
+
+Dies zeigt die gleichmäßige Stetigkeit von $f$.
+
+\subsubsection*{Schritt 5: Nachweis der Surjektivität}
+
+Um zu zeigen, dass $f$ surjektiv ist, zeigen wir, dass jeder Punkt $(x_0, y_0) \in [0,1]^2$ im Bild von $f$ liegt.
+
+Seien $x_0 = \sum_{k=1}^{\infty} \frac{\beta_k}{3^k}$ und $y_0 = \sum_{k=1}^{\infty} \frac{\gamma_k}{3^k}$ die ternären Darstellungen von $x_0$ und $y_0$.
+
+Wir konstruieren $t \in [0,1]$ mit $f(t) = (x_0, y_0)$ wie folgt:
+
+Definiere die Ziffern $\alpha_k$ rekursiv:
+\begin{itemize}
+\item Wähle $\alpha_1 \in \{0,1,2\}$ so, dass $\varphi(\alpha_1, 0) = \beta_1$ und $\psi(\alpha_1, 0) = \gamma_1$.
+\item Für $k \geq 2$: Wähle $\alpha_k \in \{0,1,2\}$ so, dass $\varphi(\alpha_k, \gamma_{k-1}) = \beta_k$ und $\psi(\alpha_k, \gamma_{k-1}) = \gamma_k$.
+\end{itemize}
+
+Die Existenz solcher $\alpha_k$ ist durch die spezielle Konstruktion der Tabellen für $\varphi$ und $\psi$ gewährleistet: Für jedes Paar $(\beta_k, \gamma_k)$ und jeden Wert von $\gamma_{k-1}$ gibt es genau ein $\alpha_k$ mit den gewünschten Eigenschaften.
+
+Setze $t = \sum_{k=1}^{\infty} \frac{\alpha_k}{3^k}$. Dann gilt nach Konstruktion $f(t) = (x_0, y_0)$.
+
+\subsubsection*{Visualisierung}
+
+Die ersten Iterationen der Peano-Kurve zeigen, wie das Einheitsintervall schrittweise das Einheitsquadrat ausfüllt. In der ersten Iteration wird das Intervall $[0,1]$ in 9 gleiche Teile unterteilt und diese werden der Reihe nach auf die 9 Teilquadrate des $3 \times 3$-Gitters abgebildet:
+
+\begin{center}
+\begin{verbatim}
+7 -- 8 -- 9
+|         |
+6 -- 5 -- 4
+|         |
+1 -- 2 -- 3
+\end{verbatim}
+\end{center}
+
+Dabei entspricht:
+\begin{itemize}
+\item $[0, 1/9] \to$ Quadrat 1 (unten links)
+\item $[1/9, 2/9] \to$ Quadrat 2 (unten Mitte)
+\item $[2/9, 3/9] \to$ Quadrat 3 (unten rechts)
+\item $[3/9, 4/9] \to$ Quadrat 4 (Mitte rechts)
+\item $[4/9, 5/9] \to$ Quadrat 5 (Mitte Mitte)
+\item $[5/9, 6/9] \to$ Quadrat 6 (Mitte links)
+\item $[6/9, 7/9] \to$ Quadrat 7 (oben links)
+\item $[7/9, 8/9] \to$ Quadrat 8 (oben Mitte)
+\item $[8/9, 1] \to$ Quadrat 9 (oben rechts)
+\end{itemize}
+
+\subsubsection*{Zusammenfassung}
+
+Wir haben eine stetige surjektive Abbildung $f: [0,1] \to [0,1]^2$ konstruiert. Die Stetigkeit folgt aus der speziellen rekursiven Konstruktion, bei der benachbarte Punkte im Intervall auf benachbarte Punkte im Quadrat abgebildet werden. Die Surjektivität ergibt sich daraus, dass wir für jeden Punkt im Quadrat ein Urbild konstruieren können.
+
+Die Abbildung kann nicht bijektiv sein, da eine stetige Bijektion zwischen kompakten Hausdorff-Räumen ein Homöomorphismus wäre, aber $[0,1]$ und $[0,1]^2$ sind nicht homöomorph (sie haben unterschiedliche Dimensionen).
+
+\end{document}

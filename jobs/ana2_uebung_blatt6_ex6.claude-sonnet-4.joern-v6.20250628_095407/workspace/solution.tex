@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newcommand{\R}{\mathbb{R}}
+\theoremstyle{definition}
+\newtheorem{prob}{Problem}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+\begin{prob}
+(a) Zeige: Die Kurve $f:[0,1]\to\R^2$,
+$$
+   f(t) := \begin{cases}\bigl(t,t\cos(\pi/t)\bigr): &t>0, \cr (0,0):
+   &t=0 \end{cases}
+$$
+ist stetig, aber nicht rektifizierbar.
+
+(b) Zeige: Für jede rektifizierbare Kurve $f:[a,b]\to\R^2$ gibt es
+einen Punkt $x$ im Einheitsquadrat $[0,1]^2$, der nicht im Bild von
+$f$ liegt. {\it Bemerkung: }Also sind die Peano-Kurven aus Aufgabe 5
+nicht rektifizierbar.   
+\end{prob}
+
+\subsection*{Lösung}
+
+\textbf{Teil (a):}
+
+Wir zeigen zunächst, dass $f$ stetig ist, und anschließend, dass $f$ nicht rektifizierbar ist.
+
+\textit{Stetigkeit:} Für $t > 0$ ist $f(t) = (t, t\cos(\pi/t))$ als Komposition stetiger Funktionen stetig. Es bleibt zu zeigen, dass $f$ auch bei $t = 0$ stetig ist.
+
+Wir müssen zeigen, dass $\lim_{t \to 0^+} f(t) = f(0) = (0,0)$. Betrachten wir die beiden Komponenten:
+\begin{itemize}
+    \item Erste Komponente: $\lim_{t \to 0^+} t = 0$. Dies ist offensichtlich.
+    \item Zweite Komponente: $\lim_{t \to 0^+} t\cos(\pi/t) = 0$. 
+    
+    Da $|\cos(\pi/t)| \leq 1$ für alle $t > 0$, gilt:
+    $$|t\cos(\pi/t)| \leq |t| = t \to 0 \text{ für } t \to 0^+.$$
+    
+    Nach dem Sandwich-Kriterium folgt $\lim_{t \to 0^+} t\cos(\pi/t) = 0$.
+\end{itemize}
+
+Somit ist $\lim_{t \to 0^+} f(t) = (0,0) = f(0)$, und $f$ ist stetig auf $[0,1]$.
+
+\textit{Nicht-Rektifizierbarkeit:} Wir zeigen, dass die Bogenlänge von $f$ unendlich ist.
+
+Betrachten wir die Partition $P_n = \{0, \frac{1}{n}, \frac{1}{n-1}, \ldots, \frac{1}{2}, 1\}$ des Intervalls $[0,1]$. 
+
+Für $k \geq 2$ berechnen wir den Abstand zwischen aufeinanderfolgenden Punkten:
+$$\|f(1/k) - f(1/(k+1))\| = \left\|\left(\frac{1}{k}, \frac{1}{k}\cos(\pi k)\right) - \left(\frac{1}{k+1}, \frac{1}{k+1}\cos(\pi(k+1))\right)\right\|$$
+
+Da $\cos(\pi k) = (-1)^k$ und $\cos(\pi(k+1)) = (-1)^{k+1} = -(-1)^k$, erhalten wir:
+$$f(1/k) = \left(\frac{1}{k}, \frac{(-1)^k}{k}\right) \text{ und } f(1/(k+1)) = \left(\frac{1}{k+1}, \frac{(-1)^{k+1}}{k+1}\right)$$
+
+Für die zweite Komponente gilt:
+$$\left|\frac{(-1)^k}{k} - \frac{(-1)^{k+1}}{k+1}\right| = \left|\frac{(-1)^k}{k} + \frac{(-1)^k}{k+1}\right| = \frac{1}{k} + \frac{1}{k+1}$$
+
+Daher ist:
+$$\|f(1/k) - f(1/(k+1))\| \geq \left|\frac{(-1)^k}{k} - \frac{(-1)^{k+1}}{k+1}\right| = \frac{1}{k} + \frac{1}{k+1} > \frac{1}{k+1}$$
+
+Die Länge der Kurve bezüglich der Partition $P_n$ ist somit mindestens:
+$$L(f, P_n) \geq \sum_{k=2}^{n} \frac{1}{k+1} = \sum_{j=3}^{n+1} \frac{1}{j}$$
+
+Da $\sum_{j=1}^{\infty} \frac{1}{j}$ divergiert, folgt $L(f, P_n) \to \infty$ für $n \to \infty$.
+
+Somit ist die Bogenlänge von $f$ unendlich, und $f$ ist nicht rektifizierbar.
+
+\textbf{Teil (b):}
+
+Sei $f:[a,b] \to \R^2$ eine rektifizierbare Kurve mit Bogenlänge $L < \infty$.
+
+Nach einem Satz aus der Maßtheorie hat das Bild einer rektifizierbaren Kurve das zweidimensionale Lebesgue-Maß null. Dies kann wie folgt eingesehen werden:
+
+Für jedes $\varepsilon > 0$ kann das Bild von $f$ durch endlich viele Rechtecke überdeckt werden, deren Gesamtfläche kleiner als $\varepsilon \cdot L$ ist. Dies folgt aus der Definition der Rektifizierbarkeit und der gleichmäßigen Stetigkeit von $f$ auf dem kompakten Intervall $[a,b]$.
+
+Genauer: Da $f$ gleichmäßig stetig ist, existiert zu jedem $\delta > 0$ ein $\eta > 0$, sodass für alle $s,t \in [a,b]$ mit $|s-t| < \eta$ gilt: $\|f(s) - f(t)\| < \delta$.
+
+Wähle eine Partition $a = t_0 < t_1 < \ldots < t_n = b$ mit $t_{i+1} - t_i < \eta$ für alle $i$. Dann kann $f([t_i, t_{i+1}])$ in einem Rechteck mit Seitenlängen höchstens $\delta$ und $\|f(t_{i+1}) - f(t_i)\| + 2\delta$ enthalten werden.
+
+Die Gesamtfläche dieser Rechtecke ist höchstens:
+$$\sum_{i=0}^{n-1} \delta \cdot (\|f(t_{i+1}) - f(t_i)\| + 2\delta) \leq \delta \cdot L + 2\delta^2 \cdot n$$
+
+Wählt man $\delta$ hinreichend klein, kann diese Fläche beliebig klein gemacht werden.
+
+Da das Einheitsquadrat $[0,1]^2$ das Lebesgue-Maß 1 hat und das Bild von $f$ Maß null hat, existieren Punkte in $[0,1]^2$, die nicht im Bild von $f$ liegen.
+
+\textit{Bemerkung:} Dies zeigt insbesondere, dass die Peano-Kurven aus Aufgabe 5, die das gesamte Einheitsquadrat ausfüllen, nicht rektifizierbar sein können.
+
+\end{document}

@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newcommand{\R}{\mathbb{R}}
+\DeclareMathOperator{\sgn}{sgn}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe: Orientierungstreue von Diffeomorphismen}
+
+\begin{enumerate}
+	\item Sei $\Phi \colon U \stackrel{\cong} \longrightarrow V$ ein Diffeomorphismus zwischen offenen Mengen $U, V \subset \R^n$. Man zeige: Ist $U$ wegzusammenhängend, so ist $\Phi$ entweder orientierungserhaltend oder orientierungsumkehrend.
+	\item Sei $U=B_1\cup B_2\subset\R^n$ die disjunkte Vereinigung zweier offener Bälle. Man zeige: Es gibt einen Diffeomorphismus $\Phi \colon U \mapsto U$, der weder orientierungserhaltend noch orientierungsumkehrend ist.
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\paragraph{Teil (a)} Wir müssen zeigen, dass ein Diffeomorphismus $\Phi: U \to V$ mit wegzusammenhängendem $U$ entweder überall orientierungserhaltend oder überall orientierungsumkehrend ist.
+
+Betrachten wir die Abbildung 
+$$f: U \to \R, \quad f(x) = \det(D\Phi(x))$$
+wobei $D\Phi(x)$ die Jacobi-Matrix von $\Phi$ an der Stelle $x$ bezeichnet.
+
+\textbf{Schritt 1:} Die Funktion $f$ ist stetig.\\
+Da $\Phi$ ein Diffeomorphismus ist, ist $\Phi$ insbesondere stetig differenzierbar. Die Einträge der Jacobi-Matrix $D\Phi(x)$ sind die partiellen Ableitungen von $\Phi$, welche nach Voraussetzung stetig sind. Die Determinante ist eine stetige Funktion der Matrixeinträge, somit ist $f(x) = \det(D\Phi(x))$ als Komposition stetiger Funktionen stetig.
+
+\textbf{Schritt 2:} Es gilt $f(x) \neq 0$ für alle $x \in U$.\\
+Da $\Phi$ ein Diffeomorphismus ist, ist $\Phi$ insbesondere lokal invertierbar. Nach dem Satz über die Umkehrfunktion ist dies genau dann der Fall, wenn $\det(D\Phi(x)) \neq 0$ für alle $x \in U$.
+
+\textbf{Schritt 3:} Das Bild $f(U)$ ist zusammenhängend.\\
+Da $U$ wegzusammenhängend ist, ist $U$ insbesondere zusammenhängend. Das stetige Bild einer zusammenhängenden Menge ist zusammenhängend, also ist $f(U) \subset \R$ zusammenhängend.
+
+\textbf{Schritt 4:} Es gilt entweder $f(U) \subset (0,\infty)$ oder $f(U) \subset (-\infty,0)$.\\
+Aus Schritt 2 wissen wir, dass $0 \notin f(U)$. Also gilt $f(U) \subset \R \setminus \{0\} = (-\infty,0) \cup (0,\infty)$. 
+
+Angenommen, es existieren $x_1, x_2 \in U$ mit $f(x_1) > 0$ und $f(x_2) < 0$. Dann wäre $f(U) \cap (-\infty,0) \neq \emptyset$ und $f(U) \cap (0,\infty) \neq \emptyset$. Dies würde bedeuten, dass $f(U)$ als Teilmenge von $(-\infty,0) \cup (0,\infty)$ nicht zusammenhängend wäre, was ein Widerspruch zu Schritt 3 ist.
+
+Folglich gilt entweder $f(U) \subset (0,\infty)$ oder $f(U) \subset (-\infty,0)$.
+
+\textbf{Schlussfolgerung:}
+\begin{itemize}
+    \item Falls $\det(D\Phi(x)) > 0$ für alle $x \in U$, dann ist $\Phi$ orientierungserhaltend.
+    \item Falls $\det(D\Phi(x)) < 0$ für alle $x \in U$, dann ist $\Phi$ orientierungsumkehrend.
+\end{itemize}
+
+Damit ist gezeigt, dass $\Phi$ entweder orientierungserhaltend oder orientierungsumkehrend ist.
+
+\paragraph{Teil (b)} Wir konstruieren einen Diffeomorphismus $\Phi: U \to U$ mit $U = B_1 \cup B_2$, wobei $B_1$ und $B_2$ disjunkte offene Bälle sind, der weder orientierungserhaltend noch orientierungsumkehrend ist.
+
+Ohne Beschränkung der Allgemeinheit können wir annehmen:
+\begin{align}
+B_1 &= \{x \in \R^n : \|x - c_1\| < r_1\}\\
+B_2 &= \{x \in \R^n : \|x - c_2\| < r_2\}
+\end{align}
+wobei $\|c_1 - c_2\| > r_1 + r_2$, sodass $B_1 \cap B_2 = \emptyset$.
+
+Wir definieren $\Phi: U \to U$ durch:
+$$\Phi(x) = \begin{cases}
+x & \text{falls } x \in B_1\\
+2c_2 - x & \text{falls } x \in B_2
+\end{cases}$$
+
+\textbf{Schritt 1:} $\Phi$ ist wohldefiniert.\\
+Da $B_1$ und $B_2$ disjunkt sind, ist $\Phi$ eindeutig definiert. Für $x \in B_2$ gilt:
+$$\|2c_2 - x - c_2\| = \|c_2 - x\| = \|x - c_2\| < r_2$$
+Also ist $\Phi(x) = 2c_2 - x \in B_2$ für alle $x \in B_2$. Trivialerweise gilt $\Phi(x) \in B_1$ für alle $x \in B_1$.
+
+\textbf{Schritt 2:} $\Phi$ ist bijektiv.\\
+Die Einschränkung $\Phi|_{B_1}$ ist die Identität, also bijektiv von $B_1$ nach $B_1$.
+Die Einschränkung $\Phi|_{B_2}$ ist eine Punktspiegelung an $c_2$. Diese ist involutorisch, d.h., $\Phi \circ \Phi = \text{id}$ auf $B_2$, also bijektiv von $B_2$ nach $B_2$.
+Da $\Phi(B_1) = B_1$ und $\Phi(B_2) = B_2$, ist $\Phi: U \to U$ bijektiv.
+
+\textbf{Schritt 3:} $\Phi$ ist ein Diffeomorphismus.\\
+Auf $B_1$ ist $\Phi(x) = x$, also $D\Phi(x) = I_n$ (die $n \times n$ Einheitsmatrix).
+Auf $B_2$ ist $\Phi(x) = 2c_2 - x$, also $D\Phi(x) = -I_n$.
+
+Da $B_1$ und $B_2$ offen und disjunkt sind, ist $\Phi$ auf ganz $U$ beliebig oft differenzierbar. Die Umkehrabbildung ist $\Phi^{-1} = \Phi$ (da $\Phi$ involutorisch ist), welche ebenfalls glatt ist.
+
+\textbf{Schritt 4:} $\Phi$ ist weder orientierungserhaltend noch orientierungsumkehrend.\\
+Wir berechnen:
+$$\det(D\Phi(x)) = \begin{cases}
+\det(I_n) = 1 > 0 & \text{falls } x \in B_1\\
+\det(-I_n) = (-1)^n & \text{falls } x \in B_2
+\end{cases}$$
+
+Für $n$ ungerade gilt $\det(-I_n) = -1 < 0$. In diesem Fall:
+\begin{itemize}
+    \item Auf $B_1$ ist $\det(D\Phi(x)) > 0$, also ist $\Phi$ dort orientierungserhaltend.
+    \item Auf $B_2$ ist $\det(D\Phi(x)) < 0$, also ist $\Phi$ dort orientierungsumkehrend.
+\end{itemize}
+
+Da $\Phi$ auf einem Teil von $U$ orientierungserhaltend und auf einem anderen Teil orientierungsumkehrend ist, ist $\Phi$ weder (überall) orientierungserhaltend noch (überall) orientierungsumkehrend.
+
+\textbf{Anmerkung:} Für $n$ gerade ist $\det(-I_n) = 1 > 0$. In diesem Fall können wir stattdessen auf $B_2$ die Abbildung $\Phi(x) = S(x - c_2) + c_2$ verwenden, wobei $S$ eine Spiegelung an einer Hyperebene durch den Ursprung ist (z.B. $S(x_1, x_2, \ldots, x_n) = (-x_1, x_2, \ldots, x_n)$). Dann gilt $\det(S) = -1$, und wir erhalten wieder einen Diffeomorphismus, der auf $B_1$ orientierungserhaltend und auf $B_2$ orientierungsumkehrend ist.
+
+\end{document}

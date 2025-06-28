@@ -1,0 +1,196 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+% Define commands to match the exercise notation
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\adjunction}[2]{#1(#2)}
+\newcommand{\fa}[1]{\forall #1 \colon}
+\newcommand{\ex}[1]{\exists #1 \colon}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+In dieser Aufgabe betrachten wir die Menge
+\[
+  \adjunction{\Q}{\sqrt 2}
+  :=
+  \left\{ a + b \sqrt{2} \mid  a,b \in \Q \right\}.
+\]
+Folgende Aussagen sind zu beweisen:
+\begin{enumerate}
+\item \( \Q \subsetneq \adjunction{\Q}{\sqrt 2} \subsetneq \R\)
+\item
+  \( \fa{x,y \in \adjunction{\Q}{\sqrt 2}} x + y, x \cdot y \in
+  \adjunction{\Q}{\sqrt 2}\)
+\item
+  \( \fa{x \in \adjunction{\Q}{\sqrt{2}}} \ex{y \in \adjunction{\Q}{\sqrt{2}}}
+    x + y = 0\)
+  \item
+    \( \fa{0 \neq x \in \adjunction{\Q}{\sqrt{2}}} \ex{y \in
+      \adjunction{\Q}{\sqrt{2}}} x \cdot y = 1\)
+\end{enumerate}
+Wegen der Teilmengenbeziehung \(\adjunction{\Q}{\sqrt 2} \subset \R\) gelten
+die Assoziativ-, Kommutativ- und Distributivgesetze, die in \(\R\) gelten, auch
+in \(\adjunction{\Q}{\sqrt 2}\). Außerdem folgt daraus auch, dass
+\[
+  \fa{x \in \adjunction{\Q}{\sqrt{2}}} x + 0 = x \land x \cdot 1 = x
+\]
+gilt. Damit ist \(\adjunction{\Q}{\sqrt{2}}\) insbesondere ein Körper.
+
+\subsection*{Lösung}
+
+\begin{enumerate}
+\item \textbf{Behauptung:} \( \Q \subsetneq \adjunction{\Q}{\sqrt 2} \subsetneq \R\)
+
+\textbf{Beweis:}
+
+Zuerst zeigen wir \(\Q \subseteq \adjunction{\Q}{\sqrt 2}\):
+
+Für jedes \(q \in \Q\) können wir schreiben: \(q = q + 0 \cdot \sqrt{2}\) mit \(q, 0 \in \Q\).
+Somit ist \(q \in \adjunction{\Q}{\sqrt 2}\), also \(\Q \subseteq \adjunction{\Q}{\sqrt 2}\).
+
+Um zu zeigen, dass die Inklusion echt ist, betrachten wir \(\sqrt{2} = 0 + 1 \cdot \sqrt{2} \in \adjunction{\Q}{\sqrt 2}\).
+Wir zeigen, dass \(\sqrt{2} \notin \Q\):
+
+Angenommen, \(\sqrt{2} \in \Q\). Dann existieren \(p, q \in \mathbb{Z}\) mit \(q \neq 0\) und \(\gcd(p,q) = 1\), sodass \(\sqrt{2} = \frac{p}{q}\).
+Durch Quadrieren erhalten wir:
+\[2 = \frac{p^2}{q^2} \implies 2q^2 = p^2\]
+
+Dies zeigt, dass \(p^2\) gerade ist, also muss auch \(p\) gerade sein. Sei \(p = 2k\) für ein \(k \in \mathbb{Z}\).
+Einsetzen liefert:
+\[2q^2 = (2k)^2 = 4k^2 \implies q^2 = 2k^2\]
+
+Also ist auch \(q^2\) gerade, und damit \(q\) gerade. Dies ist ein Widerspruch zu \(\gcd(p,q) = 1\).
+Somit ist \(\sqrt{2} \notin \Q\) und daher \(\Q \subsetneq \adjunction{\Q}{\sqrt 2}\).
+
+Nun zeigen wir \(\adjunction{\Q}{\sqrt 2} \subsetneq \R\):
+
+Offensichtlich ist \(\adjunction{\Q}{\sqrt 2} \subseteq \R\), da alle Elemente der Form \(a + b\sqrt{2}\) mit \(a,b \in \Q\) reelle Zahlen sind.
+
+Um zu zeigen, dass die Inklusion echt ist, betrachten wir \(\sqrt{3} \in \R\).
+Wir zeigen, dass \(\sqrt{3} \notin \adjunction{\Q}{\sqrt 2}\):
+
+Angenommen, \(\sqrt{3} \in \adjunction{\Q}{\sqrt 2}\). Dann existieren \(a, b \in \Q\) mit \(\sqrt{3} = a + b\sqrt{2}\).
+Durch Quadrieren erhalten wir:
+\[3 = a^2 + 2ab\sqrt{2} + 2b^2 = (a^2 + 2b^2) + 2ab\sqrt{2}\]
+
+Da \(3 \in \Q\) und die Darstellung \(c + d\sqrt{2}\) mit \(c, d \in \Q\) eindeutig ist (was wir gleich zeigen werden), folgt:
+\[a^2 + 2b^2 = 3 \text{ und } 2ab = 0\]
+
+Aus \(2ab = 0\) folgt \(a = 0\) oder \(b = 0\).
+
+Fall 1: \(a = 0\). Dann ist \(2b^2 = 3 \implies b^2 = \frac{3}{2}\).
+Dies würde bedeuten, dass \(\sqrt{\frac{3}{2}} \in \Q\), was ein Widerspruch ist.
+
+Fall 2: \(b = 0\). Dann ist \(a^2 = 3 \implies a = \sqrt{3}\).
+Dies würde bedeuten, dass \(\sqrt{3} \in \Q\), was ein Widerspruch ist.
+
+Somit ist \(\sqrt{3} \notin \adjunction{\Q}{\sqrt 2}\) und daher \(\adjunction{\Q}{\sqrt 2} \subsetneq \R\).
+
+\textit{Anmerkung zur Eindeutigkeit der Darstellung:} Seien \(a_1 + b_1\sqrt{2} = a_2 + b_2\sqrt{2}\) mit \(a_1, a_2, b_1, b_2 \in \Q\).
+Dann ist \((a_1 - a_2) + (b_1 - b_2)\sqrt{2} = 0\).
+Falls \(b_1 \neq b_2\), dann wäre \(\sqrt{2} = \frac{a_2 - a_1}{b_1 - b_2} \in \Q\), was ein Widerspruch ist.
+Also ist \(b_1 = b_2\) und damit auch \(a_1 = a_2\).
+
+\item \textbf{Behauptung:} \( \fa{x,y \in \adjunction{\Q}{\sqrt 2}} x + y, x \cdot y \in \adjunction{\Q}{\sqrt 2}\)
+
+\textbf{Beweis:}
+
+Seien \(x = a_1 + b_1\sqrt{2}\) und \(y = a_2 + b_2\sqrt{2}\) mit \(a_1, a_2, b_1, b_2 \in \Q\).
+
+\textbf{Addition:}
+\begin{align}
+x + y &= (a_1 + b_1\sqrt{2}) + (a_2 + b_2\sqrt{2})\\
+&= (a_1 + a_2) + (b_1 + b_2)\sqrt{2}
+\end{align}
+
+Da \(a_1 + a_2 \in \Q\) und \(b_1 + b_2 \in \Q\) (denn \(\Q\) ist unter Addition abgeschlossen), 
+ist \(x + y \in \adjunction{\Q}{\sqrt 2}\).
+
+\textbf{Multiplikation:}
+\begin{align}
+x \cdot y &= (a_1 + b_1\sqrt{2}) \cdot (a_2 + b_2\sqrt{2})\\
+&= a_1a_2 + a_1b_2\sqrt{2} + b_1a_2\sqrt{2} + b_1b_2(\sqrt{2})^2\\
+&= a_1a_2 + (a_1b_2 + b_1a_2)\sqrt{2} + 2b_1b_2\\
+&= (a_1a_2 + 2b_1b_2) + (a_1b_2 + b_1a_2)\sqrt{2}
+\end{align}
+
+Da \(a_1a_2 + 2b_1b_2 \in \Q\) und \(a_1b_2 + b_1a_2 \in \Q\) (denn \(\Q\) ist unter Addition und Multiplikation abgeschlossen),
+ist \(x \cdot y \in \adjunction{\Q}{\sqrt 2}\).
+
+\item \textbf{Behauptung:} \( \fa{x \in \adjunction{\Q}{\sqrt{2}}} \ex{y \in \adjunction{\Q}{\sqrt{2}}} x + y = 0\)
+
+\textbf{Beweis:}
+
+Sei \(x = a + b\sqrt{2} \in \adjunction{\Q}{\sqrt{2}}\) mit \(a, b \in \Q\).
+
+Wir suchen \(y \in \adjunction{\Q}{\sqrt{2}}\) mit \(x + y = 0\).
+
+Setze \(y = -a - b\sqrt{2}\). Da \(-a \in \Q\) und \(-b \in \Q\) (denn \(\Q\) enthält additive Inverse),
+ist \(y \in \adjunction{\Q}{\sqrt{2}}\).
+
+Wir prüfen:
+\begin{align}
+x + y &= (a + b\sqrt{2}) + (-a - b\sqrt{2})\\
+&= (a - a) + (b - b)\sqrt{2}\\
+&= 0 + 0\sqrt{2}\\
+&= 0
+\end{align}
+
+Somit existiert für jedes \(x \in \adjunction{\Q}{\sqrt{2}}\) ein additives Inverses \(y = -x \in \adjunction{\Q}{\sqrt{2}}\).
+
+\item \textbf{Behauptung:} \( \fa{0 \neq x \in \adjunction{\Q}{\sqrt{2}}} \ex{y \in \adjunction{\Q}{\sqrt{2}}} x \cdot y = 1\)
+
+\textbf{Beweis:}
+
+Sei \(x = a + b\sqrt{2} \in \adjunction{\Q}{\sqrt{2}}\) mit \(x \neq 0\), also \(a \neq 0\) oder \(b \neq 0\).
+
+Wir suchen \(y \in \adjunction{\Q}{\sqrt{2}}\) mit \(x \cdot y = 1\).
+
+Wir verwenden die Methode der Konjugation. Definiere das Konjugat von \(x\) als \(\overline{x} = a - b\sqrt{2}\).
+
+Berechne:
+\begin{align}
+x \cdot \overline{x} &= (a + b\sqrt{2})(a - b\sqrt{2})\\
+&= a^2 - ab\sqrt{2} + ab\sqrt{2} - b^2(\sqrt{2})^2\\
+&= a^2 - 2b^2
+\end{align}
+
+Wir zeigen, dass \(a^2 - 2b^2 \neq 0\):
+
+Angenommen, \(a^2 - 2b^2 = 0\), also \(a^2 = 2b^2\).
+
+Falls \(b = 0\), dann \(a^2 = 0\), also \(a = 0\), was \(x = 0\) bedeutet - Widerspruch.
+
+Falls \(b \neq 0\), dann \(\left(\frac{a}{b}\right)^2 = 2\), also \(\frac{a}{b} = \pm\sqrt{2}\).
+Da \(a, b \in \Q\) mit \(b \neq 0\), ist \(\frac{a}{b} \in \Q\).
+Dies würde bedeuten, dass \(\sqrt{2} \in \Q\), was ein Widerspruch ist.
+
+Somit ist \(a^2 - 2b^2 \neq 0\).
+
+Setze nun:
+\[y = \frac{\overline{x}}{x \cdot \overline{x}} = \frac{a - b\sqrt{2}}{a^2 - 2b^2} = \frac{a}{a^2 - 2b^2} - \frac{b}{a^2 - 2b^2}\sqrt{2}\]
+
+Da \(a^2 - 2b^2 \neq 0\) und \(a, b, a^2 - 2b^2 \in \Q\), sind \(\frac{a}{a^2 - 2b^2} \in \Q\) und \(\frac{-b}{a^2 - 2b^2} \in \Q\).
+Somit ist \(y \in \adjunction{\Q}{\sqrt{2}}\).
+
+Wir verifizieren:
+\begin{align}
+x \cdot y &= x \cdot \frac{\overline{x}}{x \cdot \overline{x}}\\
+&= \frac{x \cdot \overline{x}}{x \cdot \overline{x}}\\
+&= 1
+\end{align}
+
+Somit existiert für jedes \(x \in \adjunction{\Q}{\sqrt{2}}\) mit \(x \neq 0\) ein multiplikatives Inverses \(y = x^{-1} \in \adjunction{\Q}{\sqrt{2}}\).
+\end{enumerate}
+
+\textbf{Fazit:} Wir haben gezeigt, dass \(\adjunction{\Q}{\sqrt{2}}\) eine echte Teilmenge von \(\R\) ist, die \(\Q\) echt enthält,
+und dass \(\adjunction{\Q}{\sqrt{2}}\) unter Addition und Multiplikation abgeschlossen ist sowie additive und multiplikative Inverse besitzt.
+Zusammen mit den gegebenen Eigenschaften folgt, dass \(\adjunction{\Q}{\sqrt{2}}\) ein Körper ist.
+
+\end{document}

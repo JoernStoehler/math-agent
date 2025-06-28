@@ -1,0 +1,109 @@
+%% WARNING: This file contains multiple exercises and should be split into separate files
+\newtheorem{prob}{Aufgabe}
+\newtheorem{wrongsol}{Falsche L\"osung}[prob]
+\newtheorem{sol}{L\"osung}
+
+\includecomment{solution}
+\includecomment{tutoren}
+
+\begin{document}
+\pagestyle{empty}
+\textbf{Universit"at Augsburg} \hfill \textbf{Kai Cieliebak} \\
+\textbf{Sommersemester 2020} \hfill \textbf{Julius Natrup} \\
+\textbf{Analysis II} \hfill \textbf{Kathrin Helmsauer}
+\vspace{0.5cm}
+\begin{center} \textbf{\Large \"Ubungsblatt 1} \end{center}
+\vspace{1cm}
+
+
+\begin{prob} 
+Berechne die folgenden Integrale f\"ur $a<b$ mittels partieller Integration:
+
+\begin{enumerate}[label=(\alph*)]
+\item $\int_a^b x\sin(x)\,dx$;
+\item $\int_a^b x^2\log(x)\,dx$, wobei $0<a$;
+\item $\int_a^b x^n e^x\,dx$, wobei $n\in\N$;
+\item $\int_a^b \sin(x)\cos(x)\,dx$;
+\item $\int_a^b e^x\sin(x)\,dx$;
+\item $\int_a^b \arctan(x)\,dx$.
+\end{enumerate}
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Betrachte die Integrale
+$$
+   I_m := \int_0^{\pi/2}\sin^mx\,dx,\qquad m\in\N_0.
+$$
+\begin{enumerate}[label=(\alph*)]
+\item Beweise durch partielle Integration die Rekursionsformel
+$$
+   I_m = \frac{m-1}{m}I_{m-2},\qquad m\geq 2.
+$$
+\item Folgere aus (a) folgende Formeln f\"ur $n\in\N_0$:
+\begin{align*}
+   I_{2n} &= \frac{(2n-1)(2n-3)\cdots 3\cdot 1}{(2n-0)(2n-2)\cdots 4\cdot 2}\cdot\frac{\pi}{2},\qquad
+   I_{2n+1} = \frac{(2n-0)(2n-2)\cdots 4\cdot 2}{(2n+1)(2n-1)\cdots 5\cdot 3}\cdot 1.
+\end{align*}
+\item Beweise: 
+%direkt aus der Definition von $I_m$: 
+Die Folge $(I_m)$ ist streng monoton fallend und $\lim_{m\to\infty}I_m=0$.
+\item Zeige $\lim_{n\to\infty}\frac{I_{2n+1}}{I_{2n}}=1$ und folgere
+daraus die {\em Wallis'sche Produktdarstellung}
+$$
+   \frac{\pi}{2} = \prod_{n=1}^\infty \frac{4n^2}{4n^2-1} = \frac{2}{1} \cdot \frac{2}{3} \cdot \frac{4}{3} \cdot \frac{4}{5} \cdot \frac{6}{5} \cdot \frac{6}{7} \cdot \cdots
+$$
+\end{enumerate}
+%Wir definieren $I(n):=\int_0^\pi\sin(x)^n\,dx$.
+%\begin{enumerate}[label=(\alph*)]
+%\item Berechne rekursiv mittels partieller Integration die Werte von $I(n)$ für alle $n\in\N$
+%\item Zeige, dass $\lim_{n\to\infty} \frac{I(n)}{I(n+1)} = 1$
+%\item Zeige die \textit{Wallis-Produktformel}:
+%$$
+%\frac{\pi}{2} = \frac{2}{1} \cdot \frac{2}{3} \cdot \frac{4}{3} \cdot \frac{4}{5} \cdot \frac{6}{5} \cdot \frac{6}{7} \cdot \dots
+%$$
+%\end{enumerate} 
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Berechne die folgenden Integrale mittels Substitution:
+\begin{enumerate}[label=(\alph*)]
+\item $\int_a^b x\sin(x^2+1)\,dx$ mit dem Ansatz $u=x^2+1$;
+\item $\int_a^b \sqrt{1-x^2}\,dx$ f\"ur $-1\leq a<b\leq1$ mit dem Ansatz $x=\sin(t)$;
+\item $\int_a^b\frac{1}{1-x^2}\,dx$ f\"ur $-1<a<b<1$ mit dem Ansatz $x=\tanh(t)$;
+\item Zeige mit Hilfe einer Substitution, dass für jede Riemann-integrierbare Funktion $f:[a,b]\to\R$ gilt:
+$$
+\int_a^b\frac{f'(x)}{f(x)}\,dx = \log(|f(b)|)- \log(|f(a)|).
+$$
+ und bestimme damit das Integral $\int_a^b\tan(x)\,dx$ für $[a,b]\subset(-\pi/2,\pi/2)$.
+\end{enumerate} 
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Bestimme mittels Polynomdivision und Partialbruchzerlegung Stammfunktionen der folgenden Funktionen:
+$$
+%\begin{enumerate}[label=(\alph*)] 
+(a)\ \frac{x^5}{x-1};\quad
+(b)\ \frac{x}{x^3+x^2-x-1};\quad
+(c)\ \frac{x}{x^3-x^2+x-1}.
+%\end{enumerate} 
+$$
+
+\textit{Vorsicht!} Die Nenner bei (b) und (c) sind verschieden!
+\end{prob}
+
+\vspace{0.3cm}
+
+\begin{prob}
+Berechne den Wert von $\zeta(2)=\sum_{n=1}^\infty n^{-2}$ mit dem
+Integralvergleichskriterium bis auf zwei Stellen hinter dem Komma genau.
+%Gegeben sei $n\in\N$ mit $2\leq n$. Finde mit Hilfe des Integralvergleichskriteriums obere und untere Schranken für die konvergenten Reihen
+%$$
+%\sum_{k=1}^\infty k^{-n}
+%$$
+\end{prob}

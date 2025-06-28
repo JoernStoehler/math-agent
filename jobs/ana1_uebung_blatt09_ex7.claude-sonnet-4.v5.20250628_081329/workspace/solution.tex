@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+% Define custom commands to match the exercise
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\Set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\conj}[1]{\overline{#1}}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe: Komplexe Zahlenmengen zeichnen}
+Skizziere die folgenden Mengen in der komplexen Zahlenebene:
+\begin{enumerate}[(a)]
+\item $\Set{ z \in \C | -3 \leq \Im(z+5-3\im) \leq 2 }$
+\item $\Set{ z \in \C | \abs{z + 2 - \im} \geq 3 }$
+\item $\Set{ z \in \C | z \conj{z} - (z + \conj{z} )^2 \leq 1 }$
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\textbf{(a)} $\Set{ z \in \C | -3 \leq \Im(z+5-3\im) \leq 2 }$
+
+Sei $z = x + \im y$ mit $x, y \in \mathbb{R}$. Dann gilt:
+\begin{align}
+z + 5 - 3\im &= (x + \im y) + 5 - 3\im\\
+&= (x + 5) + \im(y - 3)
+\end{align}
+
+Der Imaginärteil von $z + 5 - 3\im$ ist also $\Im(z + 5 - 3\im) = y - 3$.
+
+Die Bedingung $-3 \leq \Im(z+5-3\im) \leq 2$ wird zu:
+\begin{align}
+-3 &\leq y - 3 \leq 2\\
+-3 + 3 &\leq y \leq 2 + 3\\
+0 &\leq y \leq 5
+\end{align}
+
+Die gesuchte Menge ist also ein horizontaler Streifen in der komplexen Ebene:
+$$M_a = \Set{z = x + \im y \in \C | x \in \mathbb{R}, 0 \leq y \leq 5}$$
+
+Dies ist ein horizontaler Streifen zwischen den Geraden $y = 0$ und $y = 5$.
+
+\textbf{(b)} $\Set{ z \in \C | \abs{z + 2 - \im} \geq 3 }$
+
+Die Bedingung $\abs{z + 2 - \im} \geq 3$ beschreibt alle komplexen Zahlen $z$, deren Abstand zum Punkt $-2 + \im$ mindestens 3 beträgt. Dies ist das Äußere (einschließlich des Randes) eines Kreises mit Mittelpunkt $z_0 = -2 + \im$ und Radius $r = 3$.
+
+Die gesuchte Menge ist:
+$$M_b = \Set{z \in \C | \abs{z - (-2 + \im)} \geq 3}$$
+
+Dies ist das Äußere (einschließlich Rand) eines Kreises mit Mittelpunkt $z_0 = -2 + \im$ und Radius $r = 3$.
+
+\textbf{(c)} $\Set{ z \in \C | z \conj{z} - (z + \conj{z} )^2 \leq 1 }$
+
+Sei wieder $z = x + \im y$ mit $x, y \in \mathbb{R}$. Dann ist $\conj{z} = x - \im y$, und wir berechnen:
+\begin{align}
+z \cdot \conj{z} &= (x + \im y)(x - \im y) = x^2 + y^2 = |z|^2\\
+z + \conj{z} &= (x + \im y) + (x - \im y) = 2x\\
+(z + \conj{z})^2 &= (2x)^2 = 4x^2
+\end{align}
+
+Die Bedingung $z \conj{z} - (z + \conj{z} )^2 \leq 1$ wird zu:
+\begin{align}
+x^2 + y^2 - 4x^2 &\leq 1\\
+y^2 - 3x^2 &\leq 1
+\end{align}
+
+Dies ist die Ungleichung einer Hyperbel. Die Randkurve ist gegeben durch $y^2 - 3x^2 = 1$, was umgeformt werden kann zu:
+$$\frac{y^2}{1} - \frac{x^2}{1/3} = 1$$
+
+Dies ist eine Hyperbel mit den Scheitelpunkten bei $(0, \pm 1)$. 
+
+Die gesuchte Menge ist:
+$$M_c = \Set{z = x + \im y \in \C | y^2 - 3x^2 \leq 1}$$
+
+Dies ist der Bereich zwischen den beiden Ästen der Hyperbel $y^2 - 3x^2 = 1$.
+
+\subsection*{Skizzen}
+
+Die drei Mengen sind in der komplexen Zahlenebene wie folgt dargestellt:
+
+\textbf{(a)} Horizontaler Streifen $0 \leq y \leq 5$:
+\begin{itemize}
+\item Ein unendlich breiter horizontaler Streifen
+\item Untere Grenze: die reelle Achse ($y = 0$)
+\item Obere Grenze: die Gerade $y = 5$
+\end{itemize}
+
+\textbf{(b)} Äußeres des Kreises um $-2 + \im$ mit Radius 3:
+\begin{itemize}
+\item Mittelpunkt: $z_0 = -2 + \im$
+\item Radius: $r = 3$
+\item Die Menge umfasst alle Punkte außerhalb und auf dem Kreisrand
+\end{itemize}
+
+\textbf{(c)} Bereich zwischen den Hyperbelästen:
+\begin{itemize}
+\item Hyperbel: $y^2 - 3x^2 = 1$
+\item Scheitelpunkte: $(0, \pm 1)$
+\item Die Menge ist der Bereich zwischen den beiden Ästen (einschließlich der Hyperbeläste selbst)
+\end{itemize}
+
+\end{document}
