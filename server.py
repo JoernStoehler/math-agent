@@ -14,6 +14,9 @@ from datetime import datetime
 import requests
 from pathlib import Path
 import mimetypes
+import psutil
+import pwd
+import time
 
 app = Flask(__name__)
 
@@ -65,33 +68,98 @@ DASHBOARD_HTML = """
             color: #555;
         }
         tr:hover {
-            background-color: #f8f9fa;
+            background-color: #f5f5f5;
         }
-        .status-completed { background-color: #d4edda; }
-        .status-running { background-color: #fff3cd; }
-        .status-failed { background-color: #f8d7da; }
-        .status-scheduled { background-color: #e2e3e5; }
+        /* Status indicators - subtle left border instead of full background */
+        .status-completed { 
+            border-left: 4px solid #28a745;
+            background-color: #fafafa;
+        }
+        .status-running { 
+            border-left: 4px solid #ffc107;
+            background-color: #fafafa;
+        }
+        .status-failed { 
+            border-left: 4px solid #dc3545;
+            background-color: #fafafa;
+        }
+        .status-scheduled { 
+            border-left: 4px solid #6c757d;
+            background-color: #fafafa;
+        }
         
-        /* Model Pills */
+        /* Model Pills - subtle with border */
         .model-pill {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 14px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 13px;
             font-weight: 500;
-            color: white;
+            border: 1px solid;
         }
         .model-claude-sonnet-4 {
-            background-color: #FF6B6B;
+            background-color: #fff5f5;
+            color: #c53030;
+            border-color: #feb2b2;
         }
         .model-claude-opus-4 {
-            background-color: #4ECDC4;
+            background-color: #e6fffa;
+            color: #047481;
+            border-color: #81e6d9;
         }
         .model-claude-haiku-3 {
-            background-color: #95E1D3;
+            background-color: #f0fff4;
+            color: #276749;
+            border-color: #9ae6b4;
         }
         .model-default {
-            background-color: #748FFC;
+            background-color: #ebf4ff;
+            color: #3182ce;
+            border-color: #90cdf4;
+        }
+        .model-gemini-2-5-pro {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            border-color: #90cdf4;
+        }
+        .model-gemini-2-5-flash {
+            background-color: #f0fdf4;
+            color: #22543d;
+            border-color: #9ae6b4;
+        }
+        
+        /* Dummy Mode Pill */
+        .dummy-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            margin-left: 8px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            background-color: #FFA500;
+            color: white;
+        }
+        
+        /* Status badges */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+        .status-badge.completed {
+            color: #276749;
+        }
+        .status-badge.running {
+            color: #744210;
+        }
+        .status-badge.failed {
+            color: #c53030;
+        }
+        .status-badge.scheduled {
+            color: #4a5568;
         }
         
         /* File Links */
@@ -120,18 +188,22 @@ DASHBOARD_HTML = """
             height: 16px;
         }
         .file-link.log-link {
-            background-color: #e3f2fd;
-            color: #1976d2;
+            background-color: #f7fafc;
+            color: #2b6cb0;
+            border: 1px solid #e2e8f0;
         }
         .file-link.log-link:hover {
-            background-color: #bbdefb;
+            background-color: #edf2f7;
+            border-color: #cbd5e0;
         }
         .file-link.pdf-link {
-            background-color: #ffebee;
-            color: #c62828;
+            background-color: #fffaf0;
+            color: #c05621;
+            border: 1px solid #feebc8;
         }
         .file-link.pdf-link:hover {
-            background-color: #ffcdd2;
+            background-color: #fef5e7;
+            border-color: #fbd38d;
         }
         .navigation {
             margin-bottom: 20px;
@@ -144,17 +216,19 @@ DASHBOARD_HTML = """
             display: inline-block;
             margin-right: 20px;
             padding: 8px 16px;
-            background-color: #0066cc;
-            color: white;
+            background-color: #f7fafc;
+            color: #2d3748;
+            border: 1px solid #e2e8f0;
             border-radius: 5px;
             font-weight: 500;
             transition: all 0.2s ease;
         }
         .navigation a:hover {
-            background-color: #0052a3;
+            background-color: #edf2f7;
+            border-color: #cbd5e0;
             text-decoration: none;
             transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         .filter-container {
             margin-bottom: 20px;
@@ -199,6 +273,14 @@ DASHBOARD_HTML = """
             content: '↓';
             color: #333;
         }
+        
+        /* Time column styling */
+        td:nth-child(5) {
+            font-family: monospace;
+            font-size: 13px;
+            color: #555;
+            white-space: nowrap;
+        }
     </style>
     <meta http-equiv="refresh" content="30">
     <script>
@@ -236,6 +318,12 @@ DASHBOARD_HTML = """
                     bVal = bVal.split('.').pop() || bVal;
                 }
                 
+                // Handle time column sorting (already formatted as YYYY-MM-DD HH:MM:SS)
+                if (column === 'time') {
+                    // The formatted time is already in sortable format
+                    // No special handling needed
+                }
+                
                 if (aVal < bVal) return currentSort.direction === 'asc' ? -1 : 1;
                 if (aVal > bVal) return currentSort.direction === 'asc' ? 1 : -1;
                 return 0;
@@ -246,7 +334,7 @@ DASHBOARD_HTML = """
         }
         
         function getColumnIndex(column) {
-            const columns = ['job_id', 'exercise', 'model', 'prompt', 'status', 'files'];
+            const columns = ['job_id', 'exercise', 'model', 'prompt', 'time', 'status', 'files'];
             return columns.indexOf(column) + 1;
         }
         
@@ -282,6 +370,16 @@ DASHBOARD_HTML = """
     <div class="navigation">
         <a href="/submit">Submit New Job</a>
         <a href="/files/">Browse Files</a>
+        <a href="/processes">Process Monitor</a>
+    </div>
+    
+    <div style="background: #f7fafc; padding: 10px; margin: 20px 0; border-radius: 5px; border: 1px solid #e2e8f0;">
+        <strong style="color: #4a5568;">Queue Status:</strong> 
+        <span style="color: #2d3748;">Running: {{ running_count }}/{{ max_concurrent }} | 
+        Queued: {{ queued_count }}</span>
+        {% if queued_count > 0 %}
+        <span style="color: #718096; font-size: 0.9em;">(Jobs will start automatically when slots become available)</span>
+        {% endif %}
     </div>
     
     <div class="filter-container">
@@ -296,6 +394,7 @@ DASHBOARD_HTML = """
                 <th class="sortable" data-column="exercise" onclick="sortTable('exercise')">Exercise</th>
                 <th class="sortable" data-column="model" onclick="sortTable('model')">Model</th>
                 <th class="sortable" data-column="prompt" onclick="sortTable('prompt')">Prompt</th>
+                <th class="sortable" data-column="time" onclick="sortTable('time')">Time</th>
                 <th class="sortable" data-column="status" onclick="sortTable('status')">Status</th>
                 <th>Files</th>
             </tr>
@@ -309,9 +408,13 @@ DASHBOARD_HTML = """
                     <span class="model-pill model-{{ job.model|replace('.', '-') }}">
                         {{ job.model }}
                     </span>
+                    {% if job.dummy_mode %}
+                    <span class="dummy-pill">DUMMY</span>
+                    {% endif %}
                 </td>
                 <td><a href="/files/prompts/{{ job.prompt }}/prompt.md">{{ job.prompt }}</a></td>
-                <td>{{ job.status }}</td>
+                <td>{{ job.formatted_time }}</td>
+                <td><span class="status-badge {{ job.status }}">{{ job.status }}</span></td>
                 <td>
                     <a href="/logs/{{ job.job_id }}" class="file-link log-link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -477,7 +580,8 @@ SUBMIT_HTML = """
             <select name="model" required>
                 <option value="claude-sonnet-4" selected>claude-sonnet-4</option>
                 <option value="claude-opus-4">claude-opus-4</option>
-                <option value="claude-haiku-3">claude-haiku-3</option>
+                <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+                <option value="gemini-2.5-flash">gemini-2.5-flash</option>
             </select>
 
             <label>Max Turns:</label>
@@ -515,6 +619,171 @@ SUBMIT_HTML = """
             <button type="submit">Submit Job</button>
         </form>
     </div>
+</body>
+</html>
+"""
+
+PROCESS_MONITOR_HTML = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Process Monitor - Math Agent Benchmark</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #555;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        .process-claude { background-color: #e3f2fd; }
+        .process-gemini { background-color: #f3e5f5; }
+        .process-claude-dummy { background-color: #fff3cd; }
+        
+        .navigation {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .navigation a {
+            display: inline-block;
+            margin-right: 20px;
+            padding: 8px 16px;
+            background-color: #f7fafc;
+            color: #2d3748;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .navigation a:hover {
+            background-color: #edf2f7;
+            border-color: #cbd5e0;
+            text-decoration: none;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .status-pill {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+        }
+        .status-running { background-color: #28a745; }
+        .status-completed { background-color: #6c757d; }
+        .status-failed { background-color: #dc3545; }
+        .status-unknown { background-color: #ffc107; color: #212529; }
+        .memory-usage {
+            font-family: monospace;
+            font-size: 13px;
+        }
+        .uptime {
+            font-family: monospace;
+            font-size: 13px;
+            color: #666;
+        }
+    </style>
+    <meta http-equiv="refresh" content="10">
+</head>
+<body>
+    <h1>Process Monitor</h1>
+    <div class="navigation">
+        <a href="/">← Back to Dashboard</a>
+        <a href="/submit">Submit New Job</a>
+        <a href="/files/">Browse Files</a>
+    </div>
+    
+    <div style="background: #e8f4f8; padding: 10px; margin: 20px 0; border-radius: 5px;">
+        <strong>Active Processes:</strong> {{ total_processes }} processes found
+        <span style="margin-left: 20px;">Last Updated: {{ current_time }}</span>
+    </div>
+    
+    <h2>Claude, Gemini & Claude-Dummy Processes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>PID</th>
+                <th>Process Name</th>
+                <th>Command</th>
+                <th>CWD</th>
+                <th>Started</th>
+                <th>Uptime</th>
+                <th>Memory</th>
+                <th>Job Status</th>
+                <th>Job Info</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for process in processes %}
+            <tr class="process-{{ process.name.replace('-', '_') }}">
+                <td>{{ process.pid }}</td>
+                <td><strong>{{ process.name }}</strong></td>
+                <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ process.cmdline }}">
+                    {{ process.cmdline[:60] }}{% if process.cmdline|length > 60 %}...{% endif %}
+                </td>
+                <td style="font-family: monospace; font-size: 13px;">{{ process.cwd or 'N/A' }}</td>
+                <td>{{ process.start_time }}</td>
+                <td class="uptime">{{ process.uptime }}</td>
+                <td class="memory-usage">{{ process.memory }}</td>
+                <td>
+                    {% if process.job_status %}
+                        <span class="status-pill status-{{ process.job_status }}">{{ process.job_status }}</span>
+                    {% else %}
+                        <span class="status-pill status-unknown">N/A</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if process.job_info %}
+                        <strong>{{ process.job_info.exercise }}</strong><br>
+                        <small>{{ process.job_info.model }} | {{ process.job_info.prompt }}</small>
+                    {% else %}
+                        <em>Not in jobs directory</em>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if not processes %}
+    <div style="text-align: center; padding: 40px; color: #666;">
+        <h3>No claude, gemini, or claude-dummy processes are currently running</h3>
+    </div>
+    {% endif %}
 </body>
 </html>
 """
@@ -644,26 +913,75 @@ LOG_VIEWER_HTML = """
             {% if entry.type == 'log' %}
                 <div class="log-entry system">{{ entry.content }}</div>
             {% elif entry.type == 'json' %}
-                {% if entry.data.type == 'message' %}
-                    <div class="log-entry message">
-                        <div class="entry-header">
-                            <span class="entry-type">{{ entry.data.role }}</span>
-                            {% if entry.duration %}
-                                <span class="entry-duration">+{{ "%.2f"|format(entry.duration) }}s</span>
+                {% if entry.data.type == 'assistant' %}
+                    {% if entry.data.content %}
+                        {% for content_item in entry.data.content %}
+                            {% if content_item.type == 'text' %}
+                                <div class="log-entry message">
+                                    <div class="entry-header">
+                                        <span class="entry-type">ASSISTANT</span>
+                                        <span style="color: #666; font-size: 11px;">{{ entry.data.model }}</span>
+                                    </div>
+                                    <div class="entry-content">{{ content_item.text }}</div>
+                                </div>
+                            {% elif content_item.type == 'tool_use' %}
+                                <div class="log-entry tool-use">
+                                    <div class="entry-header">
+                                        <span class="entry-type">TOOL USE</span>
+                                        <span class="tool-name">{{ content_item.name }}</span>
+                                    </div>
+                                    <div class="entry-content">
+                                        <pre style="margin: 0; white-space: pre-wrap; font-size: 12px;">{{ content_item.input | tojson(indent=2) }}</pre>
+                                    </div>
+                                </div>
                             {% endif %}
-                        </div>
-                        <div class="entry-content">{{ entry.data.content }}</div>
-                    </div>
-                {% elif entry.data.type == 'tool_use' %}
-                    <div class="log-entry tool-use">
-                        <div class="entry-header">
-                            <span class="entry-type">Tool Use</span>
-                            {% if entry.duration %}
-                                <span class="entry-duration">+{{ "%.2f"|format(entry.duration) }}s</span>
+                        {% endfor %}
+                    {% endif %}
+                {% elif entry.data.type == 'user' %}
+                    {% if entry.data.content %}
+                        {% for content_item in entry.data.content %}
+                            {% if content_item.type == 'tool_result' %}
+                                <div class="log-entry" style="background-color: {% if content_item.is_error %}#ffebee{% else %}#e8f5e9{% endif %}; border-left: 4px solid {% if content_item.is_error %}#f44336{% else %}#4caf50{% endif %};">
+                                    <div class="entry-header">
+                                        <span class="entry-type">TOOL RESULT</span>
+                                        {% if content_item.is_error %}
+                                            <span style="color: #f44336; font-weight: bold;">ERROR</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="entry-content">
+                                        <pre style="margin: 0; white-space: pre-wrap; font-size: 12px; max-height: 400px; overflow-y: auto;">{{ content_item.content }}</pre>
+                                    </div>
+                                </div>
                             {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% elif entry.data.type == 'system' %}
+                    <div class="log-entry system" style="background-color: #fff3e0; border-left: 4px solid #ff9800;">
+                        <div class="entry-header">
+                            <span class="entry-type">SYSTEM</span>
+                            <span style="color: #666;">{{ entry.data.subtype }}</span>
                         </div>
                         <div class="entry-content">
-                            <span class="tool-name">{{ entry.data.tool }}</span>: {{ entry.data.content }}
+                            {% if entry.data.subtype == 'init' %}
+                                <div style="font-size: 12px;">
+                                    <strong>Model:</strong> {{ entry.data.model }}<br>
+                                    {% if entry.data.tools %}
+                                        <strong>Tools:</strong> {{ entry.data.tools | length }} tools available
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                <pre style="margin: 0; white-space: pre-wrap; font-size: 12px;">{{ entry.data.raw | tojson(indent=2) }}</pre>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- Unknown JSON type, display raw -->
+                    <div class="log-entry system">
+                        <div class="entry-header">
+                            <span class="entry-type">UNKNOWN</span>
+                        </div>
+                        <div class="entry-content">
+                            <pre style="margin: 0; white-space: pre-wrap; font-size: 12px;">{{ entry.data | tojson(indent=2) }}</pre>
                         </div>
                     </div>
                 {% endif %}
@@ -692,6 +1010,17 @@ def get_prompts():
                 prompts.append(file.replace('.md', ''))
     return sorted(prompts)
 
+def format_timestamp(timestamp_str):
+    """Format timestamp from YYYYMMDD_HHMMSS to readable format."""
+    try:
+        # Parse timestamp string (format: YYYYMMDD_HHMMSS)
+        dt = datetime.strptime(timestamp_str, '%Y%m%d_%H%M%S')
+        # Return formatted string (e.g., "2025-06-28 14:30:45")
+        return dt.strftime('%Y-%m-%d %H:%M:%S')
+    except:
+        # If parsing fails, return original string
+        return timestamp_str
+
 def scan_jobs():
     """Scan the jobs directory and return job information."""
     jobs = []
@@ -712,16 +1041,23 @@ def scan_jobs():
                         if content.strip():  # Check if file is not empty
                             status_data = json.loads(content)
                             job_info['status'] = status_data.get('status', 'unknown')
+                            job_info['dummy_mode'] = status_data.get('dummy_mode', False)
                         else:
                             job_info['status'] = 'unknown'
+                            job_info['dummy_mode'] = False
                 except (json.JSONDecodeError, IOError):
                     job_info['status'] = 'unknown'
+                    job_info['dummy_mode'] = False
             else:
                 job_info['status'] = 'unknown'
+                job_info['dummy_mode'] = False
             
             # Check for solution
             solution_path = os.path.join(job_path, 'workspace', 'solution.pdf')
             job_info['has_solution'] = os.path.exists(solution_path)
+            
+            # Add formatted time
+            job_info['formatted_time'] = format_timestamp(job_info['timestamp'])
             
             jobs.append(job_info)
     
@@ -731,14 +1067,33 @@ def scan_jobs():
 
 def parse_job_id(job_id):
     """Parse job ID to extract components."""
+    # Job ID format: exercise.model.prompt.timestamp
+    # But model might contain dots (e.g., gemini-2.5-pro)
+    # So we need to parse more carefully
+    
+    # First split by dots
     parts = job_id.split('.')
+    
     if len(parts) >= 4:
+        # Extract exercise (first part)
+        exercise = parts[0]
+        
+        # Extract timestamp (last part - always in format YYYYMMDD_HHMMSS)
+        timestamp = parts[-1]
+        
+        # Extract prompt (second to last part)
+        prompt = parts[-2]
+        
+        # Everything between exercise and prompt is the model name
+        # This handles models with dots in their names
+        model = '.'.join(parts[1:-2])
+        
         return {
             'job_id': job_id,
-            'exercise': parts[0],
-            'model': parts[1],
-            'prompt': parts[2],
-            'timestamp': parts[3]
+            'exercise': exercise,
+            'model': model,
+            'prompt': prompt,
+            'timestamp': timestamp
         }
     else:
         # Handle legacy format or malformed IDs
@@ -762,6 +1117,11 @@ def get_running_job_count():
     except:
         return 0
 
+def get_queued_job_count():
+    """Count jobs in 'scheduled' status that are waiting."""
+    jobs = scan_jobs()
+    return sum(1 for job in jobs if job.get('status') == 'scheduled')
+
 def create_job(form_data):
     """Create a new job from form submission."""
     # Extract form data
@@ -775,10 +1135,14 @@ def create_job(form_data):
     if not exercise or not model:
         return {'success': False, 'error': 'Exercise and model are required'}
     
-    # Check concurrent job limit
+    # Check concurrent job limit - but now we'll queue instead of rejecting
     running_jobs = get_running_job_count()
+    queued_jobs = get_queued_job_count()
+    
+    # Log current status
     if running_jobs >= MAX_CONCURRENT_JOBS:
-        return {'success': False, 'error': f'Maximum concurrent jobs ({MAX_CONCURRENT_JOBS}) reached. Currently running: {running_jobs}'}
+        queue_message = f'Job will be queued. Currently running: {running_jobs}/{MAX_CONCURRENT_JOBS}, queued: {queued_jobs}'
+        # Continue with job creation - semaphore will handle the queueing
     
     # Handle prompt selection/creation
     if prompt_type == 'existing':
@@ -879,7 +1243,13 @@ def create_job(form_data):
 def dashboard():
     """Display the main dashboard with all jobs."""
     jobs = scan_jobs()
-    return render_template_string(DASHBOARD_HTML, jobs=jobs)
+    running_count = get_running_job_count()
+    queued_count = get_queued_job_count()
+    return render_template_string(DASHBOARD_HTML, 
+                                jobs=jobs,
+                                running_count=running_count,
+                                queued_count=queued_count,
+                                max_concurrent=MAX_CONCURRENT_JOBS)
 
 @app.route('/submit', methods=['GET', 'POST'])
 def submit_job():
@@ -984,6 +1354,17 @@ def generate_directory_listing(path):
     """
     return html
 
+@app.route('/processes')
+def process_monitor():
+    """Display the process monitoring page."""
+    processes = get_monitored_processes()
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    return render_template_string(PROCESS_MONITOR_HTML, 
+                                processes=processes,
+                                total_processes=len(processes),
+                                current_time=current_time)
+
 @app.route('/logs/<job_id>')
 def view_log(job_id):
     """Display a job's log in a user-friendly format."""
@@ -1002,6 +1383,87 @@ def view_log(job_id):
                                 job_info=job_info,
                                 entries=entries)
 
+def get_monitored_processes():
+    """Get information about running claude, gemini, and claude-dummy processes."""
+    processes = []
+    target_names = ['claude', 'gemini', 'claude-dummy']
+    
+    for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'cwd', 'create_time', 'memory_info']):
+        try:
+            proc_info = proc.info
+            if any(target in proc_info['name'] for target in target_names):
+                # Determine the actual process name
+                proc_name = proc_info['name']
+                for target in target_names:
+                    if target in proc_name:
+                        proc_name = target
+                        break
+                
+                # Get process details
+                start_time = datetime.fromtimestamp(proc_info['create_time'])
+                uptime = datetime.now() - start_time
+                
+                # Format memory usage
+                memory_mb = proc_info['memory_info'].rss / 1024 / 1024
+                memory_str = f"{memory_mb:.1f} MB"
+                
+                # Format uptime
+                if uptime.days > 0:
+                    uptime_str = f"{uptime.days}d {uptime.seconds//3600}h"
+                elif uptime.seconds > 3600:
+                    uptime_str = f"{uptime.seconds//3600}h {(uptime.seconds%3600)//60}m"
+                else:
+                    uptime_str = f"{uptime.seconds//60}m {uptime.seconds%60}s"
+                
+                # Join command line arguments
+                cmdline = ' '.join(proc_info['cmdline']) if proc_info['cmdline'] else proc_info['name']
+                
+                # Try to find associated job info
+                job_status = None
+                job_info = None
+                cwd = proc_info['cwd']
+                
+                if cwd and 'jobs/' in cwd:
+                    # Extract job ID from working directory
+                    job_path_parts = cwd.split('/')
+                    if 'jobs' in job_path_parts:
+                        job_idx = job_path_parts.index('jobs')
+                        if job_idx + 1 < len(job_path_parts):
+                            job_id = job_path_parts[job_idx + 1]
+                            # Get status from status.json
+                            status_file = os.path.join(cwd, '..', 'status.json')
+                            if os.path.exists(status_file):
+                                try:
+                                    with open(status_file, 'r') as f:
+                                        status_data = json.load(f)
+                                        job_status = status_data.get('status', 'unknown')
+                                except:
+                                    job_status = 'unknown'
+                            
+                            # Parse job info
+                            try:
+                                job_info = parse_job_id(job_id)
+                            except:
+                                job_info = None
+                
+                processes.append({
+                    'pid': proc_info['pid'],
+                    'name': proc_name,
+                    'cmdline': cmdline,
+                    'cwd': cwd,
+                    'start_time': start_time.strftime('%Y-%m-%d %H:%M:%S'),
+                    'uptime': uptime_str,
+                    'memory': memory_str,
+                    'job_status': job_status,
+                    'job_info': job_info
+                })
+                
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            # Process died or we don't have permissions
+            continue
+    
+    return processes
+
 def parse_log_file(log_file):
     """Parse a JSONL log file and calculate durations."""
     entries = []
@@ -1016,25 +1478,82 @@ def parse_log_file(log_file):
             # Try to parse as JSON
             try:
                 data = json.loads(line)
-                if 'timestamp' in data:
-                    timestamp = datetime.fromisoformat(data['timestamp'].replace('Z', '+00:00'))
-                    
-                    # Calculate duration since last timestamp
+                
+                # Handle different JSON message types
+                if data.get('type') in ['assistant', 'user', 'system']:
+                    # Extract timestamp if we can find one
+                    timestamp = None
                     duration = None
-                    if last_timestamp and data.get('type') in ['message', 'tool_use']:
-                        duration = (timestamp - last_timestamp).total_seconds()
                     
+                    # Process the entry
+                    entry_type = data['type']
+                    processed_entry = {
+                        'type': 'json',
+                        'data': {
+                            'type': entry_type,
+                            'raw': data
+                        },
+                        'duration': duration
+                    }
+                    
+                    # Handle assistant messages
+                    if entry_type == 'assistant' and 'message' in data:
+                        msg = data['message']
+                        processed_entry['data']['model'] = msg.get('model', '')
+                        processed_entry['data']['id'] = msg.get('id', '')
+                        
+                        # Extract content
+                        if 'content' in msg and isinstance(msg['content'], list):
+                            contents = []
+                            for content in msg['content']:
+                                if content.get('type') == 'text':
+                                    contents.append({
+                                        'type': 'text',
+                                        'text': content.get('text', '')
+                                    })
+                                elif content.get('type') == 'tool_use':
+                                    contents.append({
+                                        'type': 'tool_use',
+                                        'name': content.get('name', ''),
+                                        'id': content.get('id', ''),
+                                        'input': content.get('input', {})
+                                    })
+                            processed_entry['data']['content'] = contents
+                    
+                    # Handle user messages (tool results)
+                    elif entry_type == 'user' and 'message' in data:
+                        msg = data['message']
+                        if 'content' in msg and isinstance(msg['content'], list):
+                            contents = []
+                            for content in msg['content']:
+                                if content.get('type') == 'tool_result':
+                                    contents.append({
+                                        'type': 'tool_result',
+                                        'tool_use_id': content.get('tool_use_id', ''),
+                                        'content': content.get('content', ''),
+                                        'is_error': content.get('is_error', False)
+                                    })
+                            processed_entry['data']['content'] = contents
+                    
+                    # Handle system messages
+                    elif entry_type == 'system':
+                        processed_entry['data']['subtype'] = data.get('subtype', '')
+                        if 'tools' in data:
+                            processed_entry['data']['tools'] = data['tools']
+                        if 'model' in data:
+                            processed_entry['data']['model'] = data['model']
+                    
+                    entries.append(processed_entry)
+                else:
+                    # Unknown JSON format, add as-is
                     entries.append({
                         'type': 'json',
                         'data': data,
-                        'duration': duration,
-                        'timestamp': timestamp
+                        'duration': None
                     })
                     
-                    if data.get('type') in ['message', 'tool_use']:
-                        last_timestamp = timestamp
             except json.JSONDecodeError:
-                # Regular log line
+                # Regular log line (like timestamp lines)
                 entries.append({
                     'type': 'log',
                     'content': line

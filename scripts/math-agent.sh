@@ -1,120 +1,34 @@
 #!/bin/bash
-
-# Math Agent Runner Script
-# Handles setup, execution, and lifecycle management for math agent jobs
-
+# Math Agent Runner - Simplified version
 set -e
 
 # Default values
 MODEL="claude-sonnet-4"
 MAX_TURNS=100
-PROMPT_FILE=""
-EXERCISE_FILE=""
-JOB_DIR=""
-ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-}"
-TEST_RUN=false
 
-# Function to display usage
-usage() {
-    cat << EOF
-Usage: $0 [OPTIONS]
-
-Math Agent Runner - Executes Claude to solve math problems
-
-Options:
-    -j, --job-dir DIR        Job directory (required)
-    -e, --exercise FILE      Exercise .tex file (required)
-    -p, --prompt FILE        Prompt .md file (required)
-    -m, --model MODEL        Model to use (default: claude-sonnet-4)
-    -t, --max-turns NUM      Maximum turns (default: 100)
-    -k, --api-key KEY        Anthropic API key (or use ANTHROPIC_API_KEY env var)
-    --test-run               Use claude-dummy for testing (ignores API key)
-    -h, --help               Show this help message
-
-Example:
-    $0 -j jobs/test_job -e exercises/addition.tex -p prompts/v2.md
-
-EOF
-    exit 1
-}
-
-# Function to write status
-write_status() {
-    local status="$1"
-    local job_dir="$2"
-    local timestamp=$(date +"%Y%m%d_%H%M%S")
-    
-    # Create status.json
-    if [ "$status" = "scheduled" ]; then
-        echo "{\"status\": \"$status\", \"created\": \"$timestamp\"}" > "$job_dir/status.json"
-    elif [ "$status" = "failed" ] || [ "$status" = "completed" ]; then
-        # Update with completion time
-        local created=$(jq -r '.created' "$job_dir/status.json" 2>/dev/null || echo "$timestamp")
-        echo "{\"status\": \"$status\", \"created\": \"$created\", \"completed\": \"$timestamp\"}" > "$job_dir/status.json"
-    else
-        # Just update status
-        local created=$(jq -r '.created' "$job_dir/status.json" 2>/dev/null || echo "$timestamp")
-        echo "{\"status\": \"$status\", \"created\": \"$created\"}" > "$job_dir/status.json"
-    fi
-}
-
-# Function to log message
-log_message() {
-    local message="$1"
-    local log_file="$2"
-    echo "[$(date +"%Y-%m-%d %H:%M:%S")] $message" >> "$log_file"
-}
-
-# Parse command line arguments
+# Parse arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
-        -j|--job-dir)
-            JOB_DIR="$2"
-            shift 2
-            ;;
-        -e|--exercise)
-            EXERCISE_FILE="$2"
-            shift 2
-            ;;
-        -p|--prompt)
-            PROMPT_FILE="$2"
-            shift 2
-            ;;
-        -m|--model)
-            MODEL="$2"
-            shift 2
-            ;;
-        -t|--max-turns)
-            MAX_TURNS="$2"
-            shift 2
-            ;;
-        -k|--api-key)
-            ANTHROPIC_API_KEY="$2"
-            shift 2
-            ;;
-        --test-run)
-            TEST_RUN=true
-            shift
-            ;;
+        -j|--job-dir) JOB_DIR="$2"; shift 2 ;;
+        -e|--exercise) EXERCISE_FILE="$2"; shift 2 ;;
+        -p|--prompt) PROMPT_FILE="$2"; shift 2 ;;
+        -m|--model) MODEL="$2"; shift 2 ;;
+        -t|--max-turns) MAX_TURNS="$2"; shift 2 ;;
+        -k|--api-key) shift 2 ;; # Ignored for compatibility
+        --test-run) echo "Test run not implemented"; exit 1 ;;
         -h|--help)
-            usage
+            echo "Usage: $0 -j JOB_DIR -e EXERCISE -p PROMPT [-m MODEL] [-t MAX_TURNS]"
+            echo "Models: claude-opus-4, claude-sonnet-4, gemini-2.5-pro, gemini-2.5-flash"
+            exit 0
             ;;
-        *)
-            echo "Error: Unknown option $1"
-            usage
-            ;;
+        *) echo "Unknown option: $1"; exit 1 ;;
     esac
 done
 
 # Validate required arguments
 if [ -z "$JOB_DIR" ] || [ -z "$EXERCISE_FILE" ] || [ -z "$PROMPT_FILE" ]; then
     echo "Error: Missing required arguments"
-    usage
-fi
-
-if [ -z "$ANTHROPIC_API_KEY" ]; then
-    echo "Warning: ANTHROPIC_API_KEY not set"
-    # Don't exit - we might be using claude-dummy
+    exit 1
 fi
 
 # Convert to absolute paths
@@ -133,100 +47,90 @@ if [ ! -f "$PROMPT_FILE" ]; then
     exit 1
 fi
 
-# Create job directory structure
+# Setup workspace
 mkdir -p "$JOB_DIR/workspace"
 LOG_FILE="$JOB_DIR/log.jsonl"
 
-# Write initial status
-write_status "scheduled" "$JOB_DIR"
+# Initial status
+echo "{\"status\": \"scheduled\", \"created\": \"$(date +%Y%m%d_%H%M%S)\"}" > "$JOB_DIR/status.json"
 
-echo "Starting math agent job in: $JOB_DIR"
-echo "Exercise: $EXERCISE_FILE"
-echo "Prompt: $PROMPT_FILE"
+echo "Starting job in: $JOB_DIR"
 echo "Model: $MODEL"
-echo "Max turns: $MAX_TURNS"
-if [ "$TEST_RUN" = true ]; then
-    echo "Test run: YES (will use claude-dummy)"
-fi
 
 # Copy files to workspace
 cp "$EXERCISE_FILE" "$JOB_DIR/workspace/exercise.tex"
 cp "$PROMPT_FILE" "$JOB_DIR/workspace/prompt.md"
 
-# Update status to running
-write_status "running" "$JOB_DIR"
+# Update status
+echo "{\"status\": \"running\", \"created\": \"$(date +%Y%m%d_%H%M%S)\"}" > "$JOB_DIR/status.json"
 
-# Get the absolute path to the script directory before changing directories
-if [ -L "$0" ]; then
-    SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
-else
-    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-fi
-CLAUDE_DUMMY="$SCRIPT_DIR/claude-dummy"
-
-# Change to workspace directory
+# Change to workspace
 cd "$JOB_DIR/workspace"
 
-# Run Claude with proper error handling
-{
-    # Log start
-    log_message "Starting Claude execution" "$LOG_FILE"
-    log_message "Model: $MODEL, Max turns: $MAX_TURNS" "$LOG_FILE"
-    
-    # Determine which claude command to use
-    CLAUDE_CMD=""
-    
-    if [ "$TEST_RUN" = true ]; then
-        # Force use of claude-dummy in test run mode
-        if [ -x "$CLAUDE_DUMMY" ]; then
-            CLAUDE_CMD="$CLAUDE_DUMMY"
-            log_message "Test run mode: Using claude-dummy for debugging" "$LOG_FILE"
-        else
-            log_message "Error: Test run requested but claude-dummy not found at $CLAUDE_DUMMY" "$LOG_FILE"
-            write_status "failed" "$JOB_DIR"
-            exit 1
-        fi
-    elif command -v claude-code >/dev/null 2>&1 && [ -n "$ANTHROPIC_API_KEY" ]; then
-        CLAUDE_CMD="claude-code --model $MODEL --max-turns $MAX_TURNS"
-        log_message "Using claude-code with model $MODEL" "$LOG_FILE"
-    elif [ -x "$CLAUDE_DUMMY" ]; then
-        CLAUDE_CMD="$CLAUDE_DUMMY"
-        log_message "Warning: Using claude-dummy (simulation mode)" "$LOG_FILE"
-    else
-        log_message "Error: Neither claude-code nor claude-dummy found (looked for $CLAUDE_DUMMY)" "$LOG_FILE"
-        write_status "failed" "$JOB_DIR"
+# Log function
+log() {
+    echo "[$(date +"%Y-%m-%d %H:%M:%S")] $1" >> "$LOG_FILE"
+}
+
+# Start execution
+log "Starting execution with model: $MODEL"
+
+# Build and execute command based on model type
+if [[ "$MODEL" == gemini-* ]]; then
+    # Gemini command
+    if ! command -v gemini >/dev/null 2>&1; then
+        log "Error: gemini command not found"
+        echo "{\"status\": \"failed\"}" > "$JOB_DIR/status.json"
         exit 1
     fi
     
-    # Execute Claude
-    if $CLAUDE_CMD < prompt.md >> "$LOG_FILE" 2>&1; then
-        log_message "Claude execution completed successfully" "$LOG_FILE"
-        
-        # Check if solution.tex was created
-        if [ -f "solution.tex" ]; then
-            log_message "Compiling solution.tex to PDF" "$LOG_FILE"
-            
-            # Compile to PDF (run twice for references)
-            if pdflatex -interaction=nonstopmode solution.tex >> "$LOG_FILE" 2>&1 && \
-               pdflatex -interaction=nonstopmode solution.tex >> "$LOG_FILE" 2>&1; then
-                log_message "PDF compilation successful" "$LOG_FILE"
-                write_status "completed" "$JOB_DIR"
-            else
-                log_message "PDF compilation failed" "$LOG_FILE"
-                write_status "failed" "$JOB_DIR"
-            fi
-        else
-            log_message "Warning: solution.tex not found" "$LOG_FILE"
-            write_status "completed" "$JOB_DIR"
-        fi
+    log "Executing: gemini -m $MODEL -y -p @prompt.md"
+    if gemini -m "$MODEL" -y -p "@prompt.md" >> "$LOG_FILE" 2>&1; then
+        log "Gemini execution completed"
     else
-        log_message "Claude execution failed" "$LOG_FILE"
-        write_status "failed" "$JOB_DIR"
+        log "Gemini execution failed"
+        echo "{\"status\": \"failed\"}" > "$JOB_DIR/status.json"
+        exit 1
     fi
-} || {
-    # Catch any unexpected errors
-    log_message "Unexpected error occurred" "$LOG_FILE"
-    write_status "failed" "$JOB_DIR"
-}
+else
+    # Claude command
+    if ! command -v claude >/dev/null 2>&1; then
+        log "Error: claude command not found"
+        echo "{\"status\": \"failed\"}" > "$JOB_DIR/status.json"
+        exit 1
+    fi
+    
+    # Map model names
+    case "$MODEL" in
+        claude-opus-4) CLAUDE_MODEL="opus" ;;
+        claude-sonnet-4) CLAUDE_MODEL="sonnet" ;;
+        *) CLAUDE_MODEL="$MODEL" ;;
+    esac
+    
+    log "Executing: claude with model $CLAUDE_MODEL"
+    if claude --dangerously-skip-permissions --print --verbose --output-format stream-json \
+              --model "$CLAUDE_MODEL" --max-turns "$MAX_TURNS" < prompt.md >> "$LOG_FILE" 2>&1; then
+        log "Claude execution completed"
+    else
+        log "Claude execution failed"
+        echo "{\"status\": \"failed\"}" > "$JOB_DIR/status.json"
+        exit 1
+    fi
+fi
 
-echo "Job completed. Status written to $JOB_DIR/status.json"
+# Check for solution and compile PDF
+if [ -f "solution.tex" ]; then
+    log "Compiling solution.tex to PDF"
+    if pdflatex -interaction=nonstopmode solution.tex >> "$LOG_FILE" 2>&1 && \
+       pdflatex -interaction=nonstopmode solution.tex >> "$LOG_FILE" 2>&1; then
+        log "PDF compilation successful"
+    else
+        log "PDF compilation failed"
+    fi
+else
+    log "Warning: solution.tex not found"
+fi
+
+# Final status
+echo "{\"status\": \"completed\", \"created\": \"$(date +%Y%m%d_%H%M%S)\"}" > "$JOB_DIR/status.json"
+echo "Job completed"
