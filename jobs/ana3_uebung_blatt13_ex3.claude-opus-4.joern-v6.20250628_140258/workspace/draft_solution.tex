@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{tikz}
+
+\DeclareMathOperator{\vol}{vol}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\del}{\partial}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+Sei $M \subset \R^3$ eine durch das Einheits-Normalenfeld $\nu \colon M \mapsto \R^3$ orientierte Hyperfläche und
+$$
+f \colon \R^2 \supset V \to M\cap U \colon (u,v) \mapsto f(u,v)
+$$
+eine positiv orientierte Karte. 
+\begin{enumerate}[label = (\alph*)]
+	\item Man beweise folgende Formeln für das Einheits-Normalenfeld und das Pullback der induzierten Volumenform $\vol_M$ unter $f$: 
+	$$
+	\nu \circ f = \frac{\frac{\del f}{\del u}\times\frac{\del f}{\del v}}{\bigl|\frac{\del f}{\del u}\times\frac{\del f}{\del v}\bigr|}, \qquad
+	f^* \vol_M = \left| \frac{\del f}{\del u}\times\frac{\del f}{\del v} \right| du \wedge dv. 
+	$$
+	\item Man berechne mit Hilfe der Karte aus Beispiel 7.50(c) im Skript das Einheits-Normalenfeld und den Flächeninhalt (d.h. das $2$-dimensionale Volumen) des Torus $T_{r,R}$. 
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\textbf{Teil (a):} Wir beweisen die beiden Formeln.
+
+\textit{Formel für das Einheits-Normalenfeld:}
+
+Da $f: V \to M \cap U$ eine Karte ist, bilden die Tangentialvektoren $\frac{\del f}{\del u}$ und $\frac{\del f}{\del v}$ an jedem Punkt eine Basis des Tangentialraums von $M$ an diesem Punkt. Das Kreuzprodukt $\frac{\del f}{\del u} \times \frac{\del f}{\del v}$ steht senkrecht auf beiden Tangentialvektoren und ist damit ein Normalenvektor zu $M$ an der Stelle $f(u,v)$.
+
+Da $f$ positiv orientiert ist und $\nu$ das Einheits-Normalenfeld ist, das die Orientierung von $M$ bestimmt, zeigt das Kreuzprodukt $\frac{\del f}{\del u} \times \frac{\del f}{\del v}$ in die gleiche Richtung wie $\nu \circ f$. Um das Einheits-Normalenfeld zu erhalten, müssen wir diesen Vektor normieren:
+
+$$\nu \circ f = \frac{\frac{\del f}{\del u}\times\frac{\del f}{\del v}}{\bigl|\frac{\del f}{\del u}\times\frac{\del f}{\del v}\bigr|}$$
+
+\textit{Formel für das Pullback der Volumenform:}
+
+Die induzierte Volumenform $\vol_M$ auf $M$ kann lokal durch eine 2-Form dargestellt werden. Für eine orientierte Hyperfläche im $\R^3$ mit Karte $f$ gilt, dass die Volumenform das orientierte Flächenelement darstellt.
+
+Das Flächenelement eines Parallelogramms, das von den Vektoren $\frac{\del f}{\del u} du$ und $\frac{\del f}{\del v} dv$ aufgespannt wird, hat den Flächeninhalt
+$$\left|\frac{\del f}{\del u} \times \frac{\del f}{\del v}\right| \, du \, dv$$
+
+Da $f$ positiv orientiert ist, ist das Pullback der Volumenform:
+$$f^* \vol_M = \left| \frac{\del f}{\del u}\times\frac{\del f}{\del v} \right| du \wedge dv$$
+
+\textbf{Teil (b):} Da ich keinen Zugriff auf das Skript mit Beispiel 7.50(c) habe, verwende ich die Standardparametrisierung des Torus $T_{r,R}$ mit innerem Radius $r$ und äußerem Radius $R$ (wobei $R > r > 0$):
+
+$$f(u,v) = \begin{pmatrix}
+(R + r\cos v)\cos u \\
+(R + r\cos v)\sin u \\
+r\sin v
+\end{pmatrix}, \quad (u,v) \in [0,2\pi) \times [0,2\pi)$$
+
+\textit{Berechnung der partiellen Ableitungen:}
+
+$$\frac{\del f}{\del u} = \begin{pmatrix}
+-(R + r\cos v)\sin u \\
+(R + r\cos v)\cos u \\
+0
+\end{pmatrix}, \quad
+\frac{\del f}{\del v} = \begin{pmatrix}
+-r\sin v \cos u \\
+-r\sin v \sin u \\
+r\cos v
+\end{pmatrix}$$
+
+\textit{Berechnung des Kreuzprodukts:}
+
+$$\frac{\del f}{\del u} \times \frac{\del f}{\del v} = \begin{pmatrix}
+(R + r\cos v)\cos u \cdot r\cos v \\
+(R + r\cos v)\sin u \cdot r\cos v \\
+r(R + r\cos v)
+\end{pmatrix}$$
+
+Nach Berechnung ergibt sich:
+$$\frac{\del f}{\del u} \times \frac{\del f}{\del v} = r(R + r\cos v)\begin{pmatrix}
+\cos u \cos v \\
+\sin u \cos v \\
+\sin v
+\end{pmatrix}$$
+
+\textit{Berechnung des Betrags:}
+
+$$\left|\frac{\del f}{\del u} \times \frac{\del f}{\del v}\right| = r(R + r\cos v)\sqrt{\cos^2 u \cos^2 v + \sin^2 u \cos^2 v + \sin^2 v}$$
+$$= r(R + r\cos v)\sqrt{\cos^2 v + \sin^2 v} = r(R + r\cos v)$$
+
+\textit{Das Einheits-Normalenfeld:}
+
+$$\nu \circ f = \frac{\frac{\del f}{\del u} \times \frac{\del f}{\del v}}{\left|\frac{\del f}{\del u} \times \frac{\del f}{\del v}\right|} = \begin{pmatrix}
+\cos u \cos v \\
+\sin u \cos v \\
+\sin v
+\end{pmatrix}$$
+
+\textit{Der Flächeninhalt des Torus:}
+
+Der Flächeninhalt ist gegeben durch:
+$$\text{Fläche} = \int_0^{2\pi} \int_0^{2\pi} \left|\frac{\del f}{\del u} \times \frac{\del f}{\del v}\right| \, dv \, du$$
+$$= \int_0^{2\pi} \int_0^{2\pi} r(R + r\cos v) \, dv \, du$$
+$$= r \int_0^{2\pi} \left[ Rv + r\sin v \right]_0^{2\pi} \, du$$
+$$= r \int_0^{2\pi} 2\pi R \, du$$
+$$= 2\pi r R \cdot 2\pi = 4\pi^2 rR$$
+
+\textit{Hinweis:} Diese Lösung basiert auf der Standardparametrisierung eines Torus. Die tatsächliche Lösung hängt von der spezifischen Parametrisierung in Beispiel 7.50(c) ab.
+
+\end{document}

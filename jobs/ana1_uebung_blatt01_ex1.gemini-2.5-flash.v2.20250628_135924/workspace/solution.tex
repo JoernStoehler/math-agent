@@ -1,0 +1,104 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\usepackage{array} % For better table control
+
+% Define the exercise environment
+\newenvironment{exercise}[1][]{%
+  \begin{trivlist}
+  \item[\hskip \labelsep {\bfseries Exercise #1.}]% 
+}{\end{trivlist}}
+
+\begin{document}
+
+% Copy the COMPLETE exercise here first
+\begin{exercise}
+  Betrachte die folgende Schaltung und gib die Ausgaben $O_1, O_2$ dieser in
+  Abhängigkeit von den Eingaben $A, B, C$ an (zum Beispiel in Form einer
+  Tabelle). Welche Operation wird mit dieser logischen Schaltung realisiert?
+  \begin{center}
+    \begin{circuitikz}
+      \draw
+      (3,0) node[european xor port] (myxor) {}
+      (7,0) node[european xor port,anchor=in 2] (myxor1) {}
+      (0,-2) node[european and port,rotate=270] (myand) {}
+      (5,-2) node[european and port,rotate=270] (myand1) {}
+      (2.5,-4) node[european or port,rotate=270] (myor) {}
+
+      (myxor.in 1) -- +(-2.5,0) node[anchor=east] (a) {A}
+      (myxor.in 2) -- +(-2.5,0) node[anchor=east] (b) {B}
+      (myor.out) node[anchor=north] (co) {$O_2$}
+      (myxor.in 2 -| myand.in 1) node[circ] {} -- (myand.in 1)
+      (myxor.in 1 -| myand.in 2) node[circ] {} -- (myand.in 2)
+      (myand.out) |- (myor.in 2)
+      (myand1.out) |- (myor.in 1)
+      (myxor.out) |- (myxor1.in 2)
+
+      (myand1.in 1) -- +(0,1.5) node[anchor=south] (cin) {C}
+      (myand1.in 1 |- myxor1.in 1) node[circ] {} -- (myxor1.in 1)
+      (myxor1.in 2 -| myand1.in 2) node[circ] {} -- (myand1.in 2)
+      (myxor1.out) node[anchor=west] (sum) {$O_1$}
+      ;
+    \end{circuitikz}
+  \end{center}
+\end{exercise}
+
+\section*{Solution}
+
+Um die Ausgaben $O_1$ und $O_2$ der gegebenen logischen Schaltung in Abhängigkeit von den Eingaben $A, B, C$ zu bestimmen, analysieren wir die Funktion jedes Logikgatters in der Schaltung.
+
+Die Schaltung besteht aus folgenden Gattern:
+\begin{itemize}
+    \item Zwei XOR-Gatter (Exklusiv-ODER)
+    \item Zwei AND-Gatter (UND)
+    \item Ein OR-Gatter (ODER)
+\end{itemize}
+
+Wir verfolgen die Signale durch die Schaltung:
+
+\begin{enumerate}
+    \item Das erste XOR-Gatter (links oben) hat die Eingänge $A$ und $B$. Seine Ausgabe ist $A \oplus B$.
+    \item Das erste AND-Gatter (links unten) hat die Eingänge $A$ und $B$. Seine Ausgabe ist $A \land B$.
+    \item Das zweite XOR-Gatter (rechts oben) hat die Eingänge $C$ und die Ausgabe des ersten XOR-Gatters ($A \oplus B$). Daher ist die Ausgabe dieses Gatters $O_1 = C \oplus (A \oplus B)$.
+    \item Das zweite AND-Gatter (rechts unten) hat die Eingänge $C$ und die Ausgabe des ersten XOR-Gatters ($A \oplus B$). Daher ist die Ausgabe dieses Gatters $C \land (A \oplus B)$.
+    \item Das OR-Gatter (Mitte unten) hat die Eingänge der ersten AND-Gatter-Ausgabe ($A \land B$) und der zweiten AND-Gatter-Ausgabe ($C \land (A \oplus B)$). Daher ist die Ausgabe dieses Gatters $O_2 = (A \land B) \lor (C \land (A \oplus B))$.
+\end{enumerate}
+
+Zusammenfassend sind die logischen Ausdrücke für $O_1$ und $O_2$:
+\begin{align*}
+    O_1 &= A \oplus B \oplus C \\
+    O_2 &= (A \land B) \lor (C \land (A \oplus B))
+\end{align*}
+
+Um die Ausgaben in Form einer Tabelle darzustellen, erstellen wir eine Wahrheitstabelle für alle möglichen Kombinationen der Eingaben $A, B, C$:
+
+\begin{center}
+    \begin{tabular}{|c|c|c||c|c|c|c|c|}
+        \hline
+        $A$ & $B$ & $C$ & $A \oplus B$ & $A \land B$ & $O_1 = C \oplus (A \oplus B)$ & $C \land (A \oplus B)$ & $O_2 = (A \land B) \lor (C \land (A \oplus B))$ \\
+        \hline
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\
+        0 & 1 & 0 & 1 & 0 & 1 & 0 & 0 \\
+        0 & 1 & 1 & 1 & 0 & 0 & 1 & 1 \\
+        1 & 0 & 0 & 1 & 0 & 1 & 0 & 0 \\
+        1 & 0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+        1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 \\
+        1 & 1 & 1 & 0 & 1 & 1 & 0 & 1 \\
+        \hline
+    \end{tabular}
+\end{center}
+
+Die Operation, die mit dieser logischen Schaltung realisiert wird, ist die eines \textbf{Volladdierers} (Full Adder).
+\begin{itemize}
+    \item Die Ausgabe $O_1$ repräsentiert die \textbf{Summe} (Sum Bit) der drei Eingangsbits $A, B, C$.
+    \item Die Ausgabe $O_2$ repräsentiert den \textbf{Übertrag} (Carry-Out Bit) der Addition der drei Eingangsbits $A, B, C$.
+\end{itemize}
+Ein Volladdierer ist eine grundlegende Komponente in digitalen Schaltungen, die zur Addition von drei einzelnen Bits verwendet wird, wobei zwei Bits die zu addierenden Zahlen und das dritte Bit ein Übertrag von einer vorhergehenden Addition sind.
+
+\boxed{\text{Die Schaltung realisiert einen Volladdierer.}}
+
+\end{document}

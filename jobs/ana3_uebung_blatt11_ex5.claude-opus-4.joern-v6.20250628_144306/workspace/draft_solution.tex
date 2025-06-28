@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{enumerate}
+
+\begin{document}
+
+% Working on part (a): Show dα = 0
+
+For the 1-form $\alpha = \frac{x dy - y dx}{x^2 + y^2}$ on $\mathbb{R}^2 \setminus \{0\}$.
+
+We can write $\alpha = P dx + Q dy$ where:
+- $P = \frac{-y}{x^2 + y^2}$
+- $Q = \frac{x}{x^2 + y^2}$
+
+To compute $d\alpha$:
+$d\alpha = dP \wedge dx + dQ \wedge dy = \frac{\partial P}{\partial y} dy \wedge dx + \frac{\partial Q}{\partial x} dx \wedge dy$
+
+Computing partial derivatives:
+$\frac{\partial P}{\partial y} = \frac{\partial}{\partial y}\left(\frac{-y}{x^2 + y^2}\right) = \frac{-(x^2 + y^2) - (-y)(2y)}{(x^2 + y^2)^2} = \frac{-x^2 - y^2 + 2y^2}{(x^2 + y^2)^2} = \frac{y^2 - x^2}{(x^2 + y^2)^2}$
+
+$\frac{\partial Q}{\partial x} = \frac{\partial}{\partial x}\left(\frac{x}{x^2 + y^2}\right) = \frac{(x^2 + y^2) - x(2x)}{(x^2 + y^2)^2} = \frac{x^2 + y^2 - 2x^2}{(x^2 + y^2)^2} = \frac{y^2 - x^2}{(x^2 + y^2)^2}$
+
+Therefore:
+$d\alpha = \frac{y^2 - x^2}{(x^2 + y^2)^2} dy \wedge dx + \frac{y^2 - x^2}{(x^2 + y^2)^2} dx \wedge dy$
+
+Since $dy \wedge dx = -dx \wedge dy$:
+$d\alpha = \frac{y^2 - x^2}{(x^2 + y^2)^2} (-dx \wedge dy) + \frac{y^2 - x^2}{(x^2 + y^2)^2} dx \wedge dy = 0$
+
+% Now for the pullback under polar coordinates
+$\Phi(r, \varphi) = (r\cos\varphi, r\sin\varphi)$
+
+$x = r\cos\varphi$, $y = r\sin\varphi$
+$dx = \cos\varphi dr - r\sin\varphi d\varphi$
+$dy = \sin\varphi dr + r\cos\varphi d\varphi$
+
+$\Phi^*\alpha = \frac{r\cos\varphi(sin\varphi dr + r\cos\varphi d\varphi) - r\sin\varphi(\cos\varphi dr - r\sin\varphi d\varphi)}{r^2}$
+
+Expanding numerator:
+$= r\cos\varphi\sin\varphi dr + r^2\cos^2\varphi d\varphi - r\sin\varphi\cos\varphi dr + r^2\sin^2\varphi d\varphi$
+$= r^2(\cos^2\varphi + \sin^2\varphi) d\varphi$
+$= r^2 d\varphi$
+
+Therefore: $\Phi^*\alpha = d\varphi$
+
+\end{document}

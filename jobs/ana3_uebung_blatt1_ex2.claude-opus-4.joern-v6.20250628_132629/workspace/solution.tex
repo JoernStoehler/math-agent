@@ -1,0 +1,210 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newcommand{\Om}{\Omega}
+\renewcommand{\AA}{\mathcal{A}}
+\newcommand{\PP}{\mathcal{P}}
+
+\theoremstyle{definition}
+\newtheorem{prob}{Aufgabe}
+
+\begin{document}
+
+\subsection*{Aufgabe}
+\begin{prob}[Charakterisierung einer Algebra]\label{ueb:Algebra}
+(a) Zeigen Sie: Eine Algebra $\AA\subset\PP(\Om)$ lässt sich äquivalent
+charakterisieren durch die Axiome
+
+\hskip.5cm (i)' $\varnothing\in\AA$;
+
+\hskip.5cm (ii)' $A\in\AA\Longrightarrow A^c\in\AA$; 
+
+\hskip.5cm (iii)' $A,B\in\AA\Longrightarrow A\cup B\in\AA$.
+
+oder
+
+\hskip.5cm (i)'' $\varnothing,\Om\in\AA$;
+
+\hskip.5cm (ii)'' $A,B\in\AA\Longrightarrow A\Delta B\in\AA$; 
+
+\hskip.5cm (iii)'' $A,B\in\AA\Longrightarrow A\cap B\in\AA$.
+
+(b) Eine Algebra $\AA\subset\PP(\Om)$ bildet mit den Operationen $\cup$
+und $\cap$ sowie der Negation $A^c$ eine Boolesche Algebra. 
+
+(c) Eine Algebra $\AA\subset\PP(\Om)$ bildet mit der Addition $\Delta$
+und der Multiplikation $\cap$ einen kommutativen Ring mit Eins. 
+\end{prob}
+
+\subsection*{Lösung}
+
+Zunächst erinnern wir uns an die Standarddefinition einer Algebra: Eine Teilmenge $\AA \subset \PP(\Om)$ heißt Algebra, wenn
+\begin{enumerate}
+    \item $\Om \in \AA$,
+    \item $A \in \AA \Rightarrow A^c \in \AA$ (Abgeschlossenheit unter Komplementbildung),
+    \item $A, B \in \AA \Rightarrow A \cup B \in \AA$ (Abgeschlossenheit unter endlicher Vereinigung).
+\end{enumerate}
+
+\textbf{Teil (a):} Wir zeigen die Äquivalenz der verschiedenen Charakterisierungen.
+
+\underline{Standard $\Leftrightarrow$ Erste Charakterisierung:}
+
+Standard $\Rightarrow$ Erste Charakterisierung: Sei $\AA$ eine Algebra im Standardsinne.
+\begin{itemize}
+    \item Da $\Om \in \AA$ und $\AA$ unter Komplementbildung abgeschlossen ist, folgt $\varnothing = \Om^c \in \AA$. Damit ist (i)' erfüllt.
+    \item Die Axiome (ii)' und (iii)' sind identisch mit den Axiomen (ii) und (iii) der Standarddefinition.
+\end{itemize}
+
+Erste Charakterisierung $\Rightarrow$ Standard: Sei $\AA$ eine Menge, die (i)', (ii)', (iii)' erfüllt.
+\begin{itemize}
+    \item Da $\varnothing \in \AA$ nach (i)' und $\AA$ unter Komplementbildung abgeschlossen ist nach (ii)', folgt $\Om = \varnothing^c \in \AA$. Damit ist (i) erfüllt.
+    \item Die Axiome (ii) und (iii) sind identisch mit (ii)' und (iii)'.
+\end{itemize}
+
+\underline{Standard $\Leftrightarrow$ Zweite Charakterisierung:}
+
+Standard $\Rightarrow$ Zweite Charakterisierung: Sei $\AA$ eine Algebra im Standardsinne.
+\begin{itemize}
+    \item Nach Definition gilt $\Om \in \AA$, und wie oben gezeigt $\varnothing = \Om^c \in \AA$. Damit ist (i)'' erfüllt.
+    \item Für $A, B \in \AA$ müssen wir zeigen, dass $A \Delta B \in \AA$. Die symmetrische Differenz lässt sich schreiben als
+    \[
+    A \Delta B = (A \setminus B) \cup (B \setminus A) = (A \cap B^c) \cup (B \cap A^c).
+    \]
+    Da $\AA$ unter Komplementbildung abgeschlossen ist, gilt $A^c, B^c \in \AA$. Wir zeigen zunächst, dass $\AA$ auch unter Durchschnitt abgeschlossen ist. Für $A, B \in \AA$ gilt nach De Morgan:
+    \[
+    A \cap B = (A^c \cup B^c)^c.
+    \]
+    Da $A^c, B^c \in \AA$, folgt $A^c \cup B^c \in \AA$ nach (iii), und damit $A \cap B = (A^c \cup B^c)^c \in \AA$ nach (ii). Also ist $\AA$ unter Durchschnitt abgeschlossen.
+    
+    Nun können wir folgern: $A \cap B^c \in \AA$ und $B \cap A^c \in \AA$, und damit
+    \[
+    A \Delta B = (A \cap B^c) \cup (B \cap A^c) \in \AA.
+    \]
+    Somit ist (ii)'' erfüllt.
+    \item (iii)'' haben wir bereits im vorherigen Punkt gezeigt.
+\end{itemize}
+
+Zweite Charakterisierung $\Rightarrow$ Standard: Sei $\AA$ eine Menge, die (i)'', (ii)'', (iii)'' erfüllt.
+\begin{itemize}
+    \item (i) ist erfüllt, da $\Om \in \AA$ nach (i)''.
+    \item Für $A \in \AA$ zeigen wir $A^c \in \AA$. Es gilt
+    \[
+    A^c = A \Delta \Om.
+    \]
+    Dies sieht man wie folgt: $A \Delta \Om = (A \cap \Om^c) \cup (\Om \cap A^c) = (A \cap \varnothing) \cup A^c = \varnothing \cup A^c = A^c$.
+    Da $A, \Om \in \AA$ und $\AA$ unter $\Delta$ abgeschlossen ist, folgt $A^c \in \AA$. Damit ist (ii) erfüllt.
+    \item Für $A, B \in \AA$ zeigen wir $A \cup B \in \AA$. Es gilt
+    \[
+    A \cup B = (A \Delta B) \Delta (A \cap B).
+    \]
+    Dies kann man durch elementare Mengenoperationen verifizieren: Sei $x \in \Om$. Dann:
+    \begin{align}
+    x \in (A \Delta B) \Delta (A \cap B) &\Leftrightarrow x \in (A \Delta B) \text{ und } x \notin (A \cap B)\\
+    &\qquad\text{ oder } x \notin (A \Delta B) \text{ und } x \in (A \cap B)\\
+    &\Leftrightarrow (x \in A \text{ xor } x \in B) \text{ und } \neg(x \in A \text{ und } x \in B)\\
+    &\qquad\text{ oder } \neg(x \in A \text{ xor } x \in B) \text{ und } (x \in A \text{ und } x \in B)\\
+    &\Leftrightarrow x \in A \text{ oder } x \in B\\
+    &\Leftrightarrow x \in A \cup B.
+    \end{align}
+    
+    Da $A, B \in \AA$, folgt $A \cap B \in \AA$ nach (iii)'' und $A \Delta B \in \AA$ nach (ii)''. Damit auch $(A \Delta B) \Delta (A \cap B) = A \cup B \in \AA$ nach (ii)''. Somit ist (iii) erfüllt.
+\end{itemize}
+
+\textbf{Teil (b):} Wir zeigen, dass $(\AA, \cup, \cap, \cdot^c)$ eine Boolesche Algebra bildet.
+
+Eine Boolesche Algebra ist eine Menge mit zwei binären Operationen und einer unären Operation, die folgende Axiome erfüllt:
+
+\begin{enumerate}
+    \item \textbf{Kommutativität:} Für alle $A, B \in \AA$ gilt:
+    \[
+    A \cup B = B \cup A \quad \text{und} \quad A \cap B = B \cap A.
+    \]
+    Dies folgt direkt aus der Kommutativität der Mengenoperationen.
+    
+    \item \textbf{Assoziativität:} Für alle $A, B, C \in \AA$ gilt:
+    \[
+    (A \cup B) \cup C = A \cup (B \cup C) \quad \text{und} \quad (A \cap B) \cap C = A \cap (B \cap C).
+    \]
+    Dies folgt direkt aus der Assoziativität der Mengenoperationen.
+    
+    \item \textbf{Absorption:} Für alle $A, B \in \AA$ gilt:
+    \[
+    A \cup (A \cap B) = A \quad \text{und} \quad A \cap (A \cup B) = A.
+    \]
+    Dies sind bekannte Eigenschaften von Mengenoperationen.
+    
+    \item \textbf{Distributivität:} Für alle $A, B, C \in \AA$ gilt:
+    \begin{align}
+    A \cap (B \cup C) &= (A \cap B) \cup (A \cap C),\\
+    A \cup (B \cap C) &= (A \cup B) \cap (A \cup C).
+    \end{align}
+    Dies sind die Distributivgesetze für Mengenoperationen.
+    
+    \item \textbf{Komplementarität:} Für jedes $A \in \AA$ existiert ein Komplement $A^c \in \AA$ mit:
+    \[
+    A \cup A^c = \Om \quad \text{und} \quad A \cap A^c = \varnothing.
+    \]
+    Da $\AA$ eine Algebra ist, existiert für jedes $A \in \AA$ das Komplement $A^c \in \AA$, und die Eigenschaften folgen aus der Definition des Mengenkomplements.
+    
+    \item \textbf{Neutrale Elemente:} Es existieren $0, 1 \in \AA$ mit:
+    \[
+    A \cup 0 = A \quad \text{und} \quad A \cap 1 = A \quad \text{für alle } A \in \AA.
+    \]
+    Wir setzen $0 = \varnothing$ und $1 = \Om$. Da $\AA$ eine Algebra ist, gilt $\varnothing, \Om \in \AA$, und die Eigenschaften folgen aus $A \cup \varnothing = A$ und $A \cap \Om = A$.
+\end{enumerate}
+
+Alle Axiome einer Booleschen Algebra sind erfüllt, und alle verwendeten Operationen sind in $\AA$ wohldefiniert, da $\AA$ eine Algebra ist.
+
+\textbf{Teil (c):} Wir zeigen, dass $(\AA, \Delta, \cap)$ einen kommutativen Ring mit Eins bildet.
+
+Ein kommutativer Ring mit Eins benötigt:
+
+\begin{enumerate}
+    \item \textbf{$(\AA, \Delta)$ ist eine abelsche Gruppe:}
+    \begin{itemize}
+        \item \textit{Assoziativität:} Für alle $A, B, C \in \AA$ gilt $(A \Delta B) \Delta C = A \Delta (B \Delta C)$.
+        
+        Dies folgt aus der Assoziativität der symmetrischen Differenz. Wir können dies elementar zeigen: Ein Element $x$ ist genau dann in $(A \Delta B) \Delta C$, wenn es in einer ungeraden Anzahl der Mengen $A$, $B$, $C$ enthalten ist. Diese Eigenschaft ist symmetrisch in $A$, $B$, $C$, daher ist die Operation assoziativ.
+        
+        \item \textit{Neutrales Element:} Es existiert $0 \in \AA$ mit $A \Delta 0 = A$ für alle $A \in \AA$.
+        
+        Wir setzen $0 = \varnothing$. Dann gilt $A \Delta \varnothing = A$ für alle $A \in \AA$.
+        
+        \item \textit{Inverse Elemente:} Für jedes $A \in \AA$ existiert $-A \in \AA$ mit $A \Delta (-A) = 0$.
+        
+        Jedes Element ist sein eigenes Inverses: $A \Delta A = \varnothing$ für alle $A \in \AA$.
+        
+        \item \textit{Kommutativität:} Für alle $A, B \in \AA$ gilt $A \Delta B = B \Delta A$.
+        
+        Dies folgt direkt aus der Symmetrie der Definition von $\Delta$.
+    \end{itemize}
+    
+    \item \textbf{$(\AA, \cap)$ ist ein kommutatives Monoid:}
+    \begin{itemize}
+        \item \textit{Assoziativität:} Für alle $A, B, C \in \AA$ gilt $(A \cap B) \cap C = A \cap (B \cap C)$.
+        
+        Dies folgt aus der Assoziativität des Mengendurchschnitts.
+        
+        \item \textit{Neutrales Element:} Es existiert $1 \in \AA$ mit $A \cap 1 = A$ für alle $A \in \AA$.
+        
+        Wir setzen $1 = \Om$. Dann gilt $A \cap \Om = A$ für alle $A \in \AA$.
+        
+        \item \textit{Kommutativität:} Für alle $A, B \in \AA$ gilt $A \cap B = B \cap A$.
+        
+        Dies folgt aus der Kommutativität des Mengendurchschnitts.
+    \end{itemize}
+    
+    \item \textbf{Distributivität:} Für alle $A, B, C \in \AA$ gilt:
+    \[
+    A \cap (B \Delta C) = (A \cap B) \Delta (A \cap C).
+    \]
+    
+    Zum Beweis: Ein Element $x$ ist genau dann in $A \cap (B \Delta C)$, wenn $x \in A$ und $x \in B \Delta C$, also wenn $x \in A$ und ($x \in B$ xor $x \in C$). Dies ist äquivalent zu: ($x \in A$ und $x \in B$) xor ($x \in A$ und $x \in C$), was genau bedeutet $x \in (A \cap B) \Delta (A \cap C)$.
+\end{enumerate}
+
+Damit haben wir gezeigt, dass $(\AA, \Delta, \cap)$ alle Axiome eines kommutativen Rings mit Eins erfüllt. Die Nullelement ist $\varnothing$ und das Einselement ist $\Om$.
+
+\end{document}

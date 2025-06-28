@@ -1,0 +1,30 @@
+\begin{exercise}
+  Betrachte die folgende Schaltung und gib die Ausgaben $O_1, O_2$ dieser in
+  Abhängigkeit von den Eingaben $A, B, C$ an (zum Beispiel in Form einer
+  Tabelle). Welche Operation wird mit dieser logischen Schaltung realisiert?
+  \begin{center}
+    \begin{circuitikz}
+      \draw
+      (3,0) node[european xor port] (myxor) {}
+      (7,0) node[european xor port,anchor=in 2] (myxor1) {}
+      (0,-2) node[european and port,rotate=270] (myand) {}
+      (5,-2) node[european and port,rotate=270] (myand1) {}
+      (2.5,-4) node[european or port,rotate=270] (myor) {}
+
+      (myxor.in 1) -- +(-2.5,0) node[anchor=east] (a) {A}
+      (myxor.in 2) -- +(-2.5,0) node[anchor=east] (b) {B}
+      (myor.out) node[anchor=north] (co) {$O_2$}
+      (myxor.in 2 -| myand.in 1) node[circ] {} -- (myand.in 1)
+      (myxor.in 1 -| myand.in 2) node[circ] {} -- (myand.in 2)
+      (myand.out) |- (myor.in 2)
+      (myand1.out) |- (myor.in 1)
+      (myxor.out) |- (myxor1.in 2)
+
+      (myand1.in 1) -- +(0,1.5) node[anchor=south] (cin) {C}
+      (myand1.in 1 |- myxor1.in 1) node[circ] {} -- (myxor1.in 1)
+      (myxor1.in 2 -| myand1.in 2) node[circ] {} -- (myand1.in 2)
+      (myxor1.out) node[anchor=west] (sum) {$O_1$}
+      ;
+    \end{circuitikz}
+  \end{center}
+\end{exercise}

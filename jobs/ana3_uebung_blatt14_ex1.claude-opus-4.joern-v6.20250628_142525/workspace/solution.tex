@@ -1,0 +1,123 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\del}{\partial}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe (Rand-Normalenfeld)}
+
+Sei $M \subset \R^n$ eine $k$-dimensionale Untermannigfaltigkeit mit Rand. Man zeige:
+
+(a) Für $a \in \del M$ ist $T_a(\del M)$ ein $(k-1)$-dimensionaler Untervektorraum von $T_a M$, $T_a^{\perp} M$ ist ein $(n-k)$-dimensionaler Untervektorraum von $T_a^{\perp}(\del M)$, und es gilt
+\[
+\R^n = T_a^{\perp} M \oplus (T_a M \cap T_a^{\perp}(\del M)) \oplus T_a(\del M).
+\]
+
+(b) Man zeige: Es gibt eine eindeutig bestimmte stetige Abbildung $N: \del M \to \R^n$ mit den folgenden Eigenschaften für jedes $x \in \del M$:
+\begin{description}
+\item[(i)] $\|N(x)\| = 1$;
+\item[(ii)] $N(x) \in T_x M \cap T_x^{\perp}(\del M)$;
+\item[(iii)] ist $\phi: V \cap H^k \to U \cap M$ eine Karte für $M$ um $x$ mit $\phi(y) = x$ und $w \in \R^k$ der eindeutig bestimmte Vektor mit $D\phi(y)w = N(x)$, so ist die erste Komponente von $w$ positiv.
+\end{description}
+
+Die Abbildung $N: \del M \to \R^n$ heißt das \emph{äußere Normalenfeld zu $\del M$ in $M$}.
+
+\subsection*{Lösung}
+
+\textbf{Teil (a):}
+
+Sei $a \in \del M$. Da $M$ eine $k$-dimensionale Untermannigfaltigkeit mit Rand ist und $\del M$ der Rand von $M$ ist, ist $\del M$ eine $(k-1)$-dimensionale Untermannigfaltigkeit ohne Rand von $\R^n$.
+
+\textbf{Behauptung 1:} $T_a(\del M)$ ist ein $(k-1)$-dimensionaler Untervektorraum von $T_a M$.
+
+\textit{Beweis:} Da $\del M \subset M$ gilt, folgt $T_a(\del M) \subset T_a M$. Da $\del M$ eine $(k-1)$-dimensionale Untermannigfaltigkeit ist, gilt $\dim T_a(\del M) = k-1$.
+
+\textbf{Behauptung 2:} $T_a^{\perp} M$ ist ein $(n-k)$-dimensionaler Untervektorraum von $T_a^{\perp}(\del M)$.
+
+\textit{Beweis:} Da $T_a M$ ein $k$-dimensionaler Untervektorraum von $\R^n$ ist, gilt $\dim T_a^{\perp} M = n-k$. Da $\del M \subset M$ gilt, folgt $T_a(\del M) \subset T_a M$, und somit $T_a^{\perp} M \subset T_a^{\perp}(\del M)$.
+
+\textbf{Behauptung 3:} $\R^n = T_a^{\perp} M \oplus (T_a M \cap T_a^{\perp}(\del M)) \oplus T_a(\del M)$.
+
+\textit{Beweis:} Wir zeigen zuerst, dass die drei Räume paarweise orthogonal sind und dann, dass ihre direkte Summe ganz $\R^n$ ist.
+
+\textit{Schritt 1: Paarweise Orthogonalität.}
+\begin{itemize}
+\item $T_a^{\perp} M \perp T_a(\del M)$: Da $T_a(\del M) \subset T_a M$ und $T_a^{\perp} M \perp T_a M$, folgt $T_a^{\perp} M \perp T_a(\del M)$.
+
+\item $T_a^{\perp} M \perp (T_a M \cap T_a^{\perp}(\del M))$: Da $T_a M \cap T_a^{\perp}(\del M) \subset T_a M$ und $T_a^{\perp} M \perp T_a M$, folgt die Orthogonalität.
+
+\item $(T_a M \cap T_a^{\perp}(\del M)) \perp T_a(\del M)$: Da $T_a M \cap T_a^{\perp}(\del M) \subset T_a^{\perp}(\del M)$ und $T_a(\del M) \perp T_a^{\perp}(\del M)$, folgt die Orthogonalität.
+\end{itemize}
+
+\textit{Schritt 2: Dimensionsargument.}
+Wir berechnen die Dimensionen:
+\begin{itemize}
+\item $\dim T_a^{\perp} M = n-k$
+\item $\dim T_a(\del M) = k-1$
+\item Für $\dim(T_a M \cap T_a^{\perp}(\del M))$ nutzen wir: Da $\dim T_a M = k$ und $\dim T_a^{\perp}(\del M) = n-(k-1) = n-k+1$, und da $T_a M + T_a^{\perp}(\del M) = \R^n$ (da ihre orthogonalen Komplemente $T_a^{\perp} M$ und $T_a(\del M)$ sich zu einem $(n-k) + (k-1) = n-1$ dimensionalen Raum addieren), folgt aus der Dimensionsformel:
+\[
+\dim(T_a M \cap T_a^{\perp}(\del M)) = \dim T_a M + \dim T_a^{\perp}(\del M) - \dim(T_a M + T_a^{\perp}(\del M)) = k + (n-k+1) - n = 1.
+\]
+\end{itemize}
+
+Die Summe der Dimensionen ist $(n-k) + 1 + (k-1) = n$, und da die Räume paarweise orthogonal sind, folgt
+\[
+\R^n = T_a^{\perp} M \oplus (T_a M \cap T_a^{\perp}(\del M)) \oplus T_a(\del M).
+\]
+
+\textbf{Teil (b):}
+
+Wir zeigen die Existenz und Eindeutigkeit der Abbildung $N: \del M \to \R^n$.
+
+\textbf{Eindeutigkeit:} 
+Angenommen, es gibt eine solche Abbildung $N$. Für jedes $x \in \del M$ muss $N(x)$ folgende Bedingungen erfüllen:
+\begin{itemize}
+\item $N(x) \in T_x M \cap T_x^{\perp}(\del M)$, welches nach Teil (a) ein 1-dimensionaler Raum ist.
+\item $\|N(x)\| = 1$.
+\end{itemize}
+
+Daher gibt es nur zwei Kandidaten für $N(x)$: die beiden Einheitsvektoren in $T_x M \cap T_x^{\perp}(\del M)$. Bedingung (iii) legt fest, welcher der beiden zu wählen ist. Somit ist $N(x)$ eindeutig bestimmt.
+
+\textbf{Existenz:}
+Wir konstruieren $N$ lokal und zeigen dann, dass die lokalen Definitionen zusammenpassen.
+
+Sei $x \in \del M$. Wähle eine Karte $\phi: V \cap H^k \to U \cap M$ für $M$ um $x$ mit $\phi(y) = x$ für ein $y \in V \cap \partial H^k$. Hier ist $H^k = \{z \in \R^k : z_1 \geq 0\}$ der obere Halbraum.
+
+Das Differential $D\phi(y): \R^k \to \R^n$ ist injektiv, und das Bild ist $T_x M$. Der Vektor $e_1 = (1,0,\ldots,0) \in \R^k$ zeigt nach außen von $H^k$ bei $y$. Betrachte den Vektor
+\[
+v = D\phi(y)(e_1) \in T_x M.
+\]
+
+Da $\phi$ den Rand $\partial H^k$ auf $\del M$ abbildet, bildet $D\phi(y)$ den Tangentialraum $T_y(\partial H^k) = \{z \in \R^k : z_1 = 0\}$ auf $T_x(\del M)$ ab. Daher ist $v = D\phi(y)(e_1) \perp T_x(\del M)$, also $v \in T_x M \cap T_x^{\perp}(\del M)$.
+
+Setze
+\[
+N(x) = \frac{v}{\|v\|}.
+\]
+
+Dies erfüllt alle drei Bedingungen:
+\begin{itemize}
+\item[(i)] $\|N(x)\| = 1$ nach Konstruktion.
+\item[(ii)] $N(x) \in T_x M \cap T_x^{\perp}(\del M)$ wie oben gezeigt.
+\item[(iii)] Der Vektor $w$ mit $D\phi(y)w = N(x)$ ist $w = \frac{e_1}{\|v\|}$, dessen erste Komponente $\frac{1}{\|v\|} > 0$ ist.
+\end{itemize}
+
+\textbf{Unabhängigkeit von der Kartenwahl:}
+Seien $\phi_1: V_1 \cap H^k \to U_1 \cap M$ und $\phi_2: V_2 \cap H^k \to U_2 \cap M$ zwei Karten um $x$ mit $\phi_1(y_1) = x = \phi_2(y_2)$. Der Kartenwechsel
+\[
+\psi = \phi_2^{-1} \circ \phi_1: \phi_1^{-1}(U_1 \cap U_2) \cap H^k \to \phi_2^{-1}(U_1 \cap U_2) \cap H^k
+\]
+ist ein Diffeomorphismus, der $\partial H^k$ auf $\partial H^k$ abbildet. Das Differential $D\psi(y_1)$ bildet daher den nach außen zeigenden Vektor bei $y_1$ auf einen nach außen zeigenden Vektor bei $y_2$ ab. Dies zeigt, dass beide Karten dasselbe $N(x)$ liefern.
+
+\textbf{Stetigkeit:}
+Die Stetigkeit von $N$ folgt aus der lokalen Konstruktion: In einer Kartenumgebung hängt $N$ stetig von den Koordinaten ab, da die Normierung und das Differential stetig sind.
+
+Damit ist die Existenz und Eindeutigkeit von $N$ bewiesen.
+
+\end{document}

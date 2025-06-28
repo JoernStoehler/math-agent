@@ -1,0 +1,132 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{enumerate}
+\usepackage{tikz}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+In dieser Aufgabe betrachten wir die $1$-Form $\alpha = \frac{x\,dy - y\,dx}{x^2+y^2}$ auf $\R^2 \setminus \{0\}$. 
+
+\begin{enumerate}[(a)]
+    \item Man zeige $d\alpha=0$ und berechne das Pullback $\Phi^*\alpha$ unter
+    der Transformation $\Phi(r,\varphi)=(r\cos\varphi,r\sin\varphi)$ in
+    Polarkoordinaten.
+    \item Man berechne das Integral $\int_{[0,2\pi]}f_k^*\alpha$ über die geschlossenen Kurven
+    $$
+    f_k \colon [0,2\pi] \to \R^2 \setminus \{0\}, \qquad
+    t \mapsto (\cos(kt), \sin(kt)), \qquad k \in \Z
+    $$
+    und interpretiere das Ergebnis mit Hilfe von (a). 
+    \item Man folgere, dass $\alpha \in \Omega^1(\R^2 \setminus \{0\} )$ geschlossen, aber nicht exakt ist. 
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\textbf{Teilaufgabe (a):}
+
+Wir zeigen zunächst, dass $d\alpha = 0$ gilt. Die $1$-Form $\alpha$ lässt sich schreiben als
+$$\alpha = P\,dx + Q\,dy$$
+mit 
+$$P = \frac{-y}{x^2+y^2} \quad \text{und} \quad Q = \frac{x}{x^2+y^2}.$$
+
+Die äußere Ableitung ist gegeben durch
+$$d\alpha = dP \wedge dx + dQ \wedge dy = \frac{\partial P}{\partial y}\,dy \wedge dx + \frac{\partial Q}{\partial x}\,dx \wedge dy.$$
+
+Wir berechnen die partiellen Ableitungen:
+\begin{align}
+\frac{\partial P}{\partial y} &= \frac{\partial}{\partial y}\left(\frac{-y}{x^2+y^2}\right) \\
+&= \frac{-(x^2+y^2) - (-y) \cdot 2y}{(x^2+y^2)^2} \\
+&= \frac{-x^2-y^2+2y^2}{(x^2+y^2)^2} \\
+&= \frac{y^2-x^2}{(x^2+y^2)^2}
+\end{align}
+
+\begin{align}
+\frac{\partial Q}{\partial x} &= \frac{\partial}{\partial x}\left(\frac{x}{x^2+y^2}\right) \\
+&= \frac{(x^2+y^2) - x \cdot 2x}{(x^2+y^2)^2} \\
+&= \frac{x^2+y^2-2x^2}{(x^2+y^2)^2} \\
+&= \frac{y^2-x^2}{(x^2+y^2)^2}
+\end{align}
+
+Da $dy \wedge dx = -dx \wedge dy$, erhalten wir:
+\begin{align}
+d\alpha &= \frac{y^2-x^2}{(x^2+y^2)^2}\,dy \wedge dx + \frac{y^2-x^2}{(x^2+y^2)^2}\,dx \wedge dy \\
+&= \frac{y^2-x^2}{(x^2+y^2)^2}(-dx \wedge dy) + \frac{y^2-x^2}{(x^2+y^2)^2}\,dx \wedge dy \\
+&= 0
+\end{align}
+
+Nun berechnen wir das Pullback $\Phi^*\alpha$ unter der Transformation in Polarkoordinaten
+$$\Phi(r,\varphi) = (r\cos\varphi, r\sin\varphi).$$
+
+Wir haben $x = r\cos\varphi$ und $y = r\sin\varphi$, woraus folgt:
+\begin{align}
+dx &= \cos\varphi\,dr - r\sin\varphi\,d\varphi \\
+dy &= \sin\varphi\,dr + r\cos\varphi\,d\varphi
+\end{align}
+
+Einsetzen in $\alpha = \frac{x\,dy - y\,dx}{x^2+y^2}$ ergibt:
+\begin{align}
+\Phi^*\alpha &= \frac{r\cos\varphi(sin\varphi\,dr + r\cos\varphi\,d\varphi) - r\sin\varphi(\cos\varphi\,dr - r\sin\varphi\,d\varphi)}{r^2} \\
+&= \frac{r\cos\varphi\sin\varphi\,dr + r^2\cos^2\varphi\,d\varphi - r\sin\varphi\cos\varphi\,dr + r^2\sin^2\varphi\,d\varphi}{r^2} \\
+&= \frac{r^2(\cos^2\varphi + \sin^2\varphi)\,d\varphi}{r^2} \\
+&= d\varphi
+\end{align}
+
+Also ist $\Phi^*\alpha = d\varphi$.
+
+\textbf{Teilaufgabe (b):}
+
+Wir berechnen das Integral $\int_{[0,2\pi]} f_k^*\alpha$ für die Kurven
+$$f_k(t) = (\cos(kt), \sin(kt)), \quad t \in [0,2\pi], \quad k \in \Z.$$
+
+Für diese Kurven gilt:
+\begin{align}
+x &= \cos(kt), \quad y = \sin(kt) \\
+\frac{dx}{dt} &= -k\sin(kt), \quad \frac{dy}{dt} = k\cos(kt) \\
+x^2 + y^2 &= \cos^2(kt) + \sin^2(kt) = 1
+\end{align}
+
+Das Pullback der $1$-Form ist:
+\begin{align}
+f_k^*\alpha &= \frac{x\,dy - y\,dx}{x^2+y^2} \\
+&= \frac{\cos(kt) \cdot k\cos(kt)\,dt - \sin(kt) \cdot (-k\sin(kt))\,dt}{1} \\
+&= k\cos^2(kt)\,dt + k\sin^2(kt)\,dt \\
+&= k(\cos^2(kt) + \sin^2(kt))\,dt \\
+&= k\,dt
+\end{align}
+
+Daher ist
+$$\int_{[0,2\pi]} f_k^*\alpha = \int_0^{2\pi} k\,dt = k \cdot 2\pi = 2\pi k.$$
+
+\textbf{Interpretation mit Hilfe von (a):}
+
+Die Kurve $f_k$ lässt sich in Polarkoordinaten darstellen als $r = 1$, $\varphi = kt$. Mit dem Resultat $\Phi^*\alpha = d\varphi$ aus Teil (a) erhalten wir:
+$$\int_{[0,2\pi]} f_k^*\alpha = \int_0^{2\pi} d(kt) = \int_0^{2\pi} k\,dt = 2\pi k.$$
+
+Das Integral misst also, wie oft sich die Kurve $f_k$ um den Ursprung windet:
+\begin{itemize}
+\item Für $k > 0$ windet sich die Kurve $k$-mal gegen den Uhrzeigersinn
+\item Für $k < 0$ windet sich die Kurve $|k|$-mal im Uhrzeigersinn
+\item Für $k = 0$ ist die Kurve konstant (der Punkt $(1,0)$)
+\end{itemize}
+
+\textbf{Teilaufgabe (c):}
+
+Aus Teil (a) wissen wir bereits, dass $d\alpha = 0$, also ist $\alpha$ geschlossen.
+
+Wäre $\alpha$ exakt, so gäbe es eine Funktion $F: \R^2 \setminus \{0\} \to \R$ mit $\alpha = dF$. Dann müsste für jede geschlossene Kurve $\gamma$ gelten:
+$$\int_\gamma \alpha = \int_\gamma dF = F(\gamma(2\pi)) - F(\gamma(0)) = 0.$$
+
+Jedoch haben wir in Teil (b) gezeigt, dass
+$$\int_{[0,2\pi]} f_k^*\alpha = 2\pi k \neq 0 \quad \text{für } k \neq 0.$$
+
+Dies ist ein Widerspruch. Daher ist $\alpha$ nicht exakt.
+
+\textbf{Fazit:} Die $1$-Form $\alpha = \frac{x\,dy - y\,dx}{x^2+y^2}$ auf $\R^2 \setminus \{0\}$ ist geschlossen (da $d\alpha = 0$), aber nicht exakt (da die Wegintegrale über geschlossene Kurven nicht verschwinden).
+
+\end{document}

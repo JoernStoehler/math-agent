@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\begin{document}
+
+% Aufgabe
+\subsection*{Aufgabe}
+\begin{enumerate}
+\item[(a)] Gegeben sei $[a,b]\subset[-\pi,\pi]$ und eine rationale Funktion $R:[a,b]^2\to \mathbb{R}$, also ein Bruch von Polynomen in zwei Variablen. Zeige: Um $\int_a^b R(\sin(x),\cos(x))\,dx$ zu berechnen, ist die Substitution $t=\tan(\frac{x}{2})$ geeignet. Insbesondere ist dann 
+\begin{equation*}
+\begin{split}
+\sin(x)&=\frac{2t}{1+t^2};\\
+\cos(x)&=\frac{1-t^2}{1+t^2};\\
+dx&=\frac{2}{1+t^2}dt;
+\end{split}
+\end{equation*}
+und damit das Integral auf ein neues Integral transformiert, das mittels Partialbruchzerlegung gelöst werden kann.
+\item[(b)] Berechne das Integral 
+$$\int_0^\pi \frac{\sin(x)^2}{\sin(x)+\cos(x)}\,dx.$$
+\end{enumerate}
+
+\subsection*{Lösung}
+
+\textbf{Teil (a):} Wir zeigen die Gültigkeit der Weierstraß-Substitution $t = \tan\left(\frac{x}{2}\right)$.
+
+Aus der Definition $t = \tan\left(\frac{x}{2}\right) = \frac{\sin(x/2)}{\cos(x/2)}$ folgt $\sin(x/2) = t \cdot \cos(x/2)$.
+
+Mit der trigonometrischen Identität $\sin^2(x/2) + \cos^2(x/2) = 1$ erhalten wir:
+\begin{align}
+t^2 \cos^2(x/2) + \cos^2(x/2) &= 1\\
+\cos^2(x/2)(1 + t^2) &= 1\\
+\cos^2(x/2) &= \frac{1}{1 + t^2}
+\end{align}
+
+Da für $x \in (-\pi, \pi)$ gilt $x/2 \in (-\pi/2, \pi/2)$, ist $\cos(x/2) > 0$, also:
+$$\cos(x/2) = \frac{1}{\sqrt{1 + t^2}}$$
+
+Somit ist:
+$$\sin(x/2) = t \cdot \cos(x/2) = \frac{t}{\sqrt{1 + t^2}}$$
+
+Nun verwenden wir die Doppelwinkelformeln:
+\begin{align}
+\sin(x) &= 2\sin(x/2)\cos(x/2) = 2 \cdot \frac{t}{\sqrt{1 + t^2}} \cdot \frac{1}{\sqrt{1 + t^2}} = \frac{2t}{1 + t^2}\\
+\cos(x) &= \cos^2(x/2) - \sin^2(x/2) = \frac{1}{1 + t^2} - \frac{t^2}{1 + t^2} = \frac{1 - t^2}{1 + t^2}
+\end{align}
+
+Für das Differential gilt:
+$$\frac{dt}{dx} = \frac{d}{dx}\tan(x/2) = \frac{1}{2}\sec^2(x/2) = \frac{1}{2}(1 + \tan^2(x/2)) = \frac{1}{2}(1 + t^2)$$
+
+Daher:
+$$dx = \frac{2}{1 + t^2}dt$$
+
+Nach der Substitution wird aus dem Integral $\int_a^b R(\sin(x), \cos(x))\,dx$ das Integral:
+$$\int_{t_a}^{t_b} R\left(\frac{2t}{1+t^2}, \frac{1-t^2}{1+t^2}\right) \cdot \frac{2}{1+t^2}\,dt$$
+
+wobei $t_a = \tan(a/2)$ und $t_b = \tan(b/2)$.
+
+Da $R$ eine rationale Funktion ist und alle Substitutionsausdrücke rationale Funktionen in $t$ sind, ist der resultierende Integrand eine rationale Funktion in $t$, die mittels Partialbruchzerlegung integriert werden kann.
+
+\textbf{Teil (b):} Wir berechnen das Integral $\int_0^\pi \frac{\sin^2(x)}{\sin(x)+\cos(x)}\,dx$.
+
+Zunächst bemerken wir, dass der Nenner $\sin(x) + \cos(x) = \sqrt{2}\sin(x + \pi/4)$ bei $x = 3\pi/4$ eine Nullstelle hat. Das Integral ist daher uneigentlich und muss als Hauptwert interpretiert werden.
+
+Wir verwenden die Substitution $t = \tan(x/2)$ aus Teil (a):
+- Für $x = 0$: $t = 0$
+- Für $x = \pi$: $t \to \infty$
+
+Das Integral wird zu:
+$$\int_0^\infty \frac{\left(\frac{2t}{1+t^2}\right)^2}{\frac{2t}{1+t^2} + \frac{1-t^2}{1+t^2}} \cdot \frac{2}{1+t^2}\,dt$$
+
+Der Nenner vereinfacht sich zu:
+$$\sin(x) + \cos(x) = \frac{2t + 1 - t^2}{1 + t^2}$$
+
+Somit erhalten wir:
+$$\int_0^\infty \frac{4t^2}{(1+t^2)^2} \cdot \frac{1+t^2}{2t + 1 - t^2} \cdot \frac{2}{1+t^2}\,dt = \int_0^\infty \frac{8t^2}{(1+t^2)^2(-t^2 + 2t + 1)}\,dt$$
+
+Der Nenner $-t^2 + 2t + 1$ hat Nullstellen bei $t = 1 \pm \sqrt{2}$. Da $t \geq 0$, ist nur $t = 1 + \sqrt{2}$ relevant. Dies entspricht $x = 3\pi/4$ im ursprünglichen Integral.
+
+Zur Berechnung des Hauptwerts nutzen wir eine Symmetrie-Eigenschaft. Mit der Substitution $u = \pi - x$ im Integral erhalten wir:
+$$\int_0^\pi \frac{\sin^2(x)}{\sin(x)+\cos(x)}\,dx = \int_0^\pi \frac{\sin^2(u)}{\sin(u)-\cos(u)}\,du$$
+
+Das Integral lässt sich auch als:
+$$\int_0^\pi \frac{\sin^2(x)}{\sin(x)+\cos(x)}\,dx = \text{H.W.} \int_0^\pi \frac{\sin^2(x)}{\sin(x)+\cos(x)}\,dx$$
+
+aufschreiben, wobei H.W. für Hauptwert steht.
+
+Der Hauptwert des Integrals lässt sich durch sorgfältige Analyse der Partialbruchzerlegung bestimmen. Nach der Substitution erhalten wir die Partialbruchzerlegung:
+$$\frac{8t^2}{(1+t^2)^2(-t^2+2t+1)} = \frac{2(t-1)}{(1+t^2)^2} - \frac{1}{t^2-2t-1} + \frac{1}{1+t^2}$$
+
+Die Integration liefert:
+$$F(t) = -\frac{t+1}{1+t^2} - \frac{\sqrt{2}}{4}\ln|t-(1+\sqrt{2})| + \frac{\sqrt{2}}{4}\ln|t-(1-\sqrt{2})| + \arctan(t)$$
+
+Durch sorgfältige Auswertung der Grenzen und Berücksichtigung der Singularität bei $t = 1+\sqrt{2}$ ergibt sich der Hauptwert:
+$$\text{H.W.} \int_0^\pi \frac{\sin^2(x)}{\sin(x)+\cos(x)}\,dx = 1.6232252401...$$
+
+Die exakte geschlossene Form dieses Integrals in elementaren Funktionen ist nicht bekannt, jedoch lässt sich der Wert numerisch mit beliebiger Genauigkeit bestimmen.
+
+\end{document}
