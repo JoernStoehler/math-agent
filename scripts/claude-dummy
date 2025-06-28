@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# claude-dummy - Simulates claude-code for testing purposes
+# Reads from stdin and produces JSONL output similar to claude-code
+
+# Function to output a JSONL line
+output_jsonl() {
+    local type="$1"
+    local content="$2"
+    local timestamp=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
+    
+    if [ "$type" = "message" ]; then
+        echo "{\"type\":\"message\",\"role\":\"assistant\",\"content\":\"$content\",\"timestamp\":\"$timestamp\"}"
+    elif [ "$type" = "tool_use" ]; then
+        local tool_name="$3"
+        echo "{\"type\":\"tool_use\",\"tool\":\"$tool_name\",\"content\":\"$content\",\"timestamp\":\"$timestamp\"}"
+    elif [ "$type" = "error" ]; then
+        echo "{\"type\":\"error\",\"content\":\"$content\",\"timestamp\":\"$timestamp\"}"
+    fi
+}
+
+# Read the prompt from stdin
+PROMPT=$(cat)
+
+# Simulate processing delay
+sleep 1
+
+# Output initial message
+output_jsonl "message" "I'll help you solve this math problem. Let me analyze what we have."
+
+sleep 0.5
+
+# Simulate reading the exercise file
+output_jsonl "tool_use" "Reading exercise.tex" "read_file"
+output_jsonl "message" "I can see this is a problem about addition. Let me work on the solution."
+
+sleep 1
+
+# Simulate creating solution
+output_jsonl "tool_use" "Creating solution.tex" "write_file"
+output_jsonl "message" "I'm writing the solution using LaTeX format..."
+
+sleep 0.5
+
+# Write a dummy solution.tex file
+cat > solution.tex << 'EOF'
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+
+\section*{Solution}
+
+Given the problem from exercise.tex, here is the solution:
+
+\begin{equation}
+2 + 2 = 4
+\end{equation}
+
+This is a basic addition problem. The sum of 2 and 2 equals 4.
+
+\end{document}
+EOF
+
+output_jsonl "message" "I've created the solution file. The LaTeX document is ready for compilation."
+
+sleep 0.5
+
+# Simulate successful completion
+output_jsonl "message" "Task completed successfully. The solution has been written to solution.tex."
+
+# Exit successfully
+exit 0
