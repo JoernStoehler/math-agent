@@ -6,12 +6,15 @@ and coordinates job lifecycle.
 """
 
 import asyncio
+import json
 import logging
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict
 from contextlib import suppress
 
 from .job_executor import JobExecutor
+from ..core.models import JobStatusEnum
+from ..config import JOB_SCAN_INTERVAL, MAX_CONCURRENT_JOBS
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +22,7 @@ logger = logging.getLogger(__name__)
 class JobManager:
     """Manages job execution queue and lifecycle"""
     
-    def __init__(self, jobs_dir: Path, max_concurrent_jobs: int = 2):
+    def __init__(self, jobs_dir: Path, max_concurrent_jobs: int = MAX_CONCURRENT_JOBS):
         self.jobs_dir = jobs_dir
         self.max_concurrent_jobs = max_concurrent_jobs
         self.running_jobs: Dict[str, asyncio.Task] = {}
@@ -151,19 +154,22 @@ class JobManager:
                         # Check status
                         status_file = job_dir / "status.json"
                         if status_file.exists():
-                            import json
-                            with open(status_file, 'r') as f:
-                                status = json.load(f)
-                                
-                            if status.get("status") == "setup":
-                                # Submit for execution
-                                await self.submit_job(job_name)
+                            try:
+                                with open(status_file, 'r') as f:
+                                    status = json.load(f)
+                                    
+                                if status.get("status") == JobStatusEnum.SETUP.value:
+                                    # Submit for execution
+                                    await self.submit_job(job_name)
+                            except (FileNotFoundError, json.JSONDecodeError) as e:
+                                logger.error(f"Failed to read status for {job_name}: {e}")
+                                # Skip this job and continue with others
                                 
             except Exception as e:
                 logger.exception(f"Job scanner error: {e}")
                 
             # Wait before next scan
-            await asyncio.sleep(5)
+            await asyncio.sleep(JOB_SCAN_INTERVAL)
             
     def get_queue_size(self) -> int:
         """Get number of jobs in queue"""

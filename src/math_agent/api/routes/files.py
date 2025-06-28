@@ -1,7 +1,5 @@
 """File serving routes"""
 from fastapi import APIRouter, Response
-from fastapi.responses import FileResponse
-from pathlib import Path
 
 router = APIRouter(prefix="/files", tags=["files"])
 

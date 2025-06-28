@@ -159,6 +159,11 @@ math-agent/
 4. Initialize status.json
 
 ### Job Execution
+
+#### Automatic Job Scanning
+The job manager continuously scans the `jobs/` directory every 5 seconds for jobs in "setup" status and automatically submits them for execution. This allows jobs to be created either through the API or by directly creating the appropriate directory structure.
+
+#### Command Execution
 ```bash
 claude --print "@prompt.md" \
        --verbose \
@@ -167,11 +172,21 @@ claude --print "@prompt.md" \
        --model <model>
 ```
 
+Note: The CLI tool is selected based on the model prefix:
+- Models starting with "claude" use the `claude` CLI
+- All other models use the `gemini` CLI
+
 ### Status Updates
 - Stream log entries to log.jsonl
 - Update status.json on state changes
 - After completion: Check for solution.tex/pdf
-- If solution.tex exists but not pdf: Run pdflatex
+
+#### Automatic PDF Compilation
+If `solution.tex` exists but `solution.pdf` does not, the system automatically runs:
+```bash
+pdflatex -interaction=nonstopmode solution.tex
+# Runs twice to resolve references
+```
 
 ### Status Schema
 ```typescript
@@ -213,15 +228,13 @@ uv sync --dev
 uv run pytest
 ```
 
-**WARNING**: The job executor (src/backend/job.py) is COMPLETELY UNTESTED. 
-See tests/test_job_executor.py for what needs to be tested before production use.
 
 ### Project Structure
-- `src/backend/server.py` - FastAPI application and routes
-- `src/backend/job.py` - Job executor (UNTESTED)
-- `src/backend/job_manager.py` - Job queue management
-- `src/models.py` - Pydantic models
-- `tests/` - Test files with warnings about untested code
+- `src/math_agent/main.py` - FastAPI application
+- `src/math_agent/services/job_executor.py` - Job executor with comprehensive tests
+- `src/math_agent/services/job_manager.py` - Job queue management
+- `src/math_agent/core/models.py` - Pydantic models
+- `tests/` - Comprehensive test suite
 
 Single Python process running FastAPI + job manager with asyncio.
 

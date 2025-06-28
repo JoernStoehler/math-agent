@@ -8,13 +8,15 @@ including running the AI agent, managing output, and compiling LaTeX.
 import asyncio
 import json
 import logging
-import os
-import subprocess
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional, Dict, Any
 
+import aiofiles
+
 from ..core.utils import atomic_write_json
+from ..core.models import JobStatusEnum
+from ..config import PDFLATEX_COMMAND, PDFLATEX_ARGS, PDFLATEX_RUNS, MODEL_CLI_MAPPING, DEFAULT_CLI_TOOL
 
 logger = logging.getLogger(__name__)
 
@@ -33,24 +35,15 @@ class JobExecutor:
         """Execute the job"""
         try:
             # Update status to running
-            await self._update_status("running", startedAt=datetime.utcnow().isoformat() + "Z")
+            await self._update_status(JobStatusEnum.RUNNING, startedAt=datetime.now(timezone.utc).isoformat() + "Z")
             
             # Load job configuration
-            status = self._load_status()
+            status = await self._load_status()
             model = status.get("model", "claude-opus-4")
             disallowed_tools = status.get("disallowedTools", "")
             
             # Build command
-            cmd = [
-                "claude" if model.startswith("claude") else "gemini",
-                "--print", "@prompt.md",
-                "--verbose",
-                "--output-format", "stream-json",
-                "--model", model
-            ]
-            
-            if disallowed_tools:
-                cmd.extend(["--disallowedTools", disallowed_tools])
+            cmd = self._build_command(model, disallowed_tools)
             
             # Execute in workspace directory
             self.process = await asyncio.create_subprocess_exec(
@@ -72,8 +65,8 @@ class JobExecutor:
                 solution_pdf = self.workspace_dir / "solution.pdf"
                 
                 updates = {
-                    "status": "completed",
-                    "completedAt": datetime.utcnow().isoformat() + "Z",
+                    "status": JobStatusEnum.COMPLETED,
+                    "completedAt": datetime.now(timezone.utc).isoformat() + "Z",
                     "solutionTexCreated": solution_tex.exists()
                 }
                 
@@ -87,8 +80,8 @@ class JobExecutor:
                 await self._update_status(**updates)
             else:
                 await self._update_status(
-                    "error",
-                    completedAt=datetime.utcnow().isoformat() + "Z",
+                    JobStatusEnum.ERROR,
+                    completedAt=datetime.now(timezone.utc).isoformat() + "Z",
                     error=f"Process exited with code {return_code}"
                 )
                 
@@ -98,16 +91,16 @@ class JobExecutor:
                 self.process.terminate()
                 await self.process.wait()
             await self._update_status(
-                "cancelled",
-                completedAt=datetime.utcnow().isoformat() + "Z"
+                JobStatusEnum.CANCELLED,
+                completedAt=datetime.now(timezone.utc).isoformat() + "Z"
             )
             raise
             
         except Exception as e:
             logger.exception("Job execution failed")
             await self._update_status(
-                "error",
-                completedAt=datetime.utcnow().isoformat() + "Z",
+                JobStatusEnum.ERROR,
+                completedAt=datetime.now(timezone.utc).isoformat() + "Z",
                 error=str(e)
             )
             
@@ -131,26 +124,25 @@ class JobExecutor:
             try:
                 entry = json.loads(line.decode('utf-8'))
                 # Write to log
-                with open(self.log_file, 'a') as f:
-                    f.write(json.dumps(entry) + '\n')
+                async with aiofiles.open(self.log_file, 'a') as f:
+                    await f.write(json.dumps(entry) + '\n')
             except json.JSONDecodeError:
                 # Write raw line as system message
                 entry = {
-                    "timestamp": datetime.utcnow().isoformat() + "Z",
+                    "timestamp": datetime.now(timezone.utc).isoformat() + "Z",
                     "type": "system",
                     "content": line.decode('utf-8').strip()
                 }
-                with open(self.log_file, 'a') as f:
-                    f.write(json.dumps(entry) + '\n')
+                async with aiofiles.open(self.log_file, 'a') as f:
+                    await f.write(json.dumps(entry) + '\n')
                     
     async def _compile_pdf(self) -> bool:
         """Compile solution.tex to PDF"""
         try:
             # Run pdflatex
+            cmd = [PDFLATEX_COMMAND] + PDFLATEX_ARGS + ["solution.tex"]
             result = await asyncio.create_subprocess_exec(
-                "pdflatex",
-                "-interaction=nonstopmode",
-                "solution.tex",
+                *cmd,
                 cwd=str(self.workspace_dir),
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE
@@ -158,46 +150,71 @@ class JobExecutor:
             
             stdout, stderr = await result.communicate()
             
-            if result.returncode == 0:
+            if result.returncode == 0 and PDFLATEX_RUNS > 1:
                 # Run again for references
-                result2 = await asyncio.create_subprocess_exec(
-                    "pdflatex",
-                    "-interaction=nonstopmode",
-                    "solution.tex",
+                for _ in range(PDFLATEX_RUNS - 1):
+                    result2 = await asyncio.create_subprocess_exec(
+                        *cmd,
                     cwd=str(self.workspace_dir),
                     stdout=asyncio.subprocess.PIPE,
                     stderr=asyncio.subprocess.PIPE
-                )
-                await result2.wait()
+                    )
+                    await result2.wait()
                 
                 return (self.workspace_dir / "solution.pdf").exists()
             else:
                 # Log compilation error
                 error_msg = stderr.decode('utf-8') if stderr else stdout.decode('utf-8')
                 entry = {
-                    "timestamp": datetime.utcnow().isoformat() + "Z",
+                    "timestamp": datetime.now(timezone.utc).isoformat() + "Z",
                     "type": "error",
                     "content": f"LaTeX compilation failed: {error_msg[:500]}"
                 }
-                with open(self.log_file, 'a') as f:
-                    f.write(json.dumps(entry) + '\n')
+                async with aiofiles.open(self.log_file, 'a') as f:
+                    await f.write(json.dumps(entry) + '\n')
                 return False
                 
-        except Exception as e:
+        except Exception:
             logger.exception("PDF compilation failed")
             return False
             
-    def _load_status(self) -> Dict[str, Any]:
-        """Load current job status"""
-        with open(self.status_file, 'r') as f:
-            return json.load(f)
+    def _build_command(self, model: str, disallowed_tools: str = "") -> list[str]:
+        """Build the command to execute the AI agent"""
+        cli_tool = MODEL_CLI_MAPPING.get(model)
+        if not cli_tool:
+            logger.warning(f"Unknown model {model}, defaulting to {DEFAULT_CLI_TOOL} CLI")
+            cli_tool = DEFAULT_CLI_TOOL
+        
+        cmd = [
+            cli_tool,
+            "--print", "@prompt.md",
+            "--verbose",
+            "--output-format", "stream-json",
+            "--model", model
+        ]
+        
+        if disallowed_tools:
+            cmd.extend(["--disallowedTools", disallowed_tools])
             
-    async def _update_status(self, status: Optional[str] = None, **kwargs):
+        return cmd
+    
+    async def _load_status(self) -> Dict[str, Any]:
+        """Load current job status"""
+        try:
+            async with aiofiles.open(self.status_file, 'r') as f:
+                content = await f.read()
+                return json.loads(content)
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            logger.error(f"Failed to load job status: {e}")
+            # Return minimal status if file is missing/corrupt
+            return {"status": JobStatusEnum.ERROR, "error": f"Failed to load status: {e}"}
+            
+    async def _update_status(self, status: Optional[JobStatusEnum] = None, **kwargs):
         """Update job status"""
-        current = self._load_status()
+        current = await self._load_status()
         
         if status:
-            current["status"] = status
+            current["status"] = status.value
             
         current.update(kwargs)
         

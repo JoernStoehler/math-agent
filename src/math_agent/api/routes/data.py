@@ -1,24 +1,29 @@
 """Data management routes"""
-from pathlib import Path
+import logging
 
 from fastapi import APIRouter, HTTPException
 
 from ...core.models import PromptSaveRequest
-from ..dependencies import ExercisesDir, PromptsDir
+from ...config import EXERCISES_DIR, PROMPTS_DIR
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/data", tags=["data"])
 
 
 @router.get("/exercises")
-async def list_exercises(exercises_dir: ExercisesDir):
+async def list_exercises():
     """List available exercises"""
     exercises = []
     
-    if exercises_dir.exists():
-        for course_dir in sorted(exercises_dir.iterdir()):
-            if course_dir.is_dir():
-                for exercise_file in sorted(course_dir.glob("*.tex")):
-                    exercises.append(f"{course_dir.name}/{exercise_file.stem}")
+    if EXERCISES_DIR.exists():
+        try:
+            for course_dir in sorted(EXERCISES_DIR.iterdir()):
+                if course_dir.is_dir():
+                    for exercise_file in sorted(course_dir.glob("*.tex")):
+                        exercises.append(f"{course_dir.name}/{exercise_file.stem}")
+        except Exception as e:
+            logger.error(f"Failed to list exercises: {e}")
+            # Return what we have so far instead of crashing
     
     return exercises
 
@@ -35,24 +40,32 @@ async def get_models():
 
 
 @router.get("/prompts")
-async def list_prompts(prompts_dir: PromptsDir):
+async def list_prompts():
     """List saved prompts"""
     prompts = []
     
-    if prompts_dir.exists():
-        for prompt_file in sorted(prompts_dir.glob("*.md")):
-            prompts.append(prompt_file.stem)
+    if PROMPTS_DIR.exists():
+        try:
+            for prompt_file in sorted(PROMPTS_DIR.glob("*.md")):
+                prompts.append(prompt_file.stem)
+        except Exception as e:
+            logger.error(f"Failed to list prompts: {e}")
+            # Return what we have so far instead of crashing
     
     return prompts
 
 
 @router.post("/prompts/save")
-async def save_prompt(request: PromptSaveRequest, prompts_dir: PromptsDir):
+async def save_prompt(request: PromptSaveRequest):
     """Save a new prompt"""
     if not request.name or "/" in request.name or "\\" in request.name:
         raise HTTPException(status_code=400, detail="Invalid prompt name")
     
-    prompt_file = prompts_dir / f"{request.name}.md"
-    prompt_file.write_text(request.content)
+    prompt_file = PROMPTS_DIR / f"{request.name}.md"
+    try:
+        prompt_file.write_text(request.content)
+    except Exception as e:
+        logger.error(f"Failed to save prompt: {e}")
+        raise HTTPException(status_code=500, detail="Failed to save prompt")
     
     return {"message": "Prompt saved successfully"}

@@ -2,7 +2,17 @@
 Pydantic models for the math agent system.
 """
 from typing import Dict, Optional
+from enum import Enum
 from pydantic import BaseModel
+
+
+class JobStatusEnum(str, Enum):
+    """Enumeration of valid job statuses"""
+    SETUP = "setup"
+    RUNNING = "running"
+    COMPLETED = "completed"
+    ERROR = "error"
+    CANCELLED = "cancelled"
 
 
 class JobCreateRequest(BaseModel):
@@ -23,7 +33,7 @@ class PromptSaveRequest(BaseModel):
 
 class JobStatus(BaseModel):
     """Status information for a job"""
-    status: str  # TODO: Should be an Enum (setup, running, completed, error, cancelled)
+    status: JobStatusEnum
     createdAt: str
     startedAt: Optional[str] = None
     completedAt: Optional[str] = None
