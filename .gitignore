@@ -40,6 +40,9 @@ htmlcov/
 .tox/
 .nox/
 
+# Tools
+.ruff_cache/
+
 # Project specific
 jobs/
 data/prompts/*.md
