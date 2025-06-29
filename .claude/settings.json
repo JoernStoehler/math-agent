@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "WebFetch(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "LS(*)",
+      "Read(*)",
+      "Edit(*)",
+      "MultiEdit(*)",
+      "Write(*)",
+      "Task(*)",
+      "TodoRead(*)",
+      "TodoWrite(*)"
+    ],
+    "deny": []
+  },
+  "env": {},
+  "enableAllProjectMcpServers": true,
+  "cleanupPeriodDays": 10000,
+  "includeCoAuthoredBy": true
+}

@@ -32,6 +32,16 @@
   "postCreateCommand": "/workspaces/math-agent/.devcontainer/postCreateCommand.sh",
   "shutdownAction": "none",
   
+  "containerEnv": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://host.docker.internal:4317",
+    "OTEL_METRICS_EXPORTER": "otlp",
+    "OTEL_LOGS_EXPORTER": "otlp",
+    "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc"
+  },
+  
+  "runServices": ["devcontainer"],
+  
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
       "installZsh": true,

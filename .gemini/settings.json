@@ -1,0 +1,8 @@
+{
+  "telemetry": {
+    "enabled": true,
+    "target": "local"
+  },
+  "usageStatisticsEnabled": true,
+  "contextFileName": "GEMINI.md"
+}

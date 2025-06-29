@@ -46,8 +46,6 @@ jobs/*/
 server.log
 
 # Local configuration
-.claude/
-.gemini/
 .config/
 
 # IDE

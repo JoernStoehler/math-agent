@@ -35,22 +35,6 @@ services:
       - CLAUDE_CONFIG_DIR=/home/codespace/.claude
       - WORKSPACE_PATH=/workspaces/math-agent
 
-  otlp:
-    image: otel/opentelemetry-collector:latest
-    restart: unless-stopped
-    ports:
-      - "4317:4317"  # OTLP gRPC receiver
-      - "4318:4318"  # OTLP HTTP receiver
-      - "13133:13133"  # Health check endpoint
-    volumes:
-      - ./otel-config.yaml:/etc/otel-collector-config.yaml
-    command: ["--config=/etc/otel-collector-config.yaml"]
-    environment:
-      - HONEYCOMB_API_KEY=${HONEYCOMB_API_KEY}
-      - HONEYCOMB_DATASET=${HONEYCOMB_DATASET:-math-agent}
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:13133"]
-      interval: 5s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
+# OTLP service removed - using external collector at host.docker.internal:4317
+  # To disable this comment and use external OTLP collector, add to devcontainer.json:
+  # "runServices": ["devcontainer"]
