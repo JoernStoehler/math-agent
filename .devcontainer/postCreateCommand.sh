@@ -3,6 +3,16 @@ set -e
 
 echo "🚀 Setting up Math Agent environment..."
 
+# Set all permissions of mounted volumes ~/{.gemini,.claude,.config/gh,.cloudflared}
+for dir in "$HOME/.gemini" "$HOME/.claude" "$HOME/.config/gh" "$HOME/.cloudflared"; do
+    if [ -d "$dir" ]; then
+        if [ ! -w "$dir" ]; then
+            echo "🔧 Setting permissions for $dir"
+            sudo chown -R $(id -u):$(id -g) "$dir"
+        fi
+    fi
+done
+
 # Make scripts executable
 if [ -d "/workspaces/math-agent/src" ]; then
     chmod +x /workspaces/math-agent/src/*.sh 2>/dev/null || true
@@ -92,6 +102,7 @@ if command -v gh >/dev/null 2>&1; then
 else
     echo "❌ GitHub CLI installation failed"
 fi
+
 
 echo ""
 echo "✨ Math Agent environment setup complete!"

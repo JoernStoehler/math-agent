@@ -34,13 +34,13 @@
   
   "containerEnv": {
     "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
-    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://host.docker.internal:4317",
+    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://otlp-collector:4317",
     "OTEL_METRICS_EXPORTER": "otlp",
     "OTEL_LOGS_EXPORTER": "otlp",
     "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc"
   },
   
-  "runServices": ["devcontainer"],
+  // "runServices": ["devcontainer", "otlp-collector"], // buggy, not working
   
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {

@@ -13,8 +13,8 @@ exporters:
   otlp:
     endpoint: "api.honeycomb.io:443"
     headers:
-      "x-honeycomb-team": "${env:HONEYCOMB_API_KEY}"
-      "x-honeycomb-dataset": "${env:HONEYCOMB_DATASET}"
+      "x-honeycomb-team": "${HONEYCOMB_API_KEY}"
+      "x-honeycomb-dataset": "${HONEYCOMB_DATASET}"
 
 service:
   extensions: []

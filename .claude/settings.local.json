@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude --version)",
+      "Bash(gemini:*)",
+      "Bash(env)",
+      "mcp__tavily__tavily-search",
+      "mcp__tavily__tavily-extract",
+      "Bash(curl:*)",
+      "Bash(docker logs:*)",
+      "Bash(sudo netstat:*)",
+      "Bash(sudo lsof:*)",
+      "Bash(docker run:*)",
+      "Bash(docker port:*)",
+      "Bash(docker inspect:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "puppeteer",
+    "context7",
+    "tavily"
+  ]
+}
