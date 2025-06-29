@@ -1204,7 +1204,7 @@ def create_job(form_data):
         
         # Spawn agent process using math-agent.sh
         log_file = os.path.join(job_dir, 'log.jsonl')
-        math_agent_path = os.path.join('scripts', 'math-agent.sh')
+        math_agent_path = os.path.join('src', 'math-agent.sh')
         
         if not os.path.exists(math_agent_path):
             return {'success': False, 'error': 'math-agent.sh script not found'}
